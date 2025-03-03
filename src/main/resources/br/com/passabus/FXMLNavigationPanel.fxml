@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.passabus.FXMLNavigationPanelController">
+   <left>
+      <VBox prefHeight="750.0" prefWidth="400.0" style="-fx-background-color: #15CE52;" BorderPane.alignment="CENTER">
+         <children>
+            <Pane prefHeight="100.0" prefWidth="500.0" style="-fx-border-color: #F3F4F6; -fx-border-width: 0px 0px 2px 0px;">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <children>
+                  <Label layoutX="120.0" layoutY="25.0" text="Username.usuário" textFill="#1e3a8a">
+                     <font>
+                        <Font name="Arial Bold" size="25.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="120.0" layoutY="49.0" text="cargo" textFill="#1e3a8a">
+                     <font>
+                        <Font name="Arial" size="20.0" />
+                     </font>
+                  </Label>
+                  <Circle fill="DODGERBLUE" layoutX="53.0" layoutY="49.0" radius="39.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+               </children>
+            </Pane>
+            <ImageView fitHeight="80.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../passabus/imgs/logo.png" />
+               </image>
+               <VBox.margin>
+                  <Insets bottom="15.0" left="135.0" top="15.0" />
+               </VBox.margin>
+            </ImageView>
+            <Button fx:id="btnDashboard" mnemonicParsing="false" onMouseClicked="#getDashboardScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Dashboard" textAlignment="CENTER" textFill="#1e3a8a">
+               <VBox.margin>
+                  <Insets left="15.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Arial Bold" size="26.0" />
+               </font>
+               <effect>
+                  <DropShadow offsetY="6.0">
+                     <input>
+                        <InnerShadow />
+                     </input>
+                  </DropShadow>
+               </effect>
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../passabus/imgs/dash.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="25.0" layoutY="299.0" mnemonicParsing="false" onMouseClicked="#getVendaScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Venda" textAlignment="CENTER" textFill="#1e3a8a">
+               <font>
+                  <Font name="Arial Bold" size="26.0" />
+               </font>
+               <effect>
+                  <DropShadow offsetY="6.0">
+                     <input>
+                        <InnerShadow />
+                     </input>
+                  </DropShadow>
+               </effect>
+               <VBox.margin>
+                  <Insets left="15.0" top="16.0" />
+               </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../passabus/imgs/ticketbus.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="25.0" layoutY="380.0" mnemonicParsing="false" onMouseClicked="#getHistVendaScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Histórico de vendas" textAlignment="RIGHT" textFill="#1e3a8a">
+               <font>
+                  <Font name="Arial Bold" size="26.0" />
+               </font>
+               <effect>
+                  <DropShadow offsetY="6.0">
+                     <input>
+                        <InnerShadow />
+                     </input>
+                  </DropShadow>
+               </effect>
+               <VBox.margin>
+                  <Insets left="15.0" top="16.0" />
+               </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../passabus/imgs/histvendas.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="10.0" layoutY="446.0" mnemonicParsing="false" onMouseClicked="#getCancelPassagemScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Cancelar passagem" textAlignment="RIGHT" textFill="#1e3a8a">
+               <font>
+                  <Font name="Arial Bold" size="26.0" />
+               </font>
+               <effect>
+                  <DropShadow offsetY="6.0">
+                     <input>
+                        <InnerShadow />
+                     </input>
+                  </DropShadow>
+               </effect>
+               <VBox.margin>
+                  <Insets left="15.0" top="16.0" />
+               </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../passabus/imgs/cancel.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="10.0" layoutY="512.0" mnemonicParsing="false" onMouseClicked="#getHistLoginScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Histórico de Login" textAlignment="RIGHT" textFill="#1e3a8a">
+               <font>
+                  <Font name="Arial Bold" size="26.0" />
+               </font>
+               <effect>
+                  <DropShadow offsetY="6.0">
+                     <input>
+                        <InnerShadow />
+                     </input>
+                  </DropShadow>
+               </effect>
+               <VBox.margin>
+                  <Insets left="15.0" top="16.0" />
+               </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../passabus/imgs/histlog.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="25.0" layoutY="523.0" mnemonicParsing="false" onMouseClicked="#getCadastroUserScreen" prefHeight="55.0" prefWidth="370.0" style="-fx-background-radius: 16; -fx-background-color: #FFFFFF;" text="Cadastro de Usuário" textAlignment="RIGHT" textFill="#1e3a8a">
+               <font>
+                  <Font name="Arial Bold" size="26.0" />
+               </font>
+               <effect>
+                  <DropShadow offsetY="6.0">
+                     <input>
+                        <InnerShadow />
+                     </input>
+                  </DropShadow>
+               </effect>
+               <VBox.margin>
+                  <Insets left="15.0" top="16.0" />
+               </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../passabus/imgs/adduser.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="btnSair" layoutX="25.0" layoutY="596.0" mnemonicParsing="false" onMouseClicked="#logout" prefHeight="70.0" prefWidth="130.0" style="-fx-background-radius: 16; -fx-background-color: #EF4444;" text="Sair" textAlignment="RIGHT" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="26.0" />
+               </font>
+               <effect>
+                  <DropShadow offsetY="6.0">
+                     <input>
+                        <InnerShadow />
+                     </input>
+                  </DropShadow>
+               </effect>
+               <VBox.margin>
+                  <Insets left="130.0" top="25.0" />
+               </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../passabus/imgs/sair.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <AnchorPane fx:id="dashboardScreen" prefHeight="749.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane layoutX="74.0" layoutY="59.0" prefHeight="250.0" prefWidth="350.0" style="-fx-background-color: #15CE52; -fx-background-radius: 15;">
+               <effect>
+                  <DropShadow offsetY="3.0" />
+               </effect>
+               <children>
+                  <Label layoutX="10.0" layoutY="51.0" prefHeight="95.0" prefWidth="330.0" text="Quantidade de Passagens Vendidas esse mês:" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="Arial Bold" size="26.0" />
+                     </font>
+                  </Label>
+                  <TextField alignment="CENTER" layoutX="113.0" layoutY="146.0" prefHeight="57.0" prefWidth="125.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 30;">
+                     <font>
+                        <Font name="Arial Bold" size="30.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </Pane>
+            <Pane layoutX="613.0" layoutY="59.0" prefHeight="250.0" prefWidth="350.0" style="-fx-background-color: #15CE52; -fx-background-radius: 15;">
+               <effect>
+                  <DropShadow offsetY="3.0" />
+               </effect>
+               <children>
+                  <Label layoutX="10.0" layoutY="51.0" prefHeight="95.0" prefWidth="330.0" text="Destino mais popular para viagens:" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="Arial Bold" size="26.0" />
+                     </font>
+                  </Label>
+                  <TextField alignment="CENTER" layoutX="12.0" layoutY="146.0" prefHeight="57.0" prefWidth="328.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 30;">
+                     <font>
+                        <Font name="Arial Bold" size="20.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
