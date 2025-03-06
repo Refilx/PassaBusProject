@@ -60,7 +60,7 @@ public class FXMLVendaScreenController implements Initializable {
 
      void abrirTelaPopUp(String page) throws IOException {
         // Carrega o FXML do pop-up
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/com/passabus/"+page+".fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/com/passabus/view/screens/"+page+".fxml"));
         Parent popupRoot = loader.load();
 
         // Cria um novo Stage para o pop-up
@@ -72,6 +72,10 @@ public class FXMLVendaScreenController implements Initializable {
         Scene popupScene = new Scene(popupRoot);
         popupStage.setScene(popupScene);
         popupStage.showAndWait();  // Aguarda até o pop-up ser fechado
+
+         // Se o usuário apertar o botão próximo na tela de seleção de poltrona
+         if(new FXMLPopUpSelecionarAssentosPassageiroController().getProximo())
+            abrirDadosPassageiroPopUp(); // chama a tela de dados do passageiro
     }
 
     public void abrirDadosPassageiroPopUp() {
@@ -85,6 +89,7 @@ public class FXMLVendaScreenController implements Initializable {
 
             Stage segundaPopUp = new Stage();
             segundaPopUp.initModality(Modality.APPLICATION_MODAL);  // Modal: Bloqueia janela principal
+            segundaPopUp.setResizable(false);
             segundaPopUp.setScene(new Scene(root));
             segundaPopUp.showAndWait();  // Espera até a janela ser fechada
         } catch (IOException e) {

@@ -23,8 +23,13 @@ public class FXMLPopUpSelecionarAssentosPassageiroController implements Initiali
     @FXML
     private GridPane gridPane;
 
+    private static boolean proximo;
 
     int[] poltronasVendidas = {3,15,17,39,27,10,1,4,30,31};
+
+    public boolean getProximo() {
+        return proximo;
+    }
 
     @FXML
     void btnCancelarMouseClicked(MouseEvent event) {
@@ -34,10 +39,11 @@ public class FXMLPopUpSelecionarAssentosPassageiroController implements Initiali
 
     @FXML
     void btnProximoMouseClicked(MouseEvent event) throws IOException {
+        proximo = true;
         Stage stageAtual = (Stage) ((javafx.scene.Node) (btnProximo)).getScene().getWindow();
         stageAtual.close();
 
-        new FXMLVendaScreenController().abrirDadosPassageiroPopUp();
+//        new FXMLVendaScreenController().abrirDadosPassageiroPopUp();
     }
 
     @FXML
@@ -47,6 +53,7 @@ public class FXMLPopUpSelecionarAssentosPassageiroController implements Initiali
 
     @Override
     public void initialize(URL location, ResourceBundle resourses) {
+        proximo = false;
         int colunas = 12;
         int linhas = 5;
         int contador = 1;  // Contador para numerar os botões
