@@ -6,5 +6,6 @@ module br.com.passabus {
 
 
     opens br.com.passabus to javafx.fxml;
+    opens br.com.passabus.util to javafx.fxml;
     exports br.com.passabus;
 }
