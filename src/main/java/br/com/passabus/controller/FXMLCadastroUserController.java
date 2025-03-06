@@ -1,4 +1,4 @@
-package br.com.passabus;
+package br.com.passabus.controller;
 
 import br.com.passabus.util.TextFieldFormatter;
 import javafx.fxml.FXML;

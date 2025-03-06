@@ -1,4 +1,4 @@
-package br.com.passabus;
+package br.com.passabus.model.aplication;
 
 import java.io.IOException;
 import javafx.application.Application;

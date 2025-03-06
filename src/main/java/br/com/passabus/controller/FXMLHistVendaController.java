@@ -1,4 +1,4 @@
-package br.com.passabus;
+package br.com.passabus.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;

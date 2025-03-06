@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="650.0" prefWidth="800.0" style="-fx-background-radius: 15; -fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.passabus.FXMLPopUpDadosPassageiroController">
+<AnchorPane prefHeight="650.0" prefWidth="800.0" style="-fx-background-radius: 15; -fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.passabus.controller.FXMLPopUpDadosPassageiroController">
    <children>
       <Pane layoutX="37.0" layoutY="35.0" prefHeight="575.0" prefWidth="734.0" style="-fx-background-color: #15CE52; -fx-background-radius: 10;">
          <children>
