@@ -11,4 +11,5 @@ module br.com.passabus {
     opens br.com.passabus.controller to javafx.fxml;
     exports br.com.passabus.model.aplication;
     opens br.com.passabus.model.aplication to javafx.fxml;
+    opens br.com.passabus.model.validator to javafx.fxml;
 }
