@@ -15,7 +15,7 @@ public class FXMLLoginScreenAplication extends Application {
     
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/br/com/passabus/FXMLLoginScreen.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/br/com/passabus/view/screens/FXMLLoginScreen.fxml"));
         Parent root = fxmlLoader.load();
 
         Scene scene = new Scene(root);

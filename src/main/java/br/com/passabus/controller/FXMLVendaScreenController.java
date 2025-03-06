@@ -76,7 +76,7 @@ public class FXMLVendaScreenController implements Initializable {
 
     public void abrirDadosPassageiroPopUp() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/com/passabus/FXMLPopUpDadosPassageiro.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/com/passabus/view/screens/FXMLPopUpDadosPassageiro.fxml"));
             Parent root = loader.load();
 
             // Obtendo o controller da segunda pop-up para manipular campos depois

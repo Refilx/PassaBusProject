@@ -179,12 +179,12 @@
             </Label>
             <ImageView fitHeight="55.0" fitWidth="62.0" layoutX="8.0" layoutY="448.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@imgs/real-brasileiro.png" />
+                  <Image url="@../imgs/real-brasileiro.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="71.0" fitWidth="55.0" layoutX="6.0" layoutY="374.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@imgs/cartao-do-banco.png" />
+                  <Image url="@../imgs/cartao-do-banco.png" />
                </image>
             </ImageView>
          </children>

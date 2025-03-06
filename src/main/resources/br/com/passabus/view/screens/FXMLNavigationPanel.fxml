@@ -40,7 +40,7 @@
             </Pane>
             <ImageView fitHeight="80.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../passabus/imgs/logo.png" />
+                  <Image url="@../imgs/logo.png" />
                </image>
                <VBox.margin>
                   <Insets bottom="15.0" left="135.0" top="15.0" />
@@ -63,7 +63,7 @@
                <graphic>
                   <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../passabus/imgs/dash.png" />
+                        <Image url="@../imgs/dash.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -88,7 +88,7 @@
                <graphic>
                   <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../passabus/imgs/ticketbus.png" />
+                        <Image url="@../imgs/ticketbus.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -113,7 +113,7 @@
                <graphic>
                   <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../passabus/imgs/histvendas.png" />
+                        <Image url="@../imgs/histvendas.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -138,7 +138,7 @@
                <graphic>
                   <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../passabus/imgs/cancel.png" />
+                        <Image url="@../imgs/cancel.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -163,7 +163,7 @@
                <graphic>
                   <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../passabus/imgs/histlog.png" />
+                        <Image url="@../imgs/histlog.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -188,7 +188,7 @@
                <graphic>
                   <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../passabus/imgs/adduser.png" />
+                        <Image url="@../imgs/adduser.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -213,7 +213,7 @@
                <graphic>
                   <ImageView fitHeight="40.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../passabus/imgs/sair.png" />
+                        <Image url="@../imgs/sair.png" />
                      </image>
                   </ImageView>
                </graphic>

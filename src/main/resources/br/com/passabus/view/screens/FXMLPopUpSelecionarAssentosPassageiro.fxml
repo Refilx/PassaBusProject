@@ -27,7 +27,7 @@
          <children>
             <ImageView fitHeight="306.0" fitWidth="700.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@imgs/mapapoltronas.png" />
+                  <Image url="@../imgs/mapapoltronas.png" />
                </image>
             </ImageView>
             <GridPane fx:id="gridPane" layoutX="115.0" layoutY="24.0" onMouseClicked="#gridMouseClicked" prefHeight="198.0" prefWidth="560.0">

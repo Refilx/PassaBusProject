@@ -65,7 +65,7 @@ public class FXMLNavigationPanelController implements Initializable {
     }
     
     public void loadPage(String page) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/br/com/passabus/"+page+".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/br/com/passabus/view/screens/"+page+".fxml"));
         Parent root = fxmlLoader.load();
         
         borderPane.setCenter(root);

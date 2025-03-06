@@ -60,7 +60,7 @@ public class FXMLLoginScreenController implements Initializable {
 
         FXMLLoginScreenAplication loginScreen = new FXMLLoginScreenAplication();
 
-        loginScreen.trocarDeTela(stageAtual, "/br/com/passabus/FXMLNavigationPanel.fxml");
+        loginScreen.trocarDeTela(stageAtual, "/br/com/passabus/view/screens/FXMLNavigationPanel.fxml");
 
     }
 

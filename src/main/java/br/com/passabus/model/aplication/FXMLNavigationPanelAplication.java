@@ -20,7 +20,7 @@ public class FXMLNavigationPanelAplication extends Application {
     
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/br/com/passabus/FXMLNavigationPanel.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/br/com/passabus/view/screens/FXMLNavigationPanel.fxml"));
         Parent root = fxmlLoader.load();
         
         Scene scene = new Scene(root);
