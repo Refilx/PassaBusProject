@@ -60,8 +60,11 @@ public class FXMLLoginScreenController implements Initializable {
 
         FXMLLoginScreenAplication loginScreen = new FXMLLoginScreenAplication();
 
-        loginScreen.trocarDeTela(stageAtual, "/br/com/passabus/view/screens/FXMLNavigationPanel.fxml");
+        if(textFieldUsername.getText().equalsIgnoreCase("admin"))
+            loginScreen.trocarDeTela(stageAtual, "/br/com/passabus/view/screens/FXMLNavigationPanel.fxml");
 
+        if(textFieldUsername.getText().equalsIgnoreCase("operador") || textFieldUsername.getText().equalsIgnoreCase("gerente"))
+            loginScreen.trocarDeTela(stageAtual, "/br/com/passabus/view/screens/FXMLCommonUserNavigationPaneScreen.fxml");
     }
 
     @FXML

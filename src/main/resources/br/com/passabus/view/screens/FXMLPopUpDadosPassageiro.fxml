@@ -78,7 +78,7 @@
                   <Font name="Arial Bold" size="20.0" />
                </font>
             </Label>
-            <TabPane layoutX="66.0" layoutY="332.0" prefHeight="200.0" prefWidth="654.0" side="LEFT" style="-fx-background-color: #ffffff; -fx-background-radius: 10;" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="tapPane" layoutX="66.0" layoutY="332.0" prefHeight="200.0" prefWidth="654.0" side="LEFT" style="-fx-background-color: #ffffff; -fx-background-radius: 10;" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab style="-fx-background-color: #15CE52;" text="Cartão de Crédito">
                   <content>

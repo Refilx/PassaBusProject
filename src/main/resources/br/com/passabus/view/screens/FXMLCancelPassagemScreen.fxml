@@ -1,6 +1,355 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-
-<Pane fx:id="cancelPassagemScreen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="749.0" prefWidth="1000.0" style="-fx-background-color: #F3C028;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" />
+<Pane fx:id="cancelPassagemScreen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="749.0" prefWidth="1000.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.passabus.controller.FXMLCancelPassagemController">
+   <children>
+      <Label layoutX="293.0" layoutY="1.0" text="Cancelamento de Passagens">
+         <font>
+            <Font name="Arial Bold" size="30.0" />
+         </font>
+      </Label>
+      <Pane layoutX="67.0" layoutY="42.0" prefHeight="677.0" prefWidth="895.0" style="-fx-background-color: #15CE52; -fx-background-radius: 10;">
+         <children>
+            <VBox layoutX="18.0" layoutY="34.0" prefHeight="206.0" prefWidth="795.0">
+               <children>
+                  <HBox prefHeight="46.0" prefWidth="795.0">
+                     <children>
+                        <TextField fx:id="textFieldOrigem" prefHeight="46.0" prefWidth="350.0" style="-fx-background-radius: 10;">
+                           <font>
+                              <Font name="Arial" size="15.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="textFieldDataViagem" onKeyReleased="#textFieldDataViagemOnKeyReleased" prefHeight="46.0" prefWidth="165.0" style="-fx-background-radius: 10;">
+                           <HBox.margin>
+                              <Insets left="50.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font name="Arial" size="15.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="46.0" prefWidth="795.0">
+                     <children>
+                        <TextField fx:id="textFieldDestino" prefHeight="46.0" prefWidth="350.0" style="-fx-background-radius: 10;">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <font>
+                              <Font name="Arial" size="15.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="textFieldPoltrona" onKeyReleased="#textFieldPoltronaOnKeyReleased" prefHeight="46.0" prefWidth="100.0" style="-fx-background-radius: 10;">
+                           <HBox.margin>
+                              <Insets left="50.0" />
+                           </HBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor>
+                           <font>
+                              <Font name="Arial" size="15.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="61.0" prefHeight="46.0" prefWidth="795.0">
+                     <children>
+                        <TextField fx:id="textFieldCPF" onKeyReleased="#textFieldCPFOnKeyReleased" prefHeight="46.0" prefWidth="200.0" style="-fx-background-radius: 10;">
+                           <font>
+                              <Font name="Arial" size="15.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="textFieldCPF2" layoutX="10.0" layoutY="10.0" onKeyReleased="#textFieldCPFOnKeyReleased" prefHeight="46.0" prefWidth="100.0" style="-fx-background-radius: 10;">
+                           <font>
+                              <Font name="Arial" size="15.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor>
+                           <HBox.margin>
+                              <Insets left="200.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Button fx:id="btnPesquisar" mnemonicParsing="false" onMouseClicked="#btnPesquisarOnMouseClicked" prefHeight="46.0" style="-fx-background-color: #10B981; -fx-background-radius: 10;" text="Pesquisar" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Bold" size="20.0" />
+                           </font>
+                           <effect>
+                              <DropShadow offsetY="5.0" />
+                           </effect>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <HBox.margin>
+                              <Insets left="100.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+            <Label layoutX="25.0" layoutY="12.0" text="ORIGEM" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="25.0" layoutY="88.0" text="DESTINO" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="25.0" layoutY="165.0" text="CPF" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="417.0" layoutY="88.0" text="POLTRONA" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="414.0" layoutY="12.0" text="DATA DA VIAGEM" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <Separator layoutY="253.0" prefHeight="3.0" prefWidth="895.0" />
+            <VBox layoutX="27.0" layoutY="302.0" prefHeight="363.0" prefWidth="795.0">
+               <children>
+                  <HBox prefHeight="46.0" prefWidth="795.0">
+                     <children>
+                        <TextField fx:id="tfShowPassageiro" disable="true" editable="false" prefHeight="46.0" prefWidth="350.0" style="-fx-background-radius: 10;">
+                           <font>
+                              <Font name="Arial" size="15.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="CROSSHAIR" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="tfShowFormaPagamento" disable="true" editable="false" onKeyReleased="#textFieldDataViagemOnKeyReleased" prefHeight="46.0" prefWidth="235.0" style="-fx-background-radius: 10;">
+                           <HBox.margin>
+                              <Insets left="50.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font name="Arial" size="15.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="CROSSHAIR" />
+                           </cursor>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="46.0" prefWidth="795.0">
+                     <children>
+                        <TextField fx:id="tfShowOrigem" disable="true" editable="false" prefHeight="46.0" prefWidth="350.0" style="-fx-background-radius: 10;">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <font>
+                              <Font name="Arial" size="15.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="CROSSHAIR" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="tfShowTotalPago" disable="true" editable="false" onKeyReleased="#textFieldPoltronaOnKeyReleased" prefHeight="46.0" prefWidth="129.0" style="-fx-background-radius: 10;">
+                           <HBox.margin>
+                              <Insets left="50.0" />
+                           </HBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="CROSSHAIR" />
+                           </cursor>
+                           <font>
+                              <Font name="Arial" size="15.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="10.0" prefHeight="46.0" prefWidth="795.0">
+                     <children>
+                        <TextField fx:id="tfShowDestino" disable="true" editable="false" prefHeight="46.0" prefWidth="350.0" style="-fx-background-radius: 10;">
+                           <font>
+                              <Font name="Arial" size="15.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="CROSSHAIR" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="tfShowTxCancelamento" disable="true" editable="false" onKeyReleased="#textFieldDataViagemOnKeyReleased" prefHeight="46.0" prefWidth="174.0" style="-fx-background-radius: 10;">
+                           <HBox.margin>
+                              <Insets left="50.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font name="Arial" size="15.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="CROSSHAIR" />
+                           </cursor>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="210.0" prefHeight="46.0" prefWidth="795.0">
+                     <children>
+                        <TextField fx:id="tfShowLinha" disable="true" editable="false" prefHeight="46.0" prefWidth="650.0" style="-fx-background-radius: 10;">
+                           <font>
+                              <Font name="Arial" size="15.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="CROSSHAIR" />
+                           </cursor>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="61.0" prefHeight="46.0" prefWidth="795.0">
+                     <children>
+                        <TextField fx:id="tfShowDataViagem" disable="true" editable="false" onKeyReleased="#textFieldCPFOnKeyReleased" prefHeight="46.0" prefWidth="200.0" style="-fx-background-radius: 10;">
+                           <font>
+                              <Font name="Arial" size="15.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="CROSSHAIR" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="tfShowHorario" disable="true" editable="false" layoutX="10.0" layoutY="10.0" onKeyReleased="#textFieldCPFOnKeyReleased" prefHeight="46.0" prefWidth="100.0" style="-fx-background-radius: 10;">
+                           <font>
+                              <Font name="Arial" size="15.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="CROSSHAIR" />
+                           </cursor>
+                           <HBox.margin>
+                              <Insets left="50.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="tfShowPoltrona" disable="true" editable="false" onKeyReleased="#textFieldDataViagemOnKeyReleased" prefHeight="46.0" prefWidth="100.0" style="-fx-background-radius: 10;">
+                           <HBox.margin>
+                              <Insets left="50.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font name="Arial" size="15.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="CROSSHAIR" />
+                           </cursor>
+                        </TextField>
+                        <Button fx:id="btnCancelarPassagem" disable="true" mnemonicParsing="false" onMouseClicked="#btnCancelarPassagemOnMouseClicked" prefHeight="46.0" style="-fx-background-color: #EF4444; -fx-background-radius: 10;" text="Cancelar Passagem" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Bold" size="20.0" />
+                           </font>
+                           <effect>
+                              <DropShadow offsetY="5.0" />
+                           </effect>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <HBox.margin>
+                              <Insets left="60.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+            <Label layoutX="35.0" layoutY="358.0" text="ORIGEM" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="35.0" layoutY="435.0" text="DESTINO" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="427.0" layoutY="358.0" text="TOTAL PAGO" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="424.0" layoutY="282.0" text="FORMA DE PAGAMENTO" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="35.0" layoutY="279.0" text="PASSAGEIRO" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="427.0" layoutY="433.0" text="TAXA DE CANCELAMENTO" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="423.0" layoutY="587.0" text="POLTRONA" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="34.0" layoutY="510.0" text="LINHA" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="34.0" layoutY="588.0" text="DATA DA VIAGEM" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="277.0" layoutY="588.0" text="HORARIO" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="419.0" layoutY="168.0" text="HORARIO" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+         </children>
+         <effect>
+            <DropShadow offsetY="5.0" />
+         </effect>
+      </Pane>
+   </children>
+</Pane>
