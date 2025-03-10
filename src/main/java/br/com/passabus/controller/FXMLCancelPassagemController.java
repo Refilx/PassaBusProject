@@ -1,5 +1,6 @@
 package br.com.passabus.controller;
 
+import br.com.passabus.util.TextFieldFormatter;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -22,7 +23,7 @@ public class FXMLCancelPassagemController {
     private TextField textFieldCPF;
 
     @FXML
-    private TextField textFieldCPF2;
+    private TextField textFieldHorario;
 
     @FXML
     private TextField textFieldDataViagem;
@@ -75,7 +76,6 @@ public class FXMLCancelPassagemController {
     void btnPesquisarOnMouseClicked(MouseEvent event) {
         btnCancelarPassagem.setDisable(false);
         tfShowPassageiro.setDisable(false);
-        tfShowPassageiro.setText("Bruno Sousa da Silva");
         tfShowOrigem.setDisable(false);
         tfShowDestino.setDisable(false);
         tfShowFormaPagamento.setDisable(false);
@@ -90,17 +90,38 @@ public class FXMLCancelPassagemController {
 
     @FXML
     void textFieldCPFOnKeyReleased(KeyEvent event) {
-
+        TextFieldFormatter tff = new TextFieldFormatter();
+        tff.setMask("###.###.###-##");
+        tff.setCaracteresValidos("0123456789");
+        tff.setTf(textFieldCPF);
+        tff.formatter();
     }
 
     @FXML
     void textFieldDataViagemOnKeyReleased(KeyEvent event) {
+        TextFieldFormatter tff = new TextFieldFormatter();
+        tff.setMask("##/##/####");
+        tff.setCaracteresValidos("0123456789");
+        tff.setTf(textFieldDataViagem);
+        tff.formatter();
+    }
 
+    @FXML
+    void textFieldHorarioOnKeyReleased(KeyEvent event) {
+        TextFieldFormatter tff = new TextFieldFormatter();
+        tff.setMask("##:##");
+        tff.setCaracteresValidos("0123456789");
+        tff.setTf(textFieldHorario);
+        tff.formatter();
     }
 
     @FXML
     void textFieldPoltronaOnKeyReleased(KeyEvent event) {
-
+        TextFieldFormatter tff = new TextFieldFormatter();
+        tff.setMask("##");
+        tff.setCaracteresValidos("0123456789");
+        tff.setTf(textFieldPoltrona);
+        tff.formatter();
     }
 
 }
