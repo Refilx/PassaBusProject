@@ -5,6 +5,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import br.com.passabus.model.aplication.FXMLLoginScreenAplication;
+import br.com.passabus.model.dao.VerifyDAO;
+import br.com.passabus.model.validator.LoginValidator;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -56,25 +58,36 @@ public class FXMLLoginScreenController implements Initializable {
     
     @FXML
     private void btnEntrarOnMouseClicked(MouseEvent event) throws IOException {
-        Stage stageAtual = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        //Pegamos o conteúdo do campo username da tela de login e armazenamos na variável user
+        String username = textFieldUsername.getText();
 
-        FXMLLoginScreenAplication loginScreen = new FXMLLoginScreenAplication();
+        //Inicializamos a String que pegará o valor do campo password da tela de login
+        String password = passFieldSenha.getText();
 
-        if(textFieldUsername.getText().equalsIgnoreCase("admin"))
-            loginScreen.trocarDeTela(stageAtual, "/br/com/passabus/view/screens/FXMLNavigationPanel.fxml");
+        boolean resultVerify = new LoginValidator().resultVerify(username, password);
 
-        if(textFieldUsername.getText().equalsIgnoreCase("operador") || textFieldUsername.getText().equalsIgnoreCase("gerente"))
-            loginScreen.trocarDeTela(stageAtual, "/br/com/passabus/view/screens/FXMLCommonUserNavigationPaneScreen.fxml");
+        if(resultVerify){
+
+            Stage stageAtual = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            FXMLLoginScreenAplication loginScreen = new FXMLLoginScreenAplication();
+
+            if (new VerifyDAO().verifySuperUser()) {
+                loginScreen.trocarDeTela(stageAtual, "/br/com/passabus/view/screens/FXMLNavigationPanel.fxml");
+            } else {
+                loginScreen.trocarDeTela(stageAtual, "/br/com/passabus/view/screens/FXMLCommonUserNavigationPaneScreen.fxml");
+            }
+        }
     }
 
     @FXML
     public void btnEntrarOnMouseEntered(MouseEvent event) {
-        System.out.println("Mouse entrou no botão");
+
     }
 
     @FXML
     public void btnEntrarOnMouseExited(MouseEvent event) {
-        System.out.println("Mouse Saiu do botão");
+
     }
 }
 
