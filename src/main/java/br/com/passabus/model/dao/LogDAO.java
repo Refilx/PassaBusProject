@@ -180,7 +180,7 @@ public class LogDAO {
      */
     public void update(Log log){
 
-        String sql = "UPDATE log SET idUsuari = ?"+
+        String sql = "UPDATE log SET idUsuario = ?"+
                 "WHERE idLog = ?";
 
         Connection conn = null;
@@ -271,7 +271,10 @@ public class LogDAO {
      * O segundo vai registrar o logout do usuário ao sair
      */
 
-    //O método executa o READ em uma view do banco de dados
+    /**
+     * O método realiza um READ na view ultimo_logado e pega o último usuário que realizou o login
+     * @return
+     */
     public Log getUltimoLogado() {
         String sql = "SELECT idLog, username FROM ultimo_logado;";
 
@@ -297,11 +300,13 @@ public class LogDAO {
             //Enquanto houver um próximo dado para ser armazenado pelo ResultSet, os comandos serão executados
             while(rset.next()){
 
-                //Recupera o idLogs da log
+                //Recupera o idLogs do último usuário logado
                 log.setIdLog(rset.getInt("idLog"));
 
-                //Recupera o idLogs da log
+                //Recupera o username do último usuário logado
                 log.setUsername(rset.getString("username"));
+
+                log.setRole(rset.getString("role"));
             }
         }catch(Exception e){
             e.printStackTrace();

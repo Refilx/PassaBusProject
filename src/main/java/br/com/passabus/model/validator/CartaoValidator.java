@@ -1,6 +1,6 @@
 package br.com.passabus.model.validator;
 
-public class Validator {
+public class CartaoValidator {
 
     public static boolean validarCartaoCredito(String numeroCartao) {
         // Remover espaços e verificar se é um número válido
