@@ -8,6 +8,8 @@ import br.com.passabus.model.factory.ConnectionFactory;
 import org.jasypt.util.password.BasicPasswordEncryptor;
 
 import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +19,6 @@ import java.util.List;
  *
  * @author Geovanna Alves
  */
-
 public class UsuarioDAO {
     /*
      * create - ok
@@ -28,7 +29,7 @@ public class UsuarioDAO {
 
     //create
     public void save (Usuario usuario){
-        String sql = "INSERT into usuario(username, password, role, dtRegistro, idPessoa) VALUES(?, ?, ?, ?, ?)";
+        String sql = "INSERT into usuario(username, password, role, dtRegistro, status, idPessoa) VALUES(?, ?, ?, ?, ?, ?)";
 
         Connection conn = null;
 
@@ -46,13 +47,10 @@ public class UsuarioDAO {
             pstm.setString(1, usuario.getUsername());
             pstm.setString(2, senhaCriptografada);
             pstm.setString(3, usuario.getRole());
-            if (usuario.getDtRegistro() != null) {
-                pstm.setTimestamp(4, java.sql.Timestamp.from(usuario.getDtRegistro()));
-            } else {
-                pstm.setNull(4, java.sql.Types.TIMESTAMP);
-            }
+            pstm.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
+            pstm.setString(5, usuario.getStatus());
 
-            pstm.setInt(5, usuario.getIdPessoa());
+            pstm.setInt(6, usuario.getIdPessoa());
 
 
             pstm.execute();
@@ -137,7 +135,7 @@ public class UsuarioDAO {
 
     public void update(Usuario usuario){
 
-        String sql = "UPDATE usuario SET username = ?, password = ?, role = ?, dtRegistro = ?" +
+        String sql = "UPDATE usuario SET username = ?, password = ?, role = ?, status = ?" +
                 "WHERE idUsuario = ?";
 
         Connection conn = null;
@@ -157,13 +155,9 @@ public class UsuarioDAO {
             pstm.setString(1, usuario.getUsername());
             pstm.setString(2, senhaCriptografada);
             pstm.setString(3, usuario.getRole());
-            if (usuario.getDtRegistro() != null) {
-                pstm.setTimestamp(4, java.sql.Timestamp.from(usuario.getDtRegistro()));
-            } else {
-                pstm.setNull(4, java.sql.Types.TIMESTAMP);
-            }
+            pstm.setString(4, usuario.getStatus());
 
-            pstm.setInt(5, usuario.getIdUser());
+            pstm.setInt(5, usuario.getIdUsuario());
 
             pstm.execute();
 
@@ -187,7 +181,7 @@ public class UsuarioDAO {
     }
 
     //delete
-    public void deleteByID(int idUser){
+    public void deleteByID(int idUsuario){
 
         String sql = "DELETE FROM usuario WHERE idUsuario = ?";
 
@@ -201,7 +195,7 @@ public class UsuarioDAO {
 
             pstm = conn.prepareStatement(sql);
 
-            pstm.setInt(1, idUser);
+            pstm.setInt(1, idUsuario);
 
             pstm.execute();
 

@@ -14,8 +14,8 @@ public class Log extends Usuario{
 
     public Log() { }
 
-    public Log(int idLog, int idUser, String username, Timestamp dtLogin, Timestamp dtLogout) {
-        super(idUser, username);
+    public Log(int idLog, int idUsuario, String username, Timestamp dtLogin, Timestamp dtLogout) {
+        super(idUsuario, username);
         this.idLog = idLog;
         this.dtLogin = dtLogin;
         this.dtLogout = dtLogout;

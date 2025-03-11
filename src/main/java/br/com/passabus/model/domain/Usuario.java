@@ -8,33 +8,34 @@ import java.time.Instant;
  */
 public class Usuario extends Pessoa{
 
-    private int idUser;
+    private int idUsuario;
     private String username;
     private String password;
     private String role;
     private Instant dtRegistro;
+    private String status;
 
     public Usuario() { }
 
-    public Usuario(int idUser, String username) {
-        this.idUser = idUser;
+    public Usuario(int idUsuario, String username) {
+        this.idUsuario = idUsuario;
         this.username = username;
     }
 
-    public Usuario(int idUser, String username, String password, String role, Instant dtRegistro) {
-        this.idUser = idUser;
+    public Usuario(int idUsuario, String username, String password, String role, Instant dtRegistro) {
+        this.idUsuario = idUsuario;
         this.username = username;
         this.password = password;
         this.role = role;
         this.dtRegistro = dtRegistro;
     }
 
-    public int getIdUser() {
-        return idUser;
+    public int getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public String getUsername() {
@@ -67,5 +68,13 @@ public class Usuario extends Pessoa{
 
     public void setDtRegistro(Instant dtRegistro) {
         this.dtRegistro = dtRegistro;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
