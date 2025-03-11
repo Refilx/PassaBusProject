@@ -3,6 +3,7 @@ module br.com.passabus {
     requires javafx.fxml;
     requires java.desktop;
     requires java.sql;
+    requires jasypt;
 
 
     opens br.com.passabus.view.screens to javafx.fxml;
