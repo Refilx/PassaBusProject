@@ -1,4 +1,4 @@
-package model.domain;
+package br.com.passabus.model.domain;
 
 import java.util.Date;
 

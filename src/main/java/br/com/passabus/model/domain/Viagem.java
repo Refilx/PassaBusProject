@@ -1,4 +1,4 @@
-package model.domain;
+package br.com.passabus.model.domain;
 
 /**
  * Essa é a Classe model de viagem, contendo todos os atributos e métodos sobre viagem
