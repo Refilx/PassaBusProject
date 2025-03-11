@@ -1,6 +1,6 @@
 package br.com.passabus.controller;
 
-import br.com.passabus.model.validator.Validator;
+import br.com.passabus.model.validator.CartaoValidator;
 import br.com.passabus.util.TextFieldFormatter;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -71,7 +71,7 @@ public class FXMLPopUpDadosPassageiroController {
     @FXML
     void btnFinalizarVendaCartaoMouseClicked(MouseEvent event) {
         // teste se o validador de cartão funciona
-//        System.out.println(Validator.validarCartaoCredito(textFieldNumCartao.getText()));
+        System.out.println(CartaoValidator.validarCartaoCredito(textFieldNumCartao.getText()));
         System.out.println(tapPane.getSelectionModel().getSelectedItem().getText());
     }
 
