@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS `passabus`.`usuario` (
   `password` VARCHAR(100) NOT NULL,
   `role` VARCHAR(13) NOT NULL,
   `dtRegistro` TIMESTAMP NOT NULL,
+  `status` VARCHAR(10) NOT NULL,
   `idPessoa` INT NOT NULL,
   PRIMARY KEY (`idUsuario`),
   UNIQUE INDEX `idUsuario_UNIQUE` (`idUsuario` ASC) VISIBLE,
@@ -142,6 +143,25 @@ CREATE TABLE IF NOT EXISTS `passabus`.`venda` (
   CONSTRAINT `fk_venda_viagem1`
     FOREIGN KEY (`idViagem`)
     REFERENCES `passabus`.`viagem` (`idViagem`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `passabus`.`log`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `passabus`.`log` (
+  `idLog` INT NOT NULL AUTO_INCREMENT,
+  `dtLogin` TIMESTAMP NULL,
+  `dtLogout` TIMESTAMP NULL,
+  `idUsuario` INT NOT NULL,
+  PRIMARY KEY (`idLog`),
+  UNIQUE INDEX `idLog_UNIQUE` (`idLog` ASC) VISIBLE,
+  INDEX `fk_log_usuario1_idx` (`idUsuario` ASC) VISIBLE,
+  CONSTRAINT `fk_log_usuario1`
+    FOREIGN KEY (`idUsuario`)
+    REFERENCES `passabus`.`usuario` (`idUsuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
