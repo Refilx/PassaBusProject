@@ -8,15 +8,22 @@ public class Viagem {
 
     private int idViagem;
     private int idViacao;
+    private String origem;
+    private String destino;
+    private double distancia;
     private String linha;
     private String tipoViagem;
     private String classe;
 
     public Viagem() { }
 
-    public Viagem(int idViagem, int idViacao, String linha, String tipoViagem, String classe) {
+    public Viagem(int idViagem, int idViacao, String origem, String destino, double distancia,
+                  String linha, String tipoViagem, String classe) {
         this.idViagem = idViagem;
         this.idViacao = idViacao;
+        this.origem = origem;
+        this.destino = destino;
+        this.distancia = distancia;
         this.linha = linha;
         this.tipoViagem = tipoViagem;
         this.classe = classe;
@@ -36,6 +43,30 @@ public class Viagem {
 
     public void setIdViacao(int idViacao) {
         this.idViacao = idViacao;
+    }
+
+    public String getOrigem() {
+        return origem;
+    }
+
+    public void setOrigem(String origem) {
+        this.origem = origem;
+    }
+
+    public String getDestino() {
+        return destino;
+    }
+
+    public void setDestino(String destino) {
+        this.destino = destino;
+    }
+
+    public double getDistancia() {
+        return distancia;
+    }
+
+    public void setDistancia(double distancia) {
+        this.distancia = distancia;
     }
 
     public String getLinha() {

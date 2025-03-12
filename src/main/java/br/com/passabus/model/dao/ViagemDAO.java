@@ -24,7 +24,7 @@ public class ViagemDAO {
 
     //create
     public void save(Viagem viagem) {
-        String sql = "INSERT INTO viagem (idViacao, linha, tipoViagem, classe) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO viagem (idViacao, origem, destino, distancia, linha, tipoViagem, classe) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -35,6 +35,9 @@ public class ViagemDAO {
             pstm = conn.prepareStatement(sql);
 
             pstm.setInt(1, viagem.getIdViacao());
+            pstm.setString(2, viagem.getOrigem());
+            pstm.setString(2, viagem.getDestino());
+            pstm.setDouble(2, viagem.getDistancia());
             pstm.setString(2, viagem.getLinha());
             pstm.setString(3, viagem.getTipoViagem());
             pstm.setString(4, viagem.getClasse());
@@ -76,6 +79,9 @@ public class ViagemDAO {
                 Viagem viagem = new Viagem();
                 viagem.setIdViagem(rset.getInt("idViagem"));
                 viagem.setIdViacao(rset.getInt("idViacao"));
+                viagem.setOrigem(rset.getString("origem"));
+                viagem.setDestino(rset.getString("destino"));
+                viagem.setDistancia(rset.getDouble("distancia"));
                 viagem.setLinha(rset.getString("linha"));
                 viagem.setTipoViagem(rset.getString("tipoViagem"));
                 viagem.setClasse(rset.getString("classe"));
@@ -106,7 +112,8 @@ public class ViagemDAO {
 
     //update
     public void update(Viagem viagem) {
-        String sql = "UPDATE viagem SET idViacao = ?, linha = ?, tipoViagem = ?, classe = ? WHERE idViagem = ?";
+        String sql = "UPDATE viagem SET idViacao = ?," +
+                " origem = ?, destino =, linha = ?, tipoViagem = ?, classe = ? WHERE idViagem = ?";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -117,10 +124,13 @@ public class ViagemDAO {
             pstm = conn.prepareStatement(sql);
 
             pstm.setInt(1, viagem.getIdViacao());
-            pstm.setString(2, viagem.getLinha());
-            pstm.setString(3, viagem.getTipoViagem());
-            pstm.setString(4, viagem.getClasse());
-            pstm.setInt(5, viagem.getIdViagem());
+            pstm.setString(2, viagem.getOrigem());
+            pstm.setString(3, viagem.getDestino());
+            pstm.setDouble(4, viagem.getDistancia());
+            pstm.setString(5, viagem.getLinha());
+            pstm.setString(6, viagem.getTipoViagem());
+            pstm.setString(7, viagem.getClasse());
+            pstm.setInt(8, viagem.getIdViagem());
 
             pstm.execute();
 

@@ -11,23 +11,22 @@ public class Venda {
     private int idVenda;
     private int idViagem;
     private int idPassageiro;
-    private int idPagamento;
-    private double taxaEmbarque;
     private double tarifa;
     private double seguro;
     private double valorTotal;
+    private String opcaoPagamento;
+    private String status;
     private Instant dtVenda;
 
     public Venda() { }
 
-    public Venda(int idVenda, int idViagem, int idPassageiro, int idPagamento,
-                 double taxaEmbarque, double tarifa, double seguro, double valorTotal,
-                 Instant dtVenda) {
+    public Venda(int idVenda, int idViagem, int idPassageiro, String status, String opcaoPagamento,
+                 double tarifa, double seguro, double valorTotal, Instant dtVenda) {
         this.idVenda = idVenda;
         this.idViagem = idViagem;
         this.idPassageiro = idPassageiro;
-        this.idPagamento = idPagamento;
-        this.taxaEmbarque = taxaEmbarque;
+        this.status = status;
+        this.opcaoPagamento = opcaoPagamento;
         this.tarifa = tarifa;
         this.seguro = seguro;
         this.valorTotal = valorTotal;
@@ -58,20 +57,20 @@ public class Venda {
         this.idPassageiro = idPassageiro;
     }
 
-    public int getIdPagamento() {
-        return idPagamento;
+    public String getStatus() {
+        return status;
     }
 
-    public void setIdPagamento(int idPagamento) {
-        this.idPagamento = idPagamento;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public double getTaxaEmbarque() {
-        return taxaEmbarque;
+    public String getOpcaoPagamento() {
+        return opcaoPagamento;
     }
 
-    public void setTaxaEmbarque(double taxaEmbarque) {
-        this.taxaEmbarque = taxaEmbarque;
+    public void setOpcaoPagamento(String opcaoPagamento) {
+        this.opcaoPagamento = opcaoPagamento;
     }
 
     public double getTarifa() {

@@ -27,7 +27,7 @@ public class VendaDAO {
     //create
 
     public void save(Venda venda) {
-        String sql = "INSERT INTO venda (idViagem, idPassageiro, opcaoPagamento, taxaEmbarque, tarifa, seguro, valorTotal, dtVenda) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO venda (idViagem, idPassageiro, opcaoPagamento, tarifa, seguro, valorTotal, status, dtVenda) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -39,11 +39,11 @@ public class VendaDAO {
 
             pstm.setInt(1, venda.getIdViagem());
             pstm.setInt(2, venda.getIdPassageiro());
-            pstm.setInt(3, venda.getIdPagamento());
-            pstm.setDouble(4, venda.getTaxaEmbarque());
-            pstm.setDouble(5, venda.getTarifa());
-            pstm.setDouble(6, venda.getSeguro());
-            pstm.setDouble(7, venda.getValorTotal());
+            pstm.setString(3, venda.getOpcaoPagamento());
+            pstm.setDouble(4, venda.getTarifa());
+            pstm.setDouble(5, venda.getSeguro());
+            pstm.setDouble(6, venda.getValorTotal());
+            pstm.setString(7, venda.getStatus());
             pstm.setTimestamp(8, Timestamp.from(venda.getDtVenda()));
 
             pstm.execute();
@@ -63,7 +63,7 @@ public class VendaDAO {
         }
     }
 
-    public List<Venda> getAll() {
+    public List<Venda> getVendas() {
         String sql = "SELECT * FROM venda";
         List<Venda> vendas = new ArrayList<>();
 
@@ -82,8 +82,8 @@ public class VendaDAO {
                 venda.setIdVenda(rset.getInt("idVenda"));
                 venda.setIdViagem(rset.getInt("idViagem"));
                 venda.setIdPassageiro(rset.getInt("idPassageiro"));
-                venda.setIdPagamento(rset.getInt("opcaoPagamento")); //modificar
-                venda.setTaxaEmbarque(rset.getDouble("taxaEmbarque"));
+                venda.setOpcaoPagamento(rset.getString("opcaoPagamento")); //modificar
+                venda.setStatus(rset.getString("status"));
                 venda.setTarifa(rset.getDouble("tarifa"));
                 venda.setSeguro(rset.getDouble("seguro"));
                 venda.setValorTotal(rset.getDouble("valorTotal"));
@@ -112,7 +112,7 @@ public class VendaDAO {
     }
 
     public void update(Venda venda) {
-        String sql = "UPDATE venda SET idViagem = ?, idPassageiro = ?, opcaoPagamento = ?, taxaEmbarque = ?, tarifa = ?, seguro = ?, valorTotal = ?, dtVenda = ? WHERE idVenda = ?";
+        String sql = "UPDATE venda SET idViagem = ?, idPassageiro = ?, opcaoPagamento = ?, status = ?, tarifa = ?, seguro = ?, valorTotal = ?, dtVenda = ? WHERE idVenda = ?";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -124,8 +124,8 @@ public class VendaDAO {
 
             pstm.setInt(1, venda.getIdViagem());
             pstm.setInt(2, venda.getIdPassageiro());
-            pstm.setInt(3, venda.getIdPagamento());
-            pstm.setDouble(4, venda.getTaxaEmbarque());
+            pstm.setString(3, venda.getOpcaoPagamento());
+            pstm.setString(4, venda.getStatus());
             pstm.setDouble(5, venda.getTarifa());
             pstm.setDouble(6, venda.getSeguro());
             pstm.setDouble(7, venda.getValorTotal());
