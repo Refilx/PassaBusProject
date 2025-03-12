@@ -276,7 +276,7 @@ public class LogDAO {
      * @return
      */
     public Log getUltimoLogado() {
-        String sql = "SELECT idLog, username FROM ultimo_logado;";
+        String sql = "SELECT idLog, username, role FROM ultimo_logado;";
 
         //Lista que armazenará os dados de log
         Log log = new Log();

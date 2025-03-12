@@ -1,4 +1,4 @@
-package br.com.passabus.util;
+package br.com.passabus.model.util;
 
 import java.util.ArrayList;
 import javafx.scene.control.TextField;
