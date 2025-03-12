@@ -75,6 +75,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `passabus`.`viagem` (
   `idViagem` INT NOT NULL AUTO_INCREMENT,
+  `origem` VARCHAR(150) NOT NULL,
+  `destino` VARCHAR(150) NOT NULL,
+  `distancia` DOUBLE NOT NULL,
   `linha` VARCHAR(45) NOT NULL,
   `tipoViagem` VARCHAR(45) NOT NULL,
   `classe` VARCHAR(45) NOT NULL,
@@ -96,8 +99,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `passabus`.`passageiro` (
   `idPassageiro` INT NOT NULL AUTO_INCREMENT,
   `poltrona` INT NOT NULL,
-  `origem` VARCHAR(100) NOT NULL,
-  `destino` VARCHAR(100) NOT NULL,
+  `origem` VARCHAR(150) NOT NULL,
+  `destino` VARCHAR(150) NOT NULL,
   `idPessoa` INT NOT NULL,
   `idViagem` INT NOT NULL,
   PRIMARY KEY (`idPassageiro`),
@@ -122,7 +125,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `passabus`.`venda` (
   `idVenda` INT NOT NULL AUTO_INCREMENT,
-  `taxaEmbarque` DOUBLE NOT NULL,
   `tarifa` DOUBLE NOT NULL,
   `seguro` DOUBLE NOT NULL,
   `valorTotal` DOUBLE NOT NULL,
@@ -166,6 +168,24 @@ CREATE TABLE IF NOT EXISTS `passabus`.`log` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+USE `passabus` ;
+
+-- -----------------------------------------------------
+-- Placeholder table for view `passabus`.`ultimo_logado`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `passabus`.`ultimo_logado` (`idLog` INT, `idUsuario` INT, `username` INT, `role` INT);
+
+-- -----------------------------------------------------
+-- View `passabus`.`ultimo_logado`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `passabus`.`ultimo_logado`;
+USE `passabus`;
+CREATE  OR REPLACE VIEW ultimo_logado AS
+	SELECT L.idLog, L.idUsuario, U.username, U.role 
+	FROM log L
+	JOIN usuario U ON (L.idUsuario = U.idUsuario)
+	ORDER BY idLog DESC
+	LIMIT 1;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
