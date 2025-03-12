@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="650.0" prefWidth="800.0" style="-fx-background-radius: 15; -fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.passabus.controller.FXMLPopUpDadosPassageiroController">
+<AnchorPane prefHeight="650.0" prefWidth="800.0" style="-fx-background-radius: 15; -fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.passabus.controller.FXMLVendaScreenController">
    <children>
       <Pane layoutX="37.0" layoutY="35.0" prefHeight="575.0" prefWidth="734.0" style="-fx-background-color: #15CE52; -fx-background-radius: 10;">
          <children>
@@ -39,7 +39,7 @@
                         <Cursor fx:constant="TEXT" />
                      </cursor>
                   </TextField>
-                  <TextField fx:id="textFieldData" onKeyReleased="#tfDataKeyReleased" prefHeight="46.0" style="-fx-background-radius: 10;">
+                  <TextField fx:id="textFieldDataNascimento" onKeyReleased="#tfDataNascimentoKeyReleased" prefHeight="46.0" style="-fx-background-radius: 10;">
                      <VBox.margin>
                         <Insets left="50.0" right="50.0" top="25.0" />
                      </VBox.margin>
@@ -50,7 +50,7 @@
                         <Cursor fx:constant="TEXT" />
                      </cursor>
                   </TextField>
-                  <TextField fx:id="textFieldCPF" onKeyReleased="#tfCPFKeyReleased" prefHeight="46.0" style="-fx-background-radius: 10;">
+                  <TextField fx:id="textFieldCPFPassageiro" onKeyReleased="#tfCPFPassageiroKeyReleased" prefHeight="46.0" style="-fx-background-radius: 10;">
                      <VBox.margin>
                         <Insets left="50.0" right="50.0" top="25.0" />
                      </VBox.margin>

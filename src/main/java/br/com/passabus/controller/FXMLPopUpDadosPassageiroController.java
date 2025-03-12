@@ -1,7 +1,7 @@
 package br.com.passabus.controller;
 
 import br.com.passabus.model.validator.CartaoValidator;
-import br.com.passabus.util.TextFieldFormatter;
+import br.com.passabus.model.util.TextFieldFormatter;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TabPane;
@@ -21,10 +21,10 @@ public class FXMLPopUpDadosPassageiroController {
     private TabPane tapPane;
 
     @FXML
-    private TextField textFieldCPF;
+    private TextField textFieldCPFPassageiro;
 
     @FXML
-    private TextField textFieldData;
+    private TextField textFieldDataNascimento;
 
     @FXML
     private TextField textFieldNomePassageiro;
@@ -42,20 +42,20 @@ public class FXMLPopUpDadosPassageiroController {
     private TextField textFieldValorTotal;
 
     @FXML
-    void tfCPFKeyReleased(KeyEvent event) {
+    void tfCPFPassageiroKeyReleased(KeyEvent event) {
         TextFieldFormatter tff = new TextFieldFormatter();
         tff.setMask("###.###.###-##");
         tff.setCaracteresValidos("0123456789");
-        tff.setTf(textFieldCPF);
+        tff.setTf(textFieldCPFPassageiro);
         tff.formatter();
     }
 
     @FXML
-    void tfDataKeyReleased(KeyEvent event) {
+    void tfDataNascimentoKeyReleased(KeyEvent event) {
         TextFieldFormatter tff = new TextFieldFormatter();
         tff.setMask("##/##/####");
         tff.setCaracteresValidos("0123456789");
-        tff.setTf(textFieldData);
+        tff.setTf(textFieldDataNascimento);
         tff.formatter();
     }
 
