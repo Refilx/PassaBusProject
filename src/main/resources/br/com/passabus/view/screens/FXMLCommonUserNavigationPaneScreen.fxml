@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.passabus.controller.FXMLCommonUserNavigationPaneController">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.passabus.controller.FXMLNavigationPanelController">
    <left>
       <VBox prefHeight="750.0" prefWidth="400.0" style="-fx-background-color: #15CE52;" BorderPane.alignment="CENTER">
          <children>
@@ -25,12 +25,12 @@
                   <Insets />
                </VBox.margin>
                <children>
-                  <Label layoutX="120.0" layoutY="25.0" text="Username.usuário" textFill="#1e3a8a">
+                  <Label fx:id="labelUsername" layoutX="120.0" layoutY="25.0" text="Username.usuário" textFill="#1e3a8a">
                      <font>
                         <Font name="Arial Bold" size="25.0" />
                      </font>
                   </Label>
-                  <Label layoutX="120.0" layoutY="49.0" text="cargo" textFill="#1e3a8a">
+                  <Label fx:id="labelRole" layoutX="120.0" layoutY="49.0" text="cargo" textFill="#1e3a8a">
                      <font>
                         <Font name="Arial" size="20.0" />
                      </font>

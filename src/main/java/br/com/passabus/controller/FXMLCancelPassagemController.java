@@ -1,6 +1,6 @@
 package br.com.passabus.controller;
 
-import br.com.passabus.util.TextFieldFormatter;
+import br.com.passabus.model.util.TextFieldFormatter;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;

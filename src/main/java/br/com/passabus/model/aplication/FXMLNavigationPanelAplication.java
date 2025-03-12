@@ -30,11 +30,11 @@ public class FXMLNavigationPanelAplication extends Application {
         stage.show();
     }
 
-    public void trocarDeTela(Stage stageAtual, String novaTela) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(novaTela));
-        Scene novaCena = new Scene(loader.load());
-        stageAtual.setScene(novaCena);
-    }
+//    public void trocarDeTela(Stage stageAtual, String novaTela) throws IOException {
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource(novaTela));
+//        Scene novaCena = new Scene(loader.load());
+//        stageAtual.setScene(novaCena);
+//    }
     
     /**
      * @param args the command line arguments

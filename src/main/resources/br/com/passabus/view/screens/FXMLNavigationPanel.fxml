@@ -25,12 +25,12 @@
                   <Insets />
                </VBox.margin>
                <children>
-                  <Label layoutX="120.0" layoutY="25.0" text="Username.usuário" textFill="#1e3a8a">
+                  <Label fx:id="labelUsername" layoutX="120.0" layoutY="25.0" text="Username.usuário" textFill="#1e3a8a">
                      <font>
                         <Font name="Arial Bold" size="25.0" />
                      </font>
                   </Label>
-                  <Label layoutX="120.0" layoutY="49.0" text="cargo" textFill="#1e3a8a">
+                  <Label fx:id="labelRole" layoutX="120.0" layoutY="49.0" text="cargo" textFill="#1e3a8a">
                      <font>
                         <Font name="Arial" size="20.0" />
                      </font>
