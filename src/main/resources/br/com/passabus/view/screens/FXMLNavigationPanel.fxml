@@ -237,7 +237,7 @@
                         <Font name="Arial Bold" size="26.0" />
                      </font>
                   </Label>
-                  <TextField alignment="CENTER" layoutX="113.0" layoutY="146.0" prefHeight="57.0" prefWidth="125.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 30;">
+                  <TextField fx:id="textFieldQuantidadeVendidaMes" alignment="CENTER" editable="false" layoutX="113.0" layoutY="146.0" prefHeight="57.0" prefWidth="125.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 30;">
                      <font>
                         <Font name="Arial Bold" size="30.0" />
                      </font>
@@ -254,13 +254,18 @@
                         <Font name="Arial Bold" size="26.0" />
                      </font>
                   </Label>
-                  <TextField alignment="CENTER" layoutX="12.0" layoutY="146.0" prefHeight="57.0" prefWidth="328.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 30;">
+                  <TextField fx:id="textFieldDestinoPopular" alignment="CENTER" editable="false" layoutX="12.0" layoutY="146.0" prefHeight="57.0" prefWidth="328.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 30;">
                      <font>
                         <Font name="Arial Bold" size="20.0" />
                      </font>
                   </TextField>
                </children>
             </Pane>
+            <ImageView fitHeight="373.0" fitWidth="441.0" layoutX="314.0" layoutY="375.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imgs/mainbus.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </center>

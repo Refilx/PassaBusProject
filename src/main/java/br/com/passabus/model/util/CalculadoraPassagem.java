@@ -16,6 +16,22 @@ public class CalculadoraPassagem {
         return precoTotal;
     }
 
+    public double getTarifa() {
+        return tarifa;
+    }
+
+    public double getCustoPorKm() {
+        return custoPorKm;
+    }
+
+    public double getSeguro() {
+        return seguro;
+    }
+
+    public double getPrecoTotal() {
+        return precoTotal;
+    }
+
     public static void main(String[] args) {
 //        double distancia = 200.0; // Exemplo: 200 km de distância
 //        double preco = calcularPrecoPassagem(distancia);

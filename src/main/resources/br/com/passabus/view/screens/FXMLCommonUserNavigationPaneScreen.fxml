@@ -177,6 +177,11 @@
    <center>
       <AnchorPane fx:id="dashboardScreen" prefHeight="749.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
          <children>
+            <ImageView fitHeight="373.0" fitWidth="441.0" layoutX="314.0" layoutY="375.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imgs/mainbus.png" />
+               </image>
+            </ImageView>
             <Pane layoutX="74.0" layoutY="59.0" prefHeight="250.0" prefWidth="350.0" style="-fx-background-color: #15CE52; -fx-background-radius: 15;">
                <effect>
                   <DropShadow offsetY="3.0" />
@@ -187,7 +192,7 @@
                         <Font name="Arial Bold" size="26.0" />
                      </font>
                   </Label>
-                  <TextField alignment="CENTER" layoutX="113.0" layoutY="146.0" prefHeight="57.0" prefWidth="125.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 30;">
+                  <TextField fx:id="textFieldQuantidadeVendidaMes" alignment="CENTER" editable="false" layoutX="113.0" layoutY="146.0" prefHeight="57.0" prefWidth="125.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 30;">
                      <font>
                         <Font name="Arial Bold" size="30.0" />
                      </font>
@@ -204,7 +209,7 @@
                         <Font name="Arial Bold" size="26.0" />
                      </font>
                   </Label>
-                  <TextField alignment="CENTER" layoutX="12.0" layoutY="146.0" prefHeight="57.0" prefWidth="328.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 30;">
+                  <TextField fx:id="textFieldDestinoPopular" alignment="CENTER" editable="false" layoutX="12.0" layoutY="146.0" prefHeight="57.0" prefWidth="328.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 30;">
                      <font>
                         <Font name="Arial Bold" size="20.0" />
                      </font>

@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -35,6 +36,10 @@ public class FXMLNavigationPanelController implements Initializable {
     private Label labelRole;
     @FXML
     private Label labelUsername;
+    @FXML
+    private TextField textFieldDestinoPopular;
+    @FXML
+    private TextField textFieldQuantidadeVendidaMes;
 
     private LogDAO logDoUsuario = new LogDAO();
     private Log usuarioLogado;
