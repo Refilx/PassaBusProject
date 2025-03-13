@@ -1,5 +1,6 @@
 package br.com.passabus.model.domain;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -12,12 +13,12 @@ public class Pessoa {
     private String nome;
     private String CPF;
     private String telefone;
-    private Date dtNascimento;
+    private LocalDate dtNascimento;
     private String email;
 
     public Pessoa() { }
 
-    public Pessoa(int idPessoa, String nome, String CPF, String telefone, Date dtNascimento, String email) {
+    public Pessoa(int idPessoa, String nome, String CPF, String telefone, LocalDate dtNascimento, String email) {
         this.idPessoa = idPessoa;
         this.nome = nome;
         this.CPF = CPF;
@@ -58,11 +59,11 @@ public class Pessoa {
         this.telefone = telefone;
     }
 
-    public Date getDtNascimento() {
+    public LocalDate getDtNascimento() {
         return dtNascimento;
     }
 
-    public void setDtNascimento(Date dtNascimento) {
+    public void setDtNascimento(LocalDate dtNascimento) {
         this.dtNascimento = dtNascimento;
     }
 

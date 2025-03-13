@@ -1,11 +1,13 @@
 package br.com.passabus.model.dao;
 
+import br.com.passabus.model.domain.Passageiro;
 import br.com.passabus.model.factory.ConnectionFactory;
 import br.com.passabus.model.domain.Pessoa;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +47,7 @@ public class PessoaDAO {
             pstm.setString(1, pessoa.getNome());
             pstm.setString(2, pessoa.getCPF());
             pstm.setString(3, pessoa.getTelefone());
-            pstm.setDate(4, new Date(pessoa.getDtNascimento().getTime()));
+            pstm.setDate(4, Date.valueOf(pessoa.getDtNascimento()));
             pstm.setString(5, pessoa.getEmail());
 
 
@@ -69,6 +71,47 @@ public class PessoaDAO {
             }
         }
     }
+
+    public int getIdUltimaPessoa() {
+        String sql = "SELECT idPessoa FROM pessoa ORDER BY idPessoa DESC limit 1";
+
+        int idPessoa = -1;
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rset = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySQL();
+
+            pstm = conn.prepareStatement(sql);
+
+            rset = pstm.executeQuery();
+
+            rset.next();
+
+            idPessoa = rset.getInt("idPessoa");
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if(conn != null)
+                    conn.close();
+
+                if(pstm != null)
+                    pstm.close();
+
+                if(rset != null)
+                    rset.close();
+
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return idPessoa;
+    }
+
 
     //read
     public List<Pessoa> getPessoa(){
@@ -105,7 +148,7 @@ public class PessoaDAO {
 
                 pessoa.setTelefone(rset.getString("telefone"));
 
-                pessoa.setDtNascimento(rset.getDate("dtNascimento"));
+                pessoa.setDtNascimento(rset.getDate("dtNascimento").toLocalDate());
 
                 pessoa.setEmail(rset.getString("email"));
 
@@ -153,7 +196,7 @@ public class PessoaDAO {
             pstm.setString(1, pessoa.getNome());
             pstm.setString(2, pessoa.getCPF());
             pstm.setString(3, pessoa.getTelefone());
-            pstm.setDate(4, new Date(pessoa.getDtNascimento().getTime()));
+            pstm.setDate(4, Date.valueOf(pessoa.getDtNascimento()));
             pstm.setString(5, pessoa.getEmail());
 
             pstm.setInt(6, pessoa.getIdPessoa());
