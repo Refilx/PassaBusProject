@@ -131,6 +131,7 @@ CREATE TABLE IF NOT EXISTS `passabus`.`venda` (
   `dtVenda` TIMESTAMP NOT NULL,
   `opcaoPagamento` VARCHAR(17) NOT NULL,
   `status` VARCHAR(15) NOT NULL,
+  `bilhete` BIGINT NOT NULL,
   `idPassageiro` INT NOT NULL,
   `idViagem` INT NOT NULL,
   PRIMARY KEY (`idVenda`),
