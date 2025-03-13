@@ -1,10 +1,13 @@
 package br.com.passabus.model.dao;
 
+import br.com.passabus.model.domain.Passageiro;
 import br.com.passabus.model.domain.Venda;
+import br.com.passabus.model.domain.Viagem;
 import br.com.passabus.model.factory.ConnectionFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -27,7 +30,7 @@ public class VendaDAO {
     //create
 
     public void save(Venda venda) {
-        String sql = "INSERT INTO venda (idViagem, idPassageiro, opcaoPagamento, tarifa, seguro, valorTotal, status, dtVenda) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO venda (idViagem, idPassageiro, opcaoPagamento, tarifa, seguro, valorTotal, status, dtVenda, bilhete) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -44,7 +47,8 @@ public class VendaDAO {
             pstm.setDouble(5, venda.getSeguro());
             pstm.setDouble(6, venda.getValorTotal());
             pstm.setString(7, venda.getStatus());
-            pstm.setTimestamp(8, Timestamp.from(venda.getDtVenda()));
+            pstm.setTimestamp(8, venda.getDtVenda());
+            pstm.setLong(9, venda.getBilhete());
 
             pstm.execute();
         } catch (Exception e) {
@@ -63,9 +67,47 @@ public class VendaDAO {
         }
     }
 
-    public List<Venda> getVendas() {
+    public void getIdUltimoPassageiro(Venda venda) {
+        String sql = "SELECT idPassageiro FROM passageiro ORDER BY idPassageiro DESC limit 1";
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rset = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySQL();
+
+            pstm = conn.prepareStatement(sql);
+
+            rset = pstm.executeQuery();
+
+            rset.next();
+
+            venda.setIdPassageiro(rset.getInt("idPassageiro"));
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if(conn != null)
+                    conn.close();
+
+                if(pstm != null)
+                    pstm.close();
+
+                if(rset != null)
+                    rset.close();
+
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+
+    public LinkedList<Venda> getVendas() {
         String sql = "SELECT * FROM venda";
-        List<Venda> vendas = new ArrayList<>();
+        LinkedList<Venda> vendas = new LinkedList<>();
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -87,7 +129,8 @@ public class VendaDAO {
                 venda.setTarifa(rset.getDouble("tarifa"));
                 venda.setSeguro(rset.getDouble("seguro"));
                 venda.setValorTotal(rset.getDouble("valorTotal"));
-                venda.setDtVenda(rset.getTimestamp("dtVenda").toInstant());
+                venda.setDtVenda(rset.getTimestamp("dtVenda"));
+                venda.setBilhete(rset.getLong("bilhete"));
 
                 vendas.add(venda);
             }
@@ -111,8 +154,93 @@ public class VendaDAO {
         return vendas;
     }
 
+    public void getVendaParaCancelar(Passageiro p, Viagem v, Venda vd, long bilhete) {
+        String sql = "SELECT PE.nome, P.*, V.*, VD.opcaoPagamento, VD.valorTotal FROM venda VD\n" +
+                "JOIN passageiro P ON (VD.idPassageiro = P.idPassageiro)\n" +
+                "JOIN pessoa PE ON (P.idPessoa = PE.idPessoa)\n" +
+                "JOIN viagem V ON (VD.idViagem = V.idViagem)\n" +
+                "WHERE bilhete = ?;";
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rset = null;
+
+        try  {
+
+            conn = ConnectionFactory.createConnectionToMySQL();
+
+            pstm = conn.prepareStatement(sql);
+
+            pstm.setLong(1, bilhete);
+
+            rset = pstm.executeQuery();
+
+            while (rset.next()) {
+                p.setNome(rset.getString("nome"));
+                p.setOrigem(rset.getString("origem"));
+                p.setDestino(rset.getString("destino"));
+                p.setDataViagem(rset.getDate("dataviagem").toLocalDate());
+                p.setPoltrona(rset.getInt("poltrona"));
+                v.setHorario(rset.getTime("horario"));
+                v.setLinha(rset.getString("linha"));
+                vd.setOpcaoPagamento(rset.getString("opcaoPagamento"));
+                vd.setValorTotal(rset.getDouble("valorTotal"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            try {
+                if(conn!=null){
+                    conn.close();
+                }
+                if(pstm!=null){
+                    pstm.close();
+                }
+                if(rset!=null){
+                    rset.close();
+                }
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * UPDATE para cancelar a passagem
+     * @param bilhete
+     */
+    public void cancelarPassagem(long bilhete) {
+        String sql = "UPDATE venda SET status = 'CANCELADA' WHERE bilhete = ?";
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        try  {
+
+            conn = ConnectionFactory.createConnectionToMySQL();
+            pstm = conn.prepareStatement(sql);
+
+            pstm.setLong(1, bilhete);
+
+            pstm.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try{
+                if(conn!=null){
+                    conn.close();
+                }
+                if(pstm!=null){
+                    pstm.close();
+                }
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void update(Venda venda) {
-        String sql = "UPDATE venda SET idViagem = ?, idPassageiro = ?, opcaoPagamento = ?, status = ?, tarifa = ?, seguro = ?, valorTotal = ?, dtVenda = ? WHERE idVenda = ?";
+        String sql = "UPDATE venda SET idViagem = ?, idPassageiro = ?, opcaoPagamento = ?, status = ?, tarifa = ?, seguro = ?, valorTotal = ?, dtVenda = ?, bilhete = ? WHERE idVenda = ?";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -129,8 +257,9 @@ public class VendaDAO {
             pstm.setDouble(5, venda.getTarifa());
             pstm.setDouble(6, venda.getSeguro());
             pstm.setDouble(7, venda.getValorTotal());
-            pstm.setTimestamp(8, Timestamp.from(venda.getDtVenda()));
-            pstm.setInt(9, venda.getIdVenda());
+            pstm.setTimestamp(8, venda.getDtVenda());
+            pstm.setLong(9, venda.getBilhete());
+            pstm.setInt(10, venda.getIdVenda());
 
             pstm.execute();
         } catch (Exception e) {

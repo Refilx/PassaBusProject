@@ -1,5 +1,6 @@
 package br.com.passabus.model.domain;
 
+import java.sql.Timestamp;
 import java.time.Instant;
 
 /**
@@ -16,12 +17,13 @@ public class Venda {
     private double valorTotal;
     private String opcaoPagamento;
     private String status;
-    private Instant dtVenda;
+    private Timestamp dtVenda;
+    private long bilhete;
 
     public Venda() { }
 
     public Venda(int idVenda, int idViagem, int idPassageiro, String status, String opcaoPagamento,
-                 double tarifa, double seguro, double valorTotal, Instant dtVenda) {
+                 double tarifa, double seguro, double valorTotal, Timestamp dtVenda, long bilhete) {
         this.idVenda = idVenda;
         this.idViagem = idViagem;
         this.idPassageiro = idPassageiro;
@@ -31,6 +33,7 @@ public class Venda {
         this.seguro = seguro;
         this.valorTotal = valorTotal;
         this.dtVenda = dtVenda;
+        this.bilhete = bilhete;
     }
 
     public int getIdVenda() {
@@ -97,11 +100,19 @@ public class Venda {
         this.valorTotal = valorTotal;
     }
 
-    public Instant getDtVenda() {
+    public Timestamp getDtVenda() {
         return dtVenda;
     }
 
-    public void setDtVenda(Instant dtVenda) {
+    public void setDtVenda(Timestamp dtVenda) {
         this.dtVenda = dtVenda;
+    }
+
+    public long getBilhete() {
+        return bilhete;
+    }
+
+    public void setBilhete(long bilhete) {
+        this.bilhete = bilhete;
     }
 }
