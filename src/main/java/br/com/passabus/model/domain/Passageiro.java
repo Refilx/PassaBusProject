@@ -1,6 +1,6 @@
 package br.com.passabus.model.domain;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  * Essa é a Classe model do Passageiro, contendo todos os atributos e métodos sobre o Passageiro
@@ -13,11 +13,11 @@ public class Passageiro extends Pessoa{
     private int poltrona;
     private String origem;
     private String destino;
-    private Date dataViagem;
+    private LocalDate dataViagem;
 
     public Passageiro() { }
 
-    public Passageiro(int idPassageiro, int idViagem, int poltrona, String origem, String destino, Date dataViagem) {
+    public Passageiro(int idPassageiro, int idViagem, int poltrona, String origem, String destino, LocalDate dataViagem) {
         this.idPassageiro = idPassageiro;
         this.idViagem = idViagem;
         this.poltrona = poltrona;
@@ -66,11 +66,11 @@ public class Passageiro extends Pessoa{
         this.destino = destino;
     }
 
-    public Date getDataViagem() {
+    public LocalDate getDataViagem() {
         return dataViagem;
     }
 
-    public void setDataViagem(Date dataViagem) {
+    public void setDataViagem(LocalDate dataViagem) {
         this.dataViagem = dataViagem;
     }
 }

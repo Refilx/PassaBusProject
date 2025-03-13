@@ -39,7 +39,7 @@ public class PassageiroDAO {
             pstm.setInt(3, passageiro.getPoltrona());
             pstm.setString(4, passageiro.getOrigem());
             pstm.setString(5, passageiro.getDestino());
-            pstm.setDate(6, passageiro.getDataViagem());
+            pstm.setDate(6, Date.valueOf(passageiro.getDataViagem()));
 
             pstm.executeUpdate();
 
@@ -86,7 +86,7 @@ public class PassageiroDAO {
                 passageiro.setPoltrona(rset.getInt("poltrona"));
                 passageiro.setOrigem(rset.getString("origem"));
                 passageiro.setDestino(rset.getString("destino"));
-                passageiro.setDataViagem(rset.getDate("dataviagem"));
+                passageiro.setDataViagem(rset.getDate("dataviagem").toLocalDate());
 
                 passageiros.add(passageiro);
             }
@@ -119,7 +119,7 @@ public class PassageiroDAO {
             pstm.setInt(2, passageiro.getPoltrona());
             pstm.setString(3, passageiro.getOrigem());
             pstm.setString(4, passageiro.getDestino());
-            pstm.setDate(5, passageiro.getDataViagem());
+            pstm.setDate(5, Date.valueOf(passageiro.getDataViagem()));
             pstm.setInt(6, passageiro.getIdPassageiro());
 
             int rowsUpdated = pstm.executeUpdate();

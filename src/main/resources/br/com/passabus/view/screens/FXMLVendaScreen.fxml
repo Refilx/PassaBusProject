@@ -104,17 +104,16 @@
             </HBox>
          </children>
       </VBox>
-      <TableView fx:id="tvViagensPesquisadas" layoutX="28.0" layoutY="182.0" prefHeight="477.0" prefWidth="945.0" style="-fx-background-radius: 15;">
+      <TableView fx:id="tvViagensPesquisadas" disable="true" fixedCellSize="20.0" layoutX="28.0" layoutY="182.0" onMouseClicked="#tvViagensPesquisadasOnMouseClicked" prefHeight="477.0" prefWidth="945.0" style="-fx-background-radius: 15;">
         <columns>
-          <TableColumn editable="false" prefWidth="140.0" sortable="false" style="-fx-background-color: #15CE52;" text="DATA DA VIAGEM" />
-          <TableColumn minWidth="7.20001220703125" prefWidth="215.0" style="-fx-background-color: #15CE52;" text="ORIGEM" />
-            <TableColumn minWidth="7.20001220703125" prefWidth="215.0" style="-fx-background-color: #15CE52;" text="DESTINO" />
-            <TableColumn minWidth="7.20001220703125" prefWidth="130.0" style="-fx-background-color: #15CE52;" text="CLASSE" />
-            <TableColumn minWidth="0.0" prefWidth="145.0" style="-fx-background-color: #15CE52;" text="PREÇO" />
-            <TableColumn minWidth="7.20001220703125" prefWidth="105.0" style="-fx-background-color: #15CE52;" />
+          <TableColumn fx:id="tc_origem" minWidth="7.20001220703125" prefWidth="288.00002098083496" text="ORIGEM" />
+            <TableColumn fx:id="tc_destino" minWidth="7.20001220703125" prefWidth="279.1999816894531" text="DESTINO" />
+            <TableColumn fx:id="tc_classe" minWidth="7.20001220703125" prefWidth="130.0" text="CLASSE" />
+            <TableColumn fx:id="tc_horario" minWidth="0.0" prefWidth="91.199951171875" text="HORARIO" />
+            <TableColumn fx:id="tc_tipoViagem" minWidth="7.20001220703125" prefWidth="149.60009765625" text="TIPO DA VIAGEM" />
         </columns>
       </TableView>
-      <Button fx:id="btnVendaProximo" layoutX="715.0" layoutY="675.0" mnemonicParsing="false" onMouseClicked="#btnVendaProximoMouseClicked" prefHeight="46.0" prefWidth="200.0" style="-fx-background-color: #10B981; -fx-background-radius: 10;" text="Proxima" textFill="WHITE">
+      <Button fx:id="btnVendaProximo" disable="true" layoutX="715.0" layoutY="675.0" mnemonicParsing="false" onMouseClicked="#btnVendaProximoMouseClicked" prefHeight="46.0" prefWidth="200.0" style="-fx-background-color: #10B981; -fx-background-radius: 10;" text="Proxima" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="20.0" />
          </font>

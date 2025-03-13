@@ -1,25 +1,32 @@
 package br.com.passabus.controller;
 
+import br.com.passabus.model.dao.ViagemDAO;
+import br.com.passabus.model.domain.Passageiro;
 import br.com.passabus.model.domain.Viagem;
 import br.com.passabus.model.validator.CartaoValidator;
 import br.com.passabus.model.util.TextFieldFormatter;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class FXMLVendaScreenController implements Initializable {
@@ -37,6 +44,23 @@ public class FXMLVendaScreenController implements Initializable {
     private TextField textFieldOrigemViagemPesquisa;
     @FXML
     private TableView<Viagem> tvViagensPesquisadas;
+    @FXML
+    private TableColumn tc_tipoViagem;
+    @FXML
+    private TableColumn tc_classe;
+    @FXML
+    private TableColumn tc_destino;
+    @FXML
+    private TableColumn tc_horario;
+    @FXML
+    private TableColumn tc_origem;
+
+    ObservableList<Viagem> observableList;
+
+    private  List<Viagem> listaDeViagens = new LinkedList<>();
+
+    private Viagem viagemEscolhida = new Viagem();
+    private Passageiro dadosDoPassageiro = new Passageiro();
 
     // -----------------------TELA POP UP SELEÇÃO DE POLTRONA-----------------------
     @FXML
@@ -83,16 +107,37 @@ public class FXMLVendaScreenController implements Initializable {
 
     @FXML
     void btnPesquisarViagemOnMouseClicked(MouseEvent event) {
-        textFieldOrigemViagemPesquisa.getText();
-        textFieldDestinoViagemPesquisa.getText();
-        textFieldDataViagemPesquisa.getText();
+        String origem = textFieldOrigemViagemPesquisa.getText();
+        String destino = textFieldDestinoViagemPesquisa.getText();
+//        textFieldDataViagemPesquisa.getText();
 
+        if(tvViagensPesquisadas.isDisable())
+            tvViagensPesquisadas.setDisable(false);
+
+        prepararListaTabela(origem, destino);
 
     }
 
     @FXML
+    void tvViagensPesquisadasOnMouseClicked(MouseEvent event) {
+        if(btnVendaProximo.isDisable())
+            btnVendaProximo.setDisable(false);
+    }
+
+    @FXML
     void btnVendaProximoMouseClicked(MouseEvent event) throws IOException {
-        abrirTelaPopUp("FXMLPopUpSelecionarAssentosPassageiro");
+        viagemEscolhida = tvViagensPesquisadas.getSelectionModel().getSelectedItem();
+
+        if(viagemEscolhida.getOrigem() != null) {
+            dadosDoPassageiro.setOrigem(viagemEscolhida.getOrigem());
+            dadosDoPassageiro.setDestino(viagemEscolhida.getDestino());
+
+            DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            dadosDoPassageiro.setDataViagem(LocalDate.parse(textFieldDataViagemPesquisa.getText(), format));
+
+            abrirTelaPopUp("FXMLPopUpSelecionarAssentosPassageiro");
+        } else
+            JOptionPane.showMessageDialog(null, "Selecione uma viagem clicando na tabela antes de continuar!");
     }
 
     // -----------------------BOTÕES DA TELA POP UP SELEÇÃO DE POLTRONA-----------------------
@@ -128,6 +173,30 @@ public class FXMLVendaScreenController implements Initializable {
     }
 
     // -----------------------MÉTODOS DE CONFIGURAÇÃO/AUXILIAR AS TELAS DE VENDAS-----------------------
+
+    /**
+     * MÉTODO QUE FAZ A CONFIGURAÇÃO DA TABELA DE VIAGENS
+     * @param origem
+     * @param destino
+     */
+    void prepararListaTabela(String origem, String destino) {
+
+        tc_origem.setCellValueFactory(new PropertyValueFactory<>("origem"));
+        tc_destino.setCellValueFactory(new PropertyValueFactory<>("destino"));
+        tc_classe.setCellValueFactory(new PropertyValueFactory<>("classe"));
+        tc_horario.setCellValueFactory(new PropertyValueFactory<>("horario"));
+        tc_tipoViagem.setCellValueFactory(new PropertyValueFactory<>("tipoViagem"));
+
+        // Pegando a lista de viagens do banco
+        listaDeViagens =  new ViagemDAO().getViagens(origem, destino);
+
+        // configurando o observable list com os dados da lista do banco
+        observableList = FXCollections.observableList(listaDeViagens);
+
+        // Configurando a tabela após a pesquisa
+        tvViagensPesquisadas.setItems(observableList);
+    }
+
     /**
      * MÉTODO QUE CHAMA A PRIMEIRA TELA POP UP DE SELEÇÃO DE POLTRONA
      * @param page
@@ -154,26 +223,6 @@ public class FXMLVendaScreenController implements Initializable {
              abrirTelaPopUp("FXMLPopUpDadosPassageiro"); // chama a tela de dados do passageiro
          }
     }
-
-//
-//    public void abrirDadosPassageiroPopUp() {
-//        try {
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/com/passabus/view/screens/FXMLPopUpDadosPassageiro.fxml"));
-//            Parent root = loader.load();
-//
-//            // Obtendo o controller da segunda pop-up para manipular campos depois
-//            FXMLPopUpDadosPassageiroController controller = loader.getController();
-////            controller.inicializarDados("Texto Inicial");  // Exemplo de passagem de dados
-//
-//            Stage segundaPopUp = new Stage();
-//            segundaPopUp.initModality(Modality.APPLICATION_MODAL);  // Modal: Bloqueia janela principal
-//            segundaPopUp.setResizable(false);
-//            segundaPopUp.setScene(new Scene(root));
-//            segundaPopUp.showAndWait();  // Espera até a janela ser fechada
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     /**
      * Método que configura a tela pop up de seleção de poltrona
