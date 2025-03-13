@@ -5,6 +5,7 @@ import br.com.passabus.model.factory.ConnectionFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -103,6 +104,55 @@ public class PassageiroDAO {
             }
         }
         return passageiros;
+    }
+
+    /**
+     * O método_ executa um select no banco de dados que busca as poltronas que já foram compradas para uma viagem específica
+     * @param idViagem
+     * @return LinkedList contendo os números das poltronas compradas
+     * @author Bruno Sousa
+     */
+    public LinkedList<Integer> getPoltronasComprada(int idViagem) {
+
+        String sql = "SELECT poltrona FROM passageiro WHERE idViagem = ?";
+
+        LinkedList<Integer> listaPoltronasCompradas = new LinkedList<>();
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rset = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySQL();
+
+            pstm = conn.prepareStatement(sql);
+
+            pstm.setInt(1, idViagem);
+
+            rset = pstm.executeQuery();
+
+            while (rset.next()) {
+                listaPoltronasCompradas.add(rset.getInt("poltrona"));
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if(conn != null)
+                    conn.close();
+
+                if(pstm != null)
+                    pstm.close();
+
+                if(rset != null)
+                    rset.close();
+
+            }catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        return listaPoltronasCompradas;
     }
 
     // update

@@ -2,6 +2,7 @@ package br.com.passabus.model.dao;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import br.com.passabus.model.domain.Log;
@@ -106,11 +107,11 @@ public class LogDAO {
     }
 
     //O método executa o READ no banco de dados
-    public List<Log> getLogs() {
+    public LinkedList<Log> getLogs() {
         String sql = "SELECT L.*, U.username FROM log L JOIN usuario U ON(L.idUsuario = U.idUsuario)"; //Verificar se vai dar certo
 
         //Lista que armazenará os dados de logs
-        List<Log> listaLogs = new ArrayList<Log>();
+        LinkedList<Log> listaLogs = new LinkedList<>();
 
         Connection conn = null;
 
