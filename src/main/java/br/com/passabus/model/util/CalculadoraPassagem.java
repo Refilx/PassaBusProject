@@ -6,11 +6,12 @@ public class CalculadoraPassagem {
     private double custoPorKm;
     private double seguro;
     private double precoTotal;
+    private double troco;
 
     public double calcularPrecoPassagem(double distanciaKm) {
         tarifa = 5.00; // Tarifa inicial fixa
         custoPorKm = 0.30; // Custo por quilômetro
-        seguro = 2.0; // Custo por quilômetro
+        seguro = 2.0; // Custo por seguro do passageiro
         precoTotal = tarifa + seguro + (distanciaKm * custoPorKm);
 
         return precoTotal;
@@ -30,6 +31,19 @@ public class CalculadoraPassagem {
 
     public double getPrecoTotal() {
         return precoTotal;
+    }
+
+    public double getTroco() {
+        return troco;
+    }
+
+    public boolean calculaTroco(double valorPago) {
+        if(valorPago >= this.precoTotal) {
+            this.troco = valorPago - this.precoTotal;
+            return true;
+        }
+        else
+            return false;
     }
 
     public static void main(String[] args) {
