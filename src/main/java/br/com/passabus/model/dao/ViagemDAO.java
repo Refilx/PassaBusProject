@@ -24,7 +24,7 @@ public class ViagemDAO {
 
     //create
     public void save(Viagem viagem) {
-        String sql = "INSERT INTO viagem (idViacao, origem, destino, distancia, linha, tipoViagem, classe) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO viagem (idViacao, origem, destino, distancia, linha, tipoViagem, classe, horario) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -36,11 +36,12 @@ public class ViagemDAO {
 
             pstm.setInt(1, viagem.getIdViacao());
             pstm.setString(2, viagem.getOrigem());
-            pstm.setString(2, viagem.getDestino());
-            pstm.setDouble(2, viagem.getDistancia());
-            pstm.setString(2, viagem.getLinha());
-            pstm.setString(3, viagem.getTipoViagem());
-            pstm.setString(4, viagem.getClasse());
+            pstm.setString(3, viagem.getDestino());
+            pstm.setDouble(4, viagem.getDistancia());
+            pstm.setString(5, viagem.getLinha());
+            pstm.setString(6, viagem.getTipoViagem());
+            pstm.setString(7, viagem.getClasse());
+            pstm.setTime(8, viagem.getHorario());
 
             pstm.executeUpdate();
 
@@ -61,9 +62,9 @@ public class ViagemDAO {
     }
 
     // Read
-    public List<Viagem> getViagens() {
+    public List<Viagem> getViagens(String origem, String destino) {
         List<Viagem> viagens = new ArrayList<>();
-        String sql = "SELECT * FROM viagem";
+        String sql = "SELECT * FROM viagem WHERE origem = ? AND destino = ?";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -73,6 +74,10 @@ public class ViagemDAO {
 
             conn = ConnectionFactory.createConnectionToMySQL();
             pstm = conn.prepareStatement(sql);
+
+            pstm.setString(1, origem);
+            pstm.setString(2, destino);
+
             rset = pstm.executeQuery();
 
             while (rset.next()) {
@@ -85,6 +90,7 @@ public class ViagemDAO {
                 viagem.setLinha(rset.getString("linha"));
                 viagem.setTipoViagem(rset.getString("tipoViagem"));
                 viagem.setClasse(rset.getString("classe"));
+                viagem.setHorario(rset.getTime("horario"));
 
                 viagens.add(viagem);
             }
@@ -113,7 +119,7 @@ public class ViagemDAO {
     //update
     public void update(Viagem viagem) {
         String sql = "UPDATE viagem SET idViacao = ?," +
-                " origem = ?, destino =, linha = ?, tipoViagem = ?, classe = ? WHERE idViagem = ?";
+                " origem = ?, destino =, linha = ?, tipoViagem = ?, classe = ?, horario = ? WHERE idViagem = ?";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -130,7 +136,8 @@ public class ViagemDAO {
             pstm.setString(5, viagem.getLinha());
             pstm.setString(6, viagem.getTipoViagem());
             pstm.setString(7, viagem.getClasse());
-            pstm.setInt(8, viagem.getIdViagem());
+            pstm.setTime(8, viagem.getHorario());
+            pstm.setInt(9, viagem.getIdViagem());
 
             pstm.execute();
 

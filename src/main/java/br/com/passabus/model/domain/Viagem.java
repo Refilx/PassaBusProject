@@ -1,5 +1,7 @@
 package br.com.passabus.model.domain;
 
+import java.sql.Time;
+
 /**
  * Essa é a Classe model de viagem, contendo todos os atributos e métodos sobre viagem
  * @author Bruno Sousa
@@ -14,11 +16,12 @@ public class Viagem {
     private String linha;
     private String tipoViagem;
     private String classe;
+    private Time horario;
 
     public Viagem() { }
 
     public Viagem(int idViagem, int idViacao, String origem, String destino, double distancia,
-                  String linha, String tipoViagem, String classe) {
+                  String linha, String tipoViagem, String classe, Time horario) {
         this.idViagem = idViagem;
         this.idViacao = idViacao;
         this.origem = origem;
@@ -27,6 +30,7 @@ public class Viagem {
         this.linha = linha;
         this.tipoViagem = tipoViagem;
         this.classe = classe;
+        this.horario = horario;
     }
 
     public int getIdViagem() {
@@ -91,5 +95,13 @@ public class Viagem {
 
     public void setClasse(String classe) {
         this.classe = classe;
+    }
+
+    public Time getHorario() {
+        return horario;
+    }
+
+    public void setHorario(Time horario) {
+        this.horario = horario;
     }
 }

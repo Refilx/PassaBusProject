@@ -25,7 +25,7 @@ public class PassageiroDAO {
 
     // create
     public void save(Passageiro passageiro) {
-        String sql = "INSERT INTO passageiro (idPessoa, idViagem, poltrona, origem, destino) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO passageiro (idPessoa, idViagem, poltrona, origem, destino, dataviagem) VALUES (?, ?, ?, ?, ?, ?)";
         Connection conn = null;
         PreparedStatement pstm = null;
         ResultSet rs = null;
@@ -39,6 +39,7 @@ public class PassageiroDAO {
             pstm.setInt(3, passageiro.getPoltrona());
             pstm.setString(4, passageiro.getOrigem());
             pstm.setString(5, passageiro.getDestino());
+            pstm.setDate(6, passageiro.getDataViagem());
 
             pstm.executeUpdate();
 
@@ -85,6 +86,7 @@ public class PassageiroDAO {
                 passageiro.setPoltrona(rset.getInt("poltrona"));
                 passageiro.setOrigem(rset.getString("origem"));
                 passageiro.setDestino(rset.getString("destino"));
+                passageiro.setDataViagem(rset.getDate("dataviagem"));
 
                 passageiros.add(passageiro);
             }
@@ -105,7 +107,7 @@ public class PassageiroDAO {
 
     // update
     public void update(Passageiro passageiro) {
-        String sql = "UPDATE passageiro SET idViagem = ?, poltrona = ?, origem = ?, destino = ? WHERE idPassageiro = ?";
+        String sql = "UPDATE passageiro SET idViagem = ?, poltrona = ?, origem = ?, destino = ?, dataviagem = ? WHERE idPassageiro = ?";
         Connection conn = null;
         PreparedStatement pstm = null;
 
@@ -117,7 +119,8 @@ public class PassageiroDAO {
             pstm.setInt(2, passageiro.getPoltrona());
             pstm.setString(3, passageiro.getOrigem());
             pstm.setString(4, passageiro.getDestino());
-            pstm.setInt(5, passageiro.getIdPassageiro());
+            pstm.setDate(5, passageiro.getDataViagem());
+            pstm.setInt(6, passageiro.getIdPassageiro());
 
             int rowsUpdated = pstm.executeUpdate();
             if (rowsUpdated > 0) {
