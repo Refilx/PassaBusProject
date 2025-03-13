@@ -1,12 +1,19 @@
 package br.com.passabus.controller;
 
+import br.com.passabus.model.dao.PassageiroDAO;
+import br.com.passabus.model.dao.PessoaDAO;
+import br.com.passabus.model.dao.VendaDAO;
 import br.com.passabus.model.dao.ViagemDAO;
 import br.com.passabus.model.domain.Passageiro;
+import br.com.passabus.model.domain.Venda;
 import br.com.passabus.model.domain.Viagem;
+import br.com.passabus.model.util.CalculadoraPassagem;
+import br.com.passabus.model.validator.CPFValidator;
 import br.com.passabus.model.validator.CartaoValidator;
 import br.com.passabus.model.util.TextFieldFormatter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,6 +30,8 @@ import javafx.stage.Stage;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
@@ -55,12 +64,21 @@ public class FXMLVendaScreenController implements Initializable {
     @FXML
     private TableColumn tc_origem;
 
-    ObservableList<Viagem> observableList;
+    private ObservableList<Viagem> observableList;
 
-    private  List<Viagem> listaDeViagens = new LinkedList<>();
+    private DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    private Viagem viagemEscolhida = new Viagem();
-    private Passageiro dadosDoPassageiro = new Passageiro();
+    private List<Viagem> listaDeViagens = new LinkedList<>();
+
+    private static CalculadoraPassagem calc = new CalculadoraPassagem();
+
+    private static Viagem dadosDaViagemEscolhida = new Viagem();
+    private static Passageiro dadosDoPassageiro = new Passageiro();
+    private static Venda dadosDaVenda = new Venda();
+
+    private PessoaDAO pessoaDAO = new PessoaDAO();
+    private PassageiroDAO passageiroDAO = new PassageiroDAO();
+    private VendaDAO vendaDAO = new VendaDAO();
 
     // -----------------------TELA POP UP SELEÇÃO DE POLTRONA-----------------------
     @FXML
@@ -74,7 +92,7 @@ public class FXMLVendaScreenController implements Initializable {
 
     //
     private static boolean chamarTelaPopUp;
-    int[] poltronasVendidas = {3,15,17,39,27,10,1,4,30,31};
+    private static LinkedList<Integer> poltronasVendidas = new LinkedList<>();
 
     //-------------------------------------------------------
     @FXML
@@ -109,12 +127,15 @@ public class FXMLVendaScreenController implements Initializable {
     void btnPesquisarViagemOnMouseClicked(MouseEvent event) {
         String origem = textFieldOrigemViagemPesquisa.getText();
         String destino = textFieldDestinoViagemPesquisa.getText();
-//        textFieldDataViagemPesquisa.getText();
 
-        if(tvViagensPesquisadas.isDisable())
-            tvViagensPesquisadas.setDisable(false);
+        if(textFieldDataViagemPesquisa.getText() != null && textFieldDataViagemPesquisa.getText().length() == 10) {
+            if(tvViagensPesquisadas.isDisable())
+                tvViagensPesquisadas.setDisable(false);
 
-        prepararListaTabela(origem, destino);
+            prepararListaTabela(origem, destino);
+        }
+        else
+            JOptionPane.showMessageDialog(null, "Preencha o campo da Data da Viagem corretanebte, por favor");
 
     }
 
@@ -126,14 +147,13 @@ public class FXMLVendaScreenController implements Initializable {
 
     @FXML
     void btnVendaProximoMouseClicked(MouseEvent event) throws IOException {
-        viagemEscolhida = tvViagensPesquisadas.getSelectionModel().getSelectedItem();
+        dadosDaViagemEscolhida = tvViagensPesquisadas.getSelectionModel().getSelectedItem();
 
-        if(viagemEscolhida.getOrigem() != null) {
-            dadosDoPassageiro.setOrigem(viagemEscolhida.getOrigem());
-            dadosDoPassageiro.setDestino(viagemEscolhida.getDestino());
-
-            DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        if(dadosDaViagemEscolhida != null && textFieldDataViagemPesquisa.getText() != null) {
             dadosDoPassageiro.setDataViagem(LocalDate.parse(textFieldDataViagemPesquisa.getText(), format));
+
+            poltronasVendidas = new PassageiroDAO().getPoltronasComprada(dadosDaViagemEscolhida.getIdViagem());
+            configurarGridPane();
 
             abrirTelaPopUp("FXMLPopUpSelecionarAssentosPassageiro");
         } else
@@ -148,13 +168,29 @@ public class FXMLVendaScreenController implements Initializable {
         stageAtual.close();
     }
 
+    /**
+     * Botão de próximo da tela de Seleção da poltrona do passageiro
+     * @param event
+     */
     @FXML
     void btnSelecaoPoltronaProximoMouseClicked(MouseEvent event) {
-        chamarTelaPopUp = true;
-        Stage stageAtual = (Stage) ((javafx.scene.Node) (btnSelecaoPoltronaProximo)).getScene().getWindow();
-        stageAtual.close();
+        if(!textFieldPoltronaSelecionada.getText().isEmpty()) {
+            chamarTelaPopUp = true; // Habilitamos a chamada da próxima tela pop up
+
+            // Armazenamos a poltrona selecionada na poltrona do respectivo passageiro
+            dadosDoPassageiro.setPoltrona(Integer.parseInt(textFieldPoltronaSelecionada.getText()));
+
+            // Já calculamos o valor da passagem antes da tela ser chamada
+            calc.calcularPrecoPassagem(dadosDaViagemEscolhida.getDistancia());
+
+            // fechamos o stage da tela Pop Up
+            Stage stageAtual = (Stage) ((javafx.scene.Node) (btnSelecaoPoltronaProximo)).getScene().getWindow();
+            stageAtual.close();
+        } else
+            JOptionPane.showMessageDialog(null,"Selecione uma das poltronas disponíveis, por favor!");
     }
 
+    @FXML
     public void gridMouseClicked(MouseEvent mouseEvent) {
 
     }
@@ -162,17 +198,101 @@ public class FXMLVendaScreenController implements Initializable {
     // -----------------------BOTÕES DA TELA POP UP DE DADOS DO PASSAGEIRO-----------------------
     @FXML
     void btnFinalizarVendaCartaoMouseClicked(MouseEvent event) {
-        // teste se o validador de cartão funciona
-        System.out.println(CartaoValidator.validarCartaoCredito(textFieldNumCartao.getText()));
-        System.out.println(tapPane.getSelectionModel().getSelectedItem().getText());
+        dadosFinaisDaVenda();
+
+        if(CartaoValidator.validarCartaoCredito(textFieldNumCartao.getText())) {
+            int opcao = JOptionPane.showOptionDialog(null, "Cartão de crédito Aprovado!\nTem certeza que deseja finalizar a venda?", "Confirmação final",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{"Sim", "Não"}, 0);
+
+            if (opcao == 0) {
+                finalizaVenda();
+
+                // fechamos o stage da tela Pop Up
+                Stage stageAtual = (Stage) ((javafx.scene.Node) (btnFinalizarVendaCartao)).getScene().getWindow();
+                stageAtual.close();
+            } else
+                JOptionPane.showMessageDialog(null, "Venda ainda NÃO finalizada");
+
+        } else
+            JOptionPane.showMessageDialog(null, "O número do Cartão de Crédito é inválido!");
+
     }
 
     @FXML
     void btnFinalizarVendaDinheiroMouseClicked(MouseEvent event) {
-        System.out.println(tapPane.getSelectionModel().getSelectedItem().getText());
+        dadosFinaisDaVenda();
+
+        if(!textFieldValorPago.getText().isEmpty() && calc.calculaTroco(Double.parseDouble(textFieldValorPago.getText()))) {
+            int opcao = JOptionPane.showOptionDialog(null, "Tem certeza que deseja finalizar a venda?", "Confirmação final",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{"Sim", "Não"}, 0);
+
+            if (opcao == 0) {
+                JOptionPane.showMessageDialog(null, "Troco: " + calc.getTroco());
+
+                finalizaVenda();
+
+                // fechamos o stage da tela Pop Up
+                Stage stageAtual = (Stage) ((javafx.scene.Node) (btnFinalizarVendaDinheiro)).getScene().getWindow();
+                stageAtual.close();
+            } else
+                JOptionPane.showMessageDialog(null, "Venda ainda NÃO finalizada");
+        }
+    }
+
+    @FXML
+    void tapDinheiroOnSelectionChanged(Event event) {
+        textFieldValorTotal.setText("R$ "+calc.getPrecoTotal());
     }
 
     // -----------------------MÉTODOS DE CONFIGURAÇÃO/AUXILIAR AS TELAS DE VENDAS-----------------------
+
+    /**
+     * Salva os dados no banco de dados e finaliza de fato a venda
+     */
+    void finalizaVenda() {
+        // Salva o passageiro como pessoa
+        pessoaDAO.save(dadosDoPassageiro);
+
+        // Pega o id da ultima pessoa salva
+        dadosDoPassageiro.setIdPessoa(pessoaDAO.getIdUltimaPessoa());
+        passageiroDAO.save(dadosDoPassageiro);
+
+        // Pega o id do ultimo passageiro salvo
+        vendaDAO.getIdUltimoPassageiro(dadosDaVenda);
+        vendaDAO.save(dadosDaVenda);
+    }
+
+    /**
+     * Armazena os dados do passageiro (pessoa) e da venda para salvar
+     */
+    void dadosFinaisDaVenda() {
+        if(!textFieldNomePassageiro.getText().isEmpty())
+            dadosDoPassageiro.setNome(textFieldNomePassageiro.getText());
+
+        if(!textFieldDataNascimento.getText().isEmpty())
+            dadosDoPassageiro.setDtNascimento(LocalDate.parse(textFieldDataNascimento.getText(), format));
+
+        if(CPFValidator.validateCPF(textFieldCPFPassageiro.getText())) {
+            dadosDoPassageiro.setCPF(textFieldCPFPassageiro.getText());
+        } else
+            JOptionPane.showMessageDialog(null, "O CPF informado é inválido");
+
+        dadosDoPassageiro.setIdViagem(dadosDaViagemEscolhida.getIdViagem());
+        dadosDoPassageiro.setEmail(" ");
+        dadosDoPassageiro.setTelefone(" ");
+        dadosDoPassageiro.setOrigem(dadosDaViagemEscolhida.getOrigem());
+        dadosDoPassageiro.setDestino(dadosDaViagemEscolhida.getDestino());
+
+        // Armazenando os dados da venda
+        dadosDaVenda.setIdViagem(dadosDaViagemEscolhida.getIdViagem());
+        dadosDaVenda.setDtVenda(new Timestamp(System.currentTimeMillis()));
+        dadosDaVenda.setBilhete(dadosDaVenda.getDtVenda().getTime());
+        dadosDaVenda.setTarifa(calc.getTarifa());
+        dadosDaVenda.setSeguro(calc.getSeguro());
+        dadosDaVenda.setValorTotal(calc.getPrecoTotal());
+        dadosDaVenda.setOpcaoPagamento(tapPane.getSelectionModel().getSelectedItem().getText());
+        dadosDaVenda.setStatus("EM VIGOR");
+    }
 
     /**
      * MÉTODO QUE FAZ A CONFIGURAÇÃO DA TABELA DE VIAGENS
@@ -278,9 +398,6 @@ public class FXMLVendaScreenController implements Initializable {
         dataFormater.setTf(textFieldDataViagemPesquisa);
         dataFormater.formatter();
     }
-
-    // -----------------------MASCARAS DOS CAMPOS DA TELA POP UP SELEÇÃO DE POLTRONA----------------
-
 
     // -----------------------MASCARAS DOS CAMPOS DA TELA POP UP DADOS DO PASSAGEIRO----------------
     @FXML
