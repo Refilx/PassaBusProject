@@ -108,7 +108,7 @@ public class LogDAO {
 
     //O método executa o READ no banco de dados
     public LinkedList<Log> getLogs() {
-        String sql = "SELECT L.*, U.username FROM log L JOIN usuario U ON(L.idUsuario = U.idUsuario)"; //Verificar se vai dar certo
+        String sql = "SELECT L.*, U.username, U.role FROM log L JOIN usuario U ON(L.idUsuario = U.idUsuario)"; //Verificar se vai dar certo
 
         //Lista que armazenará os dados de logs
         LinkedList<Log> listaLogs = new LinkedList<>();
@@ -141,6 +141,9 @@ public class LogDAO {
 
                 //Recupera o username da consulta
                 log.setUsername(rset.getString("username"));
+
+                // Recupera a role do usuário da consulta
+                log.setRole(rset.getString("role"));
 
                 //Recupera a data do login
                 log.setDtLogin(rset.getTimestamp("dtLogin"));

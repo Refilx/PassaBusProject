@@ -108,56 +108,6 @@ public class PassageiroDAO {
         return passageiros;
     }
 
-    /**
-     * O método_ executa um select no banco de dados que busca as poltronas que já foram compradas para uma viagem específica
-     * @param idViagem
-     * @return LinkedList contendo os números das poltronas compradas
-     * @author Bruno Sousa
-     */
-    public LinkedList<Integer> getPoltronasCompradas(int idViagem, Date dataviagem) {
-
-        String sql = "SELECT poltrona FROM passageiro WHERE idViagem = ? AND dataviagem = ?";
-
-        LinkedList<Integer> listaPoltronasCompradas = new LinkedList<>();
-
-        Connection conn = null;
-        PreparedStatement pstm = null;
-        ResultSet rset = null;
-
-        try {
-            conn = ConnectionFactory.createConnectionToMySQL();
-
-            pstm = conn.prepareStatement(sql);
-
-            pstm.setInt(1, idViagem);
-            pstm.setDate(2, dataviagem);
-
-            rset = pstm.executeQuery();
-
-            while (rset.next()) {
-                listaPoltronasCompradas.add(rset.getInt("poltrona"));
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            try {
-                if(conn != null)
-                    conn.close();
-
-                if(pstm != null)
-                    pstm.close();
-
-                if(rset != null)
-                    rset.close();
-
-            }catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        return listaPoltronasCompradas;
-    }
-
     // update
     public void update(Passageiro passageiro) {
         String sql = "UPDATE passageiro SET idViagem = ?, nome = ?, CPF = ?, dtNascimento = ?, poltrona = ?, origem = ?, destino = ?, dataviagem = ? WHERE idPassageiro = ?";

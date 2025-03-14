@@ -24,6 +24,9 @@ public class FXMLHistLoginController implements Initializable {
     private TableColumn<?, ?> tc_logout;
 
     @FXML
+    private TableColumn<?, ?> tc_role;
+
+    @FXML
     private TableColumn<?, ?> tc_username;
 
     @FXML
@@ -35,6 +38,7 @@ public class FXMLHistLoginController implements Initializable {
     void prepararListaTabela() {
         tc_login.setCellValueFactory(new PropertyValueFactory<>("dtLogin"));
         tc_logout.setCellValueFactory(new PropertyValueFactory<>("dtLogout"));
+        tc_role.setCellValueFactory(new PropertyValueFactory<>("role"));
         tc_username.setCellValueFactory(new PropertyValueFactory<>("username"));
 
         // Pegando a lista de viagens do banco

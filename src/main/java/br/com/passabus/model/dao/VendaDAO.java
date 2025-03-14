@@ -116,6 +116,58 @@ public class VendaDAO {
         return vendas;
     }
 
+    /**
+     * O método_ executa um select no banco de dados que busca as poltronas que já foram compradas para uma viagem específica
+     * @param idViagem
+     * @return LinkedList contendo os números das poltronas compradas
+     * @author Bruno Sousa
+     */
+    public LinkedList<Integer> getPoltronasCompradas(int idViagem, Date dataviagem) {
+
+        String sql = "SELECT P.poltrona FROM venda V\n" +
+                "JOIN passageiro P ON (V.idPassageiro = P.idPassageiro)\n" +
+                "WHERE V.status = 'EM VIGOR' AND P.idViagem = ? AND P.dataviagem = ?";
+
+        LinkedList<Integer> listaPoltronasCompradas = new LinkedList<>();
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rset = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySQL();
+
+            pstm = conn.prepareStatement(sql);
+
+            pstm.setInt(1, idViagem);
+            pstm.setDate(2, dataviagem);
+
+            rset = pstm.executeQuery();
+
+            while (rset.next()) {
+                listaPoltronasCompradas.add(rset.getInt("poltrona"));
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if(conn != null)
+                    conn.close();
+
+                if(pstm != null)
+                    pstm.close();
+
+                if(rset != null)
+                    rset.close();
+
+            }catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        return listaPoltronasCompradas;
+    }
+
     public void getVendaParaCancelar(Passageiro p, Viagem v, Venda vd, long bilhete) {
         String sql = "SELECT P.*, V.*, VD.opcaoPagamento, VD.valorTotal FROM venda VD\n" +
                 "JOIN passageiro P ON (VD.idPassageiro = P.idPassageiro)\n" +
