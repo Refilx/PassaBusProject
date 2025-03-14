@@ -2,13 +2,16 @@ package br.com.passabus.controller;
 
 import br.com.passabus.model.dao.VendaDAO;
 import br.com.passabus.model.domain.Venda;
+import br.com.passabus.model.domain.Viagem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.util.LinkedList;
@@ -24,7 +27,7 @@ public class FXMLHistVendaController implements Initializable {
     private TableColumn<?, ?> tc_bilhete;
 
     @FXML
-    private TableColumn<?, ?> tc_status;
+    private TableColumn<Venda, String> tc_status;
 
     @FXML
     private TableColumn<?, ?> tc_formaPagemento;
@@ -43,6 +46,30 @@ public class FXMLHistVendaController implements Initializable {
         tc_bilhete.setCellValueFactory(new PropertyValueFactory<>("bilhete"));
         tc_status.setCellValueFactory(new PropertyValueFactory<>("status"));
         tc_formaPagemento.setCellValueFactory(new PropertyValueFactory<>("opcaoPagamento"));
+
+        /**
+         * Código que adiciona cor ao status das passagens vendidas, "EM VIGOR" verde e "CANCELADA" vermelho
+         */
+        tc_status.setCellFactory(column -> new TableCell<Venda, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle(""); // Resetar estilo quando a célula estiver vazia
+                } else {
+                    setText(item);
+                    if ("EM VIGOR".equals(item)) {
+                        setStyle("-fx-text-fill: green; -fx-font-weight: bold;");
+                    } else if ("CANCELADA".equals(item)) {
+                        setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
+                    } else {
+                        setStyle(""); // Resetar estilo para outros valores
+                    }
+                }
+            }
+        });
+
 
         // Pegando a lista de viagens do banco
         listaDeVendas =  new VendaDAO().getVendas();

@@ -129,9 +129,9 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TextField fx:id="textFieldValorTotal" editable="false" layoutX="51.0" layoutY="53.0" prefHeight="46.0" prefWidth="191.0" style="-fx-background-radius: 10;">
+                              <TextField fx:id="textFieldValorTotal" alignment="CENTER" editable="false" layoutX="51.0" layoutY="53.0" prefHeight="46.0" prefWidth="191.0" style="-fx-background-radius: 10;" text="R$ 37.0">
                                  <font>
-                                    <Font name="Arial Bold" size="18.0" />
+                                    <Font name="Arial Bold" size="25.0" />
                                  </font>
                                  <cursor>
                                     <Cursor fx:constant="DEFAULT" />
@@ -153,9 +153,9 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <TextField fx:id="textFieldValorPago" layoutX="51.0" layoutY="135.0" prefHeight="46.0" prefWidth="191.0" style="-fx-background-radius: 10;">
+                              <TextField fx:id="textFieldValorPago" alignment="CENTER" layoutX="51.0" layoutY="135.0" prefHeight="46.0" prefWidth="191.0" style="-fx-background-radius: 10;" text="50">
                                  <font>
-                                    <Font name="Arial Bold" size="18.0" />
+                                    <Font name="Arial Bold" size="25.0" />
                                  </font>
                                  <cursor>
                                     <Cursor fx:constant="TEXT" />

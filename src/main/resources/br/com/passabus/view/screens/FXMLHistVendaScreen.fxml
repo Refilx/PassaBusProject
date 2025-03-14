@@ -4,9 +4,9 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="749.0" prefWidth="1000.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.passabus.controller.FXMLHistVendaController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="749.0" prefWidth="1000.0" style="-fx-background-color: #FFFFFF;" stylesheets="@../styles/cells.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.passabus.controller.FXMLHistVendaController">
    <children>
-      <TableView fx:id="tableViewVendas" fixedCellSize="20.0" layoutX="14.0" layoutY="41.0" prefHeight="675.0" prefWidth="957.0" style="-fx-background-radius: 10;">
+      <TableView fx:id="tableViewVendas" fixedCellSize="50.0" layoutX="14.0" layoutY="41.0" prefHeight="675.0" prefWidth="957.0" style="-fx-background-radius: 10;" stylesheets="@../styles/cells.css">
         <columns>
           <TableColumn fx:id="tc_data" editable="false" prefWidth="200.0" resizable="false" sortable="false" text="DATA   |    HORARIO" />
           <TableColumn fx:id="tc_formaPagemento" editable="false" prefWidth="189.60003662109375" resizable="false" sortable="false" text="FORMA DE PAGAMENTO" />

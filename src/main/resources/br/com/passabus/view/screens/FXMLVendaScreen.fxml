@@ -104,13 +104,13 @@
             </HBox>
          </children>
       </VBox>
-      <TableView fx:id="tvViagensPesquisadas" disable="true" fixedCellSize="20.0" layoutX="28.0" layoutY="182.0" onMouseClicked="#tvViagensPesquisadasOnMouseClicked" prefHeight="477.0" prefWidth="945.0" style="-fx-background-radius: 15;">
+      <TableView fx:id="tvViagensPesquisadas" disable="true" fixedCellSize="50.0" layoutX="5.0" layoutY="182.0" onMouseClicked="#tvViagensPesquisadasOnMouseClicked" prefHeight="477.0" prefWidth="986.0" style="-fx-background-radius: 15;" stylesheets="@../styles/cells.css">
         <columns>
-          <TableColumn fx:id="tc_origem" minWidth="7.20001220703125" prefWidth="288.00002098083496" text="ORIGEM" />
-            <TableColumn fx:id="tc_destino" minWidth="7.20001220703125" prefWidth="279.1999816894531" text="DESTINO" />
-            <TableColumn fx:id="tc_classe" minWidth="7.20001220703125" prefWidth="130.0" text="CLASSE" />
-            <TableColumn fx:id="tc_horario" minWidth="0.0" prefWidth="91.199951171875" text="HORARIO" />
-            <TableColumn fx:id="tc_tipoViagem" minWidth="7.20001220703125" prefWidth="149.60009765625" text="TIPO DA VIAGEM" />
+          <TableColumn fx:id="tc_origem" minWidth="7.20001220703125" prefWidth="258.39996337890625" text="ORIGEM" />
+            <TableColumn fx:id="tc_destino" minWidth="7.20001220703125" prefWidth="297.59991455078125" text="DESTINO" />
+            <TableColumn fx:id="tc_classe" minWidth="7.20001220703125" prefWidth="164.00006103515625" text="CLASSE" />
+            <TableColumn fx:id="tc_horario" minWidth="0.0" prefWidth="100.7999267578125" text="HORARIO" />
+            <TableColumn fx:id="tc_tipoViagem" minWidth="7.20001220703125" prefWidth="156.79998779296875" text="TIPO DA VIAGEM" />
         </columns>
       </TableView>
       <Button fx:id="btnVendaProximo" disable="true" layoutX="715.0" layoutY="675.0" mnemonicParsing="false" onMouseClicked="#btnVendaProximoMouseClicked" prefHeight="46.0" prefWidth="200.0" style="-fx-background-color: #10B981; -fx-background-radius: 10;" text="Proxima" textFill="WHITE">
