@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import br.com.passabus.model.aplication.FXMLLoginScreenAplication;
 import br.com.passabus.model.dao.VerifyDAO;
+import br.com.passabus.model.util.CaseTextFormatter;
 import br.com.passabus.model.validator.LoginValidator;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -53,7 +54,7 @@ public class FXMLLoginScreenController implements Initializable {
     
     @Override
     public void initialize(URL location, ResourceBundle resourses) {
-        
+        CaseTextFormatter.applyLowerCase(textFieldUsername);
     }
     
     @FXML

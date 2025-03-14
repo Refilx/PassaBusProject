@@ -8,6 +8,7 @@ import br.com.passabus.model.domain.Passageiro;
 import br.com.passabus.model.domain.Venda;
 import br.com.passabus.model.domain.Viagem;
 import br.com.passabus.model.util.CalculadoraPassagem;
+import br.com.passabus.model.util.CaseTextFormatter;
 import br.com.passabus.model.validator.CPFValidator;
 import br.com.passabus.model.validator.CartaoValidator;
 import br.com.passabus.model.util.TextFieldFormatter;
@@ -76,7 +77,6 @@ public class FXMLVendaScreenController implements Initializable {
     private static Passageiro dadosDoPassageiro = new Passageiro();
     private static Venda dadosDaVenda = new Venda();
 
-    private PessoaDAO pessoaDAO = new PessoaDAO();
     private PassageiroDAO passageiroDAO = new PassageiroDAO();
     private VendaDAO vendaDAO = new VendaDAO();
 
@@ -121,6 +121,8 @@ public class FXMLVendaScreenController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resourses) {
         configurarGridPane();
+        CaseTextFormatter.applyUpperCase(textFieldOrigemViagemPesquisa);
+        CaseTextFormatter.applyUpperCase(textFieldDestinoViagemPesquisa);
     }
 
     @FXML
@@ -152,7 +154,7 @@ public class FXMLVendaScreenController implements Initializable {
         if(dadosDaViagemEscolhida != null && textFieldDataViagemPesquisa.getText() != null) {
             dadosDoPassageiro.setDataViagem(LocalDate.parse(textFieldDataViagemPesquisa.getText(), format));
 
-            poltronasVendidas = new PassageiroDAO().getPoltronasCompradas(dadosDaViagemEscolhida.getIdViagem(), Date.valueOf(dadosDoPassageiro.getDataViagem()));
+            poltronasVendidas = new VendaDAO().getPoltronasCompradas(dadosDaViagemEscolhida.getIdViagem(), Date.valueOf(dadosDoPassageiro.getDataViagem()));
             configurarGridPane();
 
             abrirTelaPopUp("FXMLPopUpSelecionarAssentosPassageiro");
