@@ -30,8 +30,8 @@ import javafx.stage.Stage;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
@@ -152,7 +152,7 @@ public class FXMLVendaScreenController implements Initializable {
         if(dadosDaViagemEscolhida != null && textFieldDataViagemPesquisa.getText() != null) {
             dadosDoPassageiro.setDataViagem(LocalDate.parse(textFieldDataViagemPesquisa.getText(), format));
 
-            poltronasVendidas = new PassageiroDAO().getPoltronasComprada(dadosDaViagemEscolhida.getIdViagem());
+            poltronasVendidas = new PassageiroDAO().getPoltronasCompradas(dadosDaViagemEscolhida.getIdViagem(), Date.valueOf(dadosDoPassageiro.getDataViagem()));
             configurarGridPane();
 
             abrirTelaPopUp("FXMLPopUpSelecionarAssentosPassageiro");
@@ -227,7 +227,7 @@ public class FXMLVendaScreenController implements Initializable {
                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{"Sim", "Não"}, 0);
 
             if (opcao == 0) {
-                JOptionPane.showMessageDialog(null, "Troco: " + calc.getTroco());
+                JOptionPane.showMessageDialog(null, "Troco: R$ " + calc.getTroco());
 
                 finalizaVenda();
 
@@ -250,15 +250,11 @@ public class FXMLVendaScreenController implements Initializable {
      * Salva os dados no banco de dados e finaliza de fato a venda
      */
     void finalizaVenda() {
-        // Salva o passageiro como pessoa
-        pessoaDAO.save(dadosDoPassageiro);
 
-        // Pega o id da ultima pessoa salva
-        dadosDoPassageiro.setIdPessoa(pessoaDAO.getIdUltimaPessoa());
         passageiroDAO.save(dadosDoPassageiro);
 
         // Pega o id do ultimo passageiro salvo
-        vendaDAO.getIdUltimoPassageiro(dadosDaVenda);
+        dadosDaVenda.setIdPassageiro(dadosDoPassageiro.getIdPassageiro());
         vendaDAO.save(dadosDaVenda);
     }
 
@@ -278,8 +274,6 @@ public class FXMLVendaScreenController implements Initializable {
             JOptionPane.showMessageDialog(null, "O CPF informado é inválido");
 
         dadosDoPassageiro.setIdViagem(dadosDaViagemEscolhida.getIdViagem());
-        dadosDoPassageiro.setEmail(" ");
-        dadosDoPassageiro.setTelefone(" ");
         dadosDoPassageiro.setOrigem(dadosDaViagemEscolhida.getOrigem());
         dadosDoPassageiro.setDestino(dadosDaViagemEscolhida.getDestino());
 

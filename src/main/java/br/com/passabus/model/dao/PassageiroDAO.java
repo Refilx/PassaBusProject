@@ -26,7 +26,7 @@ public class PassageiroDAO {
 
     // create
     public void save(Passageiro passageiro) {
-        String sql = "INSERT INTO passageiro (idPessoa, idViagem, poltrona, origem, destino, dataviagem) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO passageiro (nome, CPF, dtNascimento, poltrona, origem, destino, dataviagem, idViagem) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         Connection conn = null;
         PreparedStatement pstm = null;
         ResultSet rs = null;
@@ -35,12 +35,14 @@ public class PassageiroDAO {
             conn = ConnectionFactory.createConnectionToMySQL();
             pstm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            pstm.setInt(1, passageiro.getIdPessoa());
-            pstm.setInt(2, passageiro.getIdViagem());
-            pstm.setInt(3, passageiro.getPoltrona());
-            pstm.setString(4, passageiro.getOrigem());
-            pstm.setString(5, passageiro.getDestino());
-            pstm.setDate(6, Date.valueOf(passageiro.getDataViagem()));
+            pstm.setString(1, passageiro.getNome());
+            pstm.setString(2, passageiro.getCPF());
+            pstm.setDate(3, Date.valueOf(passageiro.getDtNascimento()));
+            pstm.setInt(4, passageiro.getPoltrona());
+            pstm.setString(5, passageiro.getOrigem());
+            pstm.setString(6, passageiro.getDestino());
+            pstm.setDate(7, Date.valueOf(passageiro.getDataViagem()));
+            pstm.setInt(8, passageiro.getIdViagem());
 
             pstm.executeUpdate();
 
@@ -49,8 +51,6 @@ public class PassageiroDAO {
             if (rs.next()) {
                 passageiro.setIdPassageiro(rs.getInt(1));
             }
-
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -82,12 +82,14 @@ public class PassageiroDAO {
             while (rset.next()) {
                 Passageiro passageiro = new Passageiro();
                 passageiro.setIdPassageiro(rset.getInt("idPassageiro"));
-                passageiro.setIdPessoa(rset.getInt("idPessoa"));
-                passageiro.setIdViagem(rset.getInt("idViagem"));
+                passageiro.setNome(rset.getString("nome"));
+                passageiro.setCPF(rset.getString("CPF"));
+                passageiro.setDtNascimento(rset.getDate("dtNascimento").toLocalDate());
                 passageiro.setPoltrona(rset.getInt("poltrona"));
                 passageiro.setOrigem(rset.getString("origem"));
                 passageiro.setDestino(rset.getString("destino"));
                 passageiro.setDataViagem(rset.getDate("dataviagem").toLocalDate());
+                passageiro.setIdViagem(rset.getInt("idViagem"));
 
                 passageiros.add(passageiro);
             }
@@ -112,9 +114,9 @@ public class PassageiroDAO {
      * @return LinkedList contendo os números das poltronas compradas
      * @author Bruno Sousa
      */
-    public LinkedList<Integer> getPoltronasComprada(int idViagem) {
+    public LinkedList<Integer> getPoltronasCompradas(int idViagem, Date dataviagem) {
 
-        String sql = "SELECT poltrona FROM passageiro WHERE idViagem = ?";
+        String sql = "SELECT poltrona FROM passageiro WHERE idViagem = ? AND dataviagem = ?";
 
         LinkedList<Integer> listaPoltronasCompradas = new LinkedList<>();
 
@@ -128,6 +130,7 @@ public class PassageiroDAO {
             pstm = conn.prepareStatement(sql);
 
             pstm.setInt(1, idViagem);
+            pstm.setDate(2, dataviagem);
 
             rset = pstm.executeQuery();
 
@@ -157,7 +160,7 @@ public class PassageiroDAO {
 
     // update
     public void update(Passageiro passageiro) {
-        String sql = "UPDATE passageiro SET idViagem = ?, poltrona = ?, origem = ?, destino = ?, dataviagem = ? WHERE idPassageiro = ?";
+        String sql = "UPDATE passageiro SET idViagem = ?, nome = ?, CPF = ?, dtNascimento = ?, poltrona = ?, origem = ?, destino = ?, dataviagem = ? WHERE idPassageiro = ?";
         Connection conn = null;
         PreparedStatement pstm = null;
 
@@ -166,11 +169,14 @@ public class PassageiroDAO {
             pstm = conn.prepareStatement(sql);
 
             pstm.setInt(1, passageiro.getIdViagem());
-            pstm.setInt(2, passageiro.getPoltrona());
-            pstm.setString(3, passageiro.getOrigem());
-            pstm.setString(4, passageiro.getDestino());
-            pstm.setDate(5, Date.valueOf(passageiro.getDataViagem()));
-            pstm.setInt(6, passageiro.getIdPassageiro());
+            pstm.setString(2, passageiro.getNome());
+            pstm.setString(3, passageiro.getCPF());
+            pstm.setDate(4, Date.valueOf(passageiro.getDtNascimento()));
+            pstm.setInt(5, passageiro.getPoltrona());
+            pstm.setString(6, passageiro.getOrigem());
+            pstm.setString(7, passageiro.getDestino());
+            pstm.setDate(8, Date.valueOf(passageiro.getDataViagem()));
+            pstm.setInt(9, passageiro.getIdPassageiro());
 
             int rowsUpdated = pstm.executeUpdate();
             if (rowsUpdated > 0) {

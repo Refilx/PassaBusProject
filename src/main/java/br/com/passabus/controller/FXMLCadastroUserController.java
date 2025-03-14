@@ -131,7 +131,6 @@ public class FXMLCadastroUserController {
 
                     pessoaDAO.save(usuario);
 
-                    usuario.setIdPessoa(pessoaDAO.getIdUltimaPessoa());
                     usuarioDAO.save(usuario);
 
                     textFieldNome.setText(null);

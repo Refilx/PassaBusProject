@@ -35,14 +35,13 @@ public class PessoaDAO {
 
         Connection conn = null;
         PreparedStatement pstm = null;
+        ResultSet rset = null;
 
         try{
 
             conn = ConnectionFactory.createConnectionToMySQL();
 
-
             pstm = conn.prepareStatement(sql);
-
 
             pstm.setString(1, pessoa.getNome());
             pstm.setString(2, pessoa.getCPF());
@@ -50,8 +49,13 @@ public class PessoaDAO {
             pstm.setDate(4, Date.valueOf(pessoa.getDtNascimento()));
             pstm.setString(5, pessoa.getEmail());
 
+            pstm.executeQuery();
 
-            pstm.execute();
+            // recuperar o id gerado automaticamente
+            rset = pstm.getGeneratedKeys();
+            if(rset.next()) {
+                pessoa.setIdPessoa(rset.getInt(1));
+            }
 
         }catch(Exception e){
             e.printStackTrace();
@@ -71,47 +75,6 @@ public class PessoaDAO {
             }
         }
     }
-
-    public int getIdUltimaPessoa() {
-        String sql = "SELECT idPessoa FROM pessoa ORDER BY idPessoa DESC limit 1";
-
-        int idPessoa = -1;
-
-        Connection conn = null;
-        PreparedStatement pstm = null;
-        ResultSet rset = null;
-
-        try {
-            conn = ConnectionFactory.createConnectionToMySQL();
-
-            pstm = conn.prepareStatement(sql);
-
-            rset = pstm.executeQuery();
-
-            rset.next();
-
-            idPessoa = rset.getInt("idPessoa");
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            try {
-                if(conn != null)
-                    conn.close();
-
-                if(pstm != null)
-                    pstm.close();
-
-                if(rset != null)
-                    rset.close();
-
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return idPessoa;
-    }
-
 
     //read
     public List<Pessoa> getPessoa(){

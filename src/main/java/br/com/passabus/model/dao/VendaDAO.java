@@ -67,44 +67,6 @@ public class VendaDAO {
         }
     }
 
-    public void getIdUltimoPassageiro(Venda venda) {
-        String sql = "SELECT idPassageiro FROM passageiro ORDER BY idPassageiro DESC limit 1";
-
-        Connection conn = null;
-        PreparedStatement pstm = null;
-        ResultSet rset = null;
-
-        try {
-            conn = ConnectionFactory.createConnectionToMySQL();
-
-            pstm = conn.prepareStatement(sql);
-
-            rset = pstm.executeQuery();
-
-            rset.next();
-
-            venda.setIdPassageiro(rset.getInt("idPassageiro"));
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            try {
-                if(conn != null)
-                    conn.close();
-
-                if(pstm != null)
-                    pstm.close();
-
-                if(rset != null)
-                    rset.close();
-
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-
     public LinkedList<Venda> getVendas() {
         String sql = "SELECT * FROM venda";
         LinkedList<Venda> vendas = new LinkedList<>();
@@ -155,9 +117,8 @@ public class VendaDAO {
     }
 
     public void getVendaParaCancelar(Passageiro p, Viagem v, Venda vd, long bilhete) {
-        String sql = "SELECT PE.nome, P.*, V.*, VD.opcaoPagamento, VD.valorTotal FROM venda VD\n" +
+        String sql = "SELECT P.*, V.*, VD.opcaoPagamento, VD.valorTotal FROM venda VD\n" +
                 "JOIN passageiro P ON (VD.idPassageiro = P.idPassageiro)\n" +
-                "JOIN pessoa PE ON (P.idPessoa = PE.idPessoa)\n" +
                 "JOIN viagem V ON (VD.idViagem = V.idViagem)\n" +
                 "WHERE bilhete = ?;";
 
