@@ -9,12 +9,15 @@ import br.com.passabus.model.dao.VerifyDAO;
 import br.com.passabus.model.util.CaseTextFormatter;
 import br.com.passabus.model.validator.LoginValidator;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -26,7 +29,7 @@ import javafx.stage.Stage;
 public class FXMLLoginScreenController implements Initializable {
 
     @FXML
-    private AnchorPane AnchorPane;
+    private AnchorPane loginScreen;
     @FXML
     private VBox VBoxFields;
     @FXML
@@ -51,6 +54,17 @@ public class FXMLLoginScreenController implements Initializable {
     private Pane topPane;
     @FXML
     private Label usernameLabel;
+
+    // ------- RECOVER PASSWORD SCREEN -------
+
+    @FXML
+    private Button btnRecuperar;
+
+    @FXML
+    private Button btnVoltar;
+
+    @FXML
+    private TextField textFieldEmailToRecoverPassword;
     
     @Override
     public void initialize(URL location, ResourceBundle resourses) {
@@ -81,14 +95,39 @@ public class FXMLLoginScreenController implements Initializable {
         }
     }
 
+    // --------- NAVEGAÇÃO ENTRE TELAS DE RECUPERAÇÃO E LOGIN ----------
     @FXML
-    public void btnEntrarOnMouseEntered(MouseEvent event) {
-
+    private void getLoginScreen(MouseEvent event) throws IOException {
+        loadPage("FXMLLoginScreen");
     }
 
     @FXML
-    public void btnEntrarOnMouseExited(MouseEvent event) {
+    private void getEmailToRecoverPasswordScreen(MouseEvent event) throws IOException {
+        loadPage("FXMLEmailToRecoverPasswordScreen");
+    }
+
+    @FXML
+    private void getEnterRecoveryCodeScreen(MouseEvent event) throws IOException {
+        loadPage("FXMLEnterRecoveryCodeScreen");
+    }
+
+    @FXML
+    private void getEnterNewPasswordScreen(MouseEvent event) throws IOException {
+        loadPage("FXMLEnterNewPasswordScreen");
+    }
+
+    public void loadPage(String page) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/br/com/passabus/view/screens/"+page+".fxml"));
+        Parent root = fxmlLoader.load();
+
+        borderPane.setCenter(root);
+    }
+
+    // ------- RECOVER PASSWORD SCREEN -------
+    @FXML
+    void btnRecuperarOnMouseClicked(MouseEvent event) {
 
     }
+
 }
 
