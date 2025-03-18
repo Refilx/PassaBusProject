@@ -194,7 +194,7 @@ public class FXMLLoginScreenController implements Initializable {
     // -----------------------BOTÃO DA TELA REDEFINIÇÃO DE SENHA-----------------------
     @FXML
     void btnSalvarNovaSenhaOnMouseClicked(MouseEvent event) throws IOException {
-        if(pfNovaSenha.equals(pfConfirmNovaSenha)) {
+        if(pfNovaSenha.getText().equals(pfConfirmNovaSenha.getText())) {
             dadosDoUsuario.setPassword(pfNovaSenha.getText());
             UsuarioDAO.updateSenhaDoUsuario(dadosDoUsuario);
             getLoginScreen(null);
