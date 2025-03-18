@@ -5,8 +5,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import br.com.passabus.model.aplication.FXMLLoginScreenAplication;
+import br.com.passabus.model.dao.UsuarioDAO;
 import br.com.passabus.model.dao.VerifyDAO;
+import br.com.passabus.model.domain.Usuario;
 import br.com.passabus.model.util.CaseTextFormatter;
+import br.com.passabus.model.util.Email;
+import br.com.passabus.model.util.TextFieldFormatter;
+import br.com.passabus.model.validator.EmailValidator;
 import br.com.passabus.model.validator.LoginValidator;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,6 +30,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import javax.swing.*;
 
 /**
  * Classe Controladora da tela de login e das telas de recuperação de senha
@@ -60,6 +67,9 @@ public class FXMLLoginScreenController implements Initializable {
     @FXML
     private Label usernameLabel;
 
+    private Email email = new Email();
+    private static Usuario dadosDoUsuario = new Usuario();
+    private static String codigoEnviado;
 
     // -----------------------TELA INSERÇÃO DO EMAIL DE RECUPERAÇÃO-----------------------
     @FXML
@@ -141,29 +151,69 @@ public class FXMLLoginScreenController implements Initializable {
 
     // -----------------------BOTÃO DA TELA EMAIL DE RECUPERAÇÃO-----------------------
     @FXML
-    void btnRecuperarOnMouseClicked(MouseEvent event) {
+    void btnRecuperarOnMouseClicked(MouseEvent event) throws IOException {
 
+        // Verifica se o e-mail digitado é válido
+        if(EmailValidator.isValidEmail(textFieldEmailToRecoverPassword.getText())) {
+
+            // Verifica se o e-mail digitado está cadastrado no banco de dados
+            if(VerifyDAO.verifyEmail(textFieldEmailToRecoverPassword.getText())) {
+
+                // Armazenando o email do usuário e buscando o ID desse usuário no banco de dados e guardando nos dados do usuário
+                dadosDoUsuario.setEmail(textFieldEmailToRecoverPassword.getText());
+                UsuarioDAO.getIdUsuarioByEmail(dadosDoUsuario);
+
+                // Enviando email com o cógido de recuperação de senha para o e-mail do usuário
+                email.sendMailTo(textFieldEmailToRecoverPassword.getText());
+                codigoEnviado = email.getRecoveryCode(); //Guardo o código de recuperação enviado
+                getEnterRecoveryCodeScreen(null); // Chamando a tela de inserção do código de recuperação
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "O CPF digitado é inválido\nPor favor, digite um CPF válido/correto!",
+                        "Erro tentar realizar cadastro", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "O CPF digitado é inválido\nPor favor, digite um CPF válido/correto!",
+                    "Erro tentar realizar cadastro", JOptionPane.WARNING_MESSAGE);
+        }
     }
 
     // -----------------------BOTÃO DA TELA CÓDIGO DE RECUPERAÇÃO-----------------------
     @FXML
-    void btnConfirmarRecoveryCodeOnMouseClicked(MouseEvent event) {
-
+    void btnConfirmarRecoveryCodeOnMouseClicked(MouseEvent event) throws IOException {
+        if(codigoEnviado.equals(tfRecoveryCode.getText())) {
+            getEnterNewPasswordScreen(null);
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "O código digitado é diferente do enviado!\nDigite o código enviado corretamente",
+                    "Código digitado errado!", JOptionPane.WARNING_MESSAGE);
+        }
     }
 
     // -----------------------BOTÃO DA TELA REDEFINIÇÃO DE SENHA-----------------------
     @FXML
-    void btnSalvarNovaSenhaOnMouseClicked(MouseEvent event) {
-
+    void btnSalvarNovaSenhaOnMouseClicked(MouseEvent event) throws IOException {
+        if(pfNovaSenha.equals(pfConfirmNovaSenha)) {
+            dadosDoUsuario.setPassword(pfNovaSenha.getText());
+            UsuarioDAO.updateSenhaDoUsuario(dadosDoUsuario);
+            getLoginScreen(null);
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "As senhas estão diferentes!\nOs campos precisam estar com senhas iguais",
+                    "Erro tentar realizar atualizar senhas", JOptionPane.WARNING_MESSAGE);
+            pfNovaSenha.setText(null);
+            pfConfirmNovaSenha.setText(null);
+        }
     }
-
-    // -----------------------MASCARA DO CAMPO DA TELA EMAIL DE RECUPERAÇÃO-----------------------
-
 
     // -----------------------MASCARA DO CAMPO DA TELA CÓDIGO DE RECUPERAÇÃO-----------------------
     @FXML
     void tfRecoveryCodeOnKeyReleased(KeyEvent event) {
-
+        TextFieldFormatter tff = new TextFieldFormatter();
+        tff.setMask("****-****-****");
+        tff.setTf(tfRecoveryCode);
+        tff.formatter();
     }
 
 }
