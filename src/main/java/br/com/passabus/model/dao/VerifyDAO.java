@@ -351,4 +351,52 @@ public class VerifyDAO {
         return resultVerify;
     }
 
+
+    /**
+     * Verifica se o email passado por parâmetro existe no banco de dados
+     * @param email
+     * @return true (se existir no banco) e false (se NÃO existir no banco)
+     */
+    public static boolean verifyEmail(String email) {
+        String sql = "SELECT email FROM pessoa WHERE email = ?";
+
+        boolean resultVerify = false;
+
+        Connection conn =  null;
+        PreparedStatement pstm = null;
+        ResultSet rset = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySQL();
+
+            pstm = conn.prepareStatement(sql);
+
+            pstm.setString(1, email);
+
+            rset = pstm.executeQuery();
+
+            if(rset.next()) {
+                resultVerify = true;
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if(conn != null)
+                    conn.close();
+
+                if(pstm != null)
+                    pstm.close();
+
+                if(rset != null)
+                    rset.close();
+
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return resultVerify;
+    }
+
 }
