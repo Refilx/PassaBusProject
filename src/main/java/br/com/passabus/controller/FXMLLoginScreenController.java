@@ -17,8 +17,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -26,8 +26,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * Classe Controladora da tela de login e das telas de recuperação de senha
+ * @author Bruno Sousa da Silva
+ */
 public class FXMLLoginScreenController implements Initializable {
 
+    // -----------------------TELA PRINCIPAL DE LOGIN-----------------------
     @FXML
     private AnchorPane loginScreen;
     @FXML
@@ -55,22 +60,31 @@ public class FXMLLoginScreenController implements Initializable {
     @FXML
     private Label usernameLabel;
 
-    // ------- RECOVER PASSWORD SCREEN -------
 
+    // -----------------------TELA INSERÇÃO DO EMAIL DE RECUPERAÇÃO-----------------------
     @FXML
     private Button btnRecuperar;
-
     @FXML
-    private Button btnVoltar;
-
+    private Button btnCancelar;
     @FXML
     private TextField textFieldEmailToRecoverPassword;
-    
+
+    // -----------------------TELA INSERÇÃO DO CÓDIGO DE RECUPERAÇÃO-----------------------
+    @FXML
+    private TextField tfRecoveryCode;
+
+    // -----------------------TELA DE REDEFINIÇÃO DE SENHA-----------------------
+    @FXML
+    private PasswordField pfConfirmNovaSenha;
+    @FXML
+    private PasswordField pfNovaSenha;
+
+    // -----------------------INICIALIZE E BOTÃO DA TELA DE LOGIN-----------------------
     @Override
     public void initialize(URL location, ResourceBundle resourses) {
         CaseTextFormatter.applyLowerCase(textFieldUsername);
     }
-    
+
     @FXML
     private void btnEntrarOnMouseClicked(MouseEvent event) throws IOException {
         //Pegamos o conteúdo do campo username da tela de login e armazenamos na variável user
@@ -94,6 +108,8 @@ public class FXMLLoginScreenController implements Initializable {
             }
         }
     }
+
+
 
     // --------- NAVEGAÇÃO ENTRE TELAS DE RECUPERAÇÃO E LOGIN ----------
     @FXML
@@ -123,9 +139,30 @@ public class FXMLLoginScreenController implements Initializable {
         borderPane.setCenter(root);
     }
 
-    // ------- RECOVER PASSWORD SCREEN -------
+    // -----------------------BOTÃO DA TELA EMAIL DE RECUPERAÇÃO-----------------------
     @FXML
     void btnRecuperarOnMouseClicked(MouseEvent event) {
+
+    }
+
+    // -----------------------BOTÃO DA TELA CÓDIGO DE RECUPERAÇÃO-----------------------
+    @FXML
+    void btnConfirmarRecoveryCodeOnMouseClicked(MouseEvent event) {
+
+    }
+
+    // -----------------------BOTÃO DA TELA REDEFINIÇÃO DE SENHA-----------------------
+    @FXML
+    void btnSalvarNovaSenhaOnMouseClicked(MouseEvent event) {
+
+    }
+
+    // -----------------------MASCARA DO CAMPO DA TELA EMAIL DE RECUPERAÇÃO-----------------------
+
+
+    // -----------------------MASCARA DO CAMPO DA TELA CÓDIGO DE RECUPERAÇÃO-----------------------
+    @FXML
+    void tfRecoveryCodeOnKeyReleased(KeyEvent event) {
 
     }
 

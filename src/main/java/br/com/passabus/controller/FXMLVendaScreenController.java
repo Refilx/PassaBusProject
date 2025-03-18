@@ -99,7 +99,7 @@ public class FXMLVendaScreenController implements Initializable {
     private static boolean chamarTelaPopUp;
     private static LinkedList<Integer> poltronasVendidas = new LinkedList<>();
 
-    //-------------------------------------------------------
+    // -----------------------TELA POP UP PREENCHIMENTO DOS DADOS DO PASSAGEIRO-----------------------
     @FXML
     private Button btnFinalizarVendaCartao;
     @FXML
