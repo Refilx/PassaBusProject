@@ -7,9 +7,9 @@ import java.sql.PreparedStatement;
 import br.com.passabus.model.factory.ConnectionFactory;
 import org.jasypt.util.password.BasicPasswordEncryptor;
 
+import javax.swing.*;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -132,6 +132,102 @@ public class UsuarioDAO {
 
         return listaUsuario;
     }
+
+    /**
+     * Busco o id do usuário no banco de dados usando o email para buscá-lo
+     * @param usuario
+     * @return usuario contendo o Id do usuário específico com o e-mail especificado
+     * @author Bruno Sousa da Silva
+     */
+    public static void getIdUsuarioByEmail(Usuario usuario) {
+        String sql = "SELECT U.idUsuario, P.email FROM pessoa P\n" +
+                     "JOIN usuario U ON (P.idPessoa = U.idPessoa)\n" +
+                     "WHERE email = ?";
+
+        Connection conn =  null;
+        PreparedStatement pstm = null;
+        ResultSet rset = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySQL();
+
+            pstm = conn.prepareStatement(sql);
+
+            pstm.setString(1, usuario.getEmail());
+
+            rset = pstm.executeQuery();
+
+            if(rset.next()) {
+                usuario.setIdUsuario(rset.getInt("idUsuario"));
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if(conn != null)
+                    conn.close();
+
+                if(pstm != null)
+                    pstm.close();
+
+                if(rset != null)
+                    rset.close();
+
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+
+    /**
+     * Atualiza a senha do usuário específico após o processo de redefinição de senha
+     * @param usuario
+     * @author Bruno Sousa da Silva
+     */
+    public static void updateSenhaDoUsuario(Usuario usuario) {
+        String sql = "UPDATE usuario SET password = ?\n" +
+                     "WHERE idUsuario = ?";
+
+        Connection conn =  null;
+        PreparedStatement pstm = null;
+        ResultSet rset = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySQL();
+
+            pstm = conn.prepareStatement(sql);
+
+            pstm.setString(1, usuario.getPassword());
+            pstm.setInt(2, usuario.getIdUsuario());
+
+            int rowsUpdated = pstm.executeUpdate();
+            if (rowsUpdated > 0) {
+                JOptionPane.showMessageDialog(null, "Senha Atualizada com Sucesso!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao realizar a atualização da senha!");
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (conn != null)
+                    conn.close();
+
+                if (pstm != null)
+                    pstm.close();
+
+                if (rset != null)
+                    rset.close();
+
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
 
     public void update(Usuario usuario){
 
