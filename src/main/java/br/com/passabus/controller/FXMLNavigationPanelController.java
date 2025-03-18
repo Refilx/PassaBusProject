@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import br.com.passabus.model.aplication.FXMLLoginScreenAplication;
 import br.com.passabus.model.dao.LogDAO;
+import br.com.passabus.model.dao.VendaDAO;
 import br.com.passabus.model.domain.Log;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,9 +16,12 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import javax.swing.*;
@@ -32,6 +36,8 @@ public class FXMLNavigationPanelController implements Initializable {
     private Button btnSair;
     @FXML
     private AnchorPane dashboardScreen;
+    @FXML
+    private Circle imgCircle;
     @FXML
     private Label labelRole;
     @FXML
@@ -106,6 +112,12 @@ public class FXMLNavigationPanelController implements Initializable {
 
         labelRole.setText(usuarioLogado.getRole());
         labelUsername.setText(usuarioLogado.getUsername());
+
+        textFieldQuantidadeVendidaMes.setText(""+VendaDAO.quantidadeVendida());
+        textFieldDestinoPopular.setText(VendaDAO.destinoPopular());
+
+        Image img = new Image(getClass().getResource("/br/com/passabus/view/imgs/heliozao.png").toExternalForm(), false);
+        imgCircle.setFill(new ImagePattern(img));
     }
     
 }

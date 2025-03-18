@@ -35,7 +35,7 @@
                         <Font name="Arial" size="20.0" />
                      </font>
                   </Label>
-                  <Circle fill="DODGERBLUE" layoutX="53.0" layoutY="49.0" radius="39.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+                  <Circle fx:id="imgCircle" fill="DODGERBLUE" layoutX="53.0" layoutY="49.0" radius="39.0" stroke="TRANSPARENT" strokeType="INSIDE" />
                </children>
             </Pane>
             <ImageView fitHeight="80.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
@@ -241,6 +241,9 @@
                      <font>
                         <Font name="Arial Bold" size="30.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
                   </TextField>
                </children>
             </Pane>
@@ -258,6 +261,9 @@
                      <font>
                         <Font name="Arial Bold" size="20.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
                   </TextField>
                </children>
             </Pane>
