@@ -152,7 +152,7 @@ public class VerifyDAO {
      */
     public boolean verifyCPF(String cpf) {
 
-        String sql = "SELECT cpf FROM pessoa";
+        String sql = "SELECT CPF FROM pessoa";
 
         //
         boolean resultadoVerify = true;
@@ -303,6 +303,52 @@ public class VerifyDAO {
             }
         }
         return resultadoValidacao;
+    }
+
+    /**
+     * Verifica se o bilhete informado foi vendido e está em vigor
+     * @return true (se houver um bilhete igual e 'EM VIGOR' no banco) e false (se NÃO houver um bilhete igual e 'EM VIGOR' no banco)
+     */
+    public static boolean verifyBilhete(long bilhete) {
+
+        String sql = "SELECT bilhete FROM venda WHERE status = 'EM VIGOR' AND bilhete = ?";
+
+        boolean resultVerify = false;
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rset = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySQL();
+
+            pstm = conn.prepareStatement(sql);
+            pstm.setLong(1, bilhete);
+
+            rset = pstm.executeQuery();
+
+            if(rset.next()) {
+                resultVerify = true;
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if(conn != null)
+                    conn.close();
+
+                if(pstm != null)
+                    pstm.close();
+
+                if(rset != null)
+                    rset.close();
+
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return resultVerify;
     }
 
 }

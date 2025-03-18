@@ -22,7 +22,7 @@
                      <children>
                         <TextField fx:id="textFieldBilhete" onKeyReleased="#textFieldBilheteOnKeyReleased" prefHeight="46.0" prefWidth="327.0" style="-fx-background-radius: 10;">
                            <font>
-                              <Font name="Arial" size="15.0" />
+                              <Font name="Arial" size="20.0" />
                            </font>
                            <cursor>
                               <Cursor fx:constant="TEXT" />
