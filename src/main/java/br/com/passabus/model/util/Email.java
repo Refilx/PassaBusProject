@@ -8,14 +8,16 @@ import java.util.UUID;
 
 public class Email {
 
+    private String recoveryCode;
+
     public void sendMailTo(String destinatario) {
         // Dependências necessárias: commons-email-1.5 e mail-1.6.2
 
         String[] code = generateUniqueCode().split("-");
-        String recoverycode = code[1]+"-"+code[2]+"-"+code[3];
+        recoveryCode = code[1]+"-"+code[2]+"-"+code[3];
 
         String msg = "Recebemos uma solicitação para recuperar a senha da sua conta.\n" +
-                "Favor usar o código %s somente válido enquanto a tela de inserção do código estiver aberta.\n".formatted(recoverycode) +
+                "Favor usar o código %s somente válido enquanto a tela de inserção do código estiver aberta.\n".formatted(recoveryCode) +
                 "Se você não solicitou a recuperação da sua senha, favor ignorar essa mensagem.\n\n" +
                 "---------------\n" +
                 "PassaBus Administration";
@@ -48,5 +50,9 @@ public class Email {
     public static String generateUniqueCode() {
         UUID uniqueKey = UUID.randomUUID(); // Gera um UUID aleatório
         return uniqueKey.toString(); // Retorna o código como uma string
+    }
+
+    public String getRecoveryCode() {
+        return recoveryCode;
     }
 }
