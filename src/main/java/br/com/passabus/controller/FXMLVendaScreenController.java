@@ -1,12 +1,12 @@
 package br.com.passabus.controller;
 
 import br.com.passabus.model.dao.PassageiroDAO;
-import br.com.passabus.model.dao.PessoaDAO;
 import br.com.passabus.model.dao.VendaDAO;
 import br.com.passabus.model.dao.ViagemDAO;
 import br.com.passabus.model.domain.Passageiro;
 import br.com.passabus.model.domain.Venda;
 import br.com.passabus.model.domain.Viagem;
+import br.com.passabus.model.factory.ConnectionFactory;
 import br.com.passabus.model.util.CalculadoraPassagem;
 import br.com.passabus.model.util.CaseTextFormatter;
 import br.com.passabus.model.validator.CPFValidator;
@@ -27,17 +27,22 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class FXMLVendaScreenController implements Initializable {
 
@@ -126,7 +131,7 @@ public class FXMLVendaScreenController implements Initializable {
     }
 
     @FXML
-    void btnPesquisarViagemOnMouseClicked(MouseEvent event) {
+    void btnPesquisarViagemOnMouseClicked(MouseEvent event) throws Exception {
         String origem = textFieldOrigemViagemPesquisa.getText();
         String destino = textFieldDestinoViagemPesquisa.getText();
 
@@ -138,7 +143,6 @@ public class FXMLVendaScreenController implements Initializable {
         }
         else
             JOptionPane.showMessageDialog(null, "Preencha o campo da Data da Viagem corretanebte, por favor");
-
     }
 
     @FXML
@@ -199,7 +203,7 @@ public class FXMLVendaScreenController implements Initializable {
 
     // -----------------------BOTÕES DA TELA POP UP DE DADOS DO PASSAGEIRO-----------------------
     @FXML
-    void btnFinalizarVendaCartaoMouseClicked(MouseEvent event) {
+    void btnFinalizarVendaCartaoMouseClicked(MouseEvent event) throws Exception {
         dadosFinaisDaVenda();
 
         if(CartaoValidator.validarCartaoCredito(textFieldNumCartao.getText())) {
@@ -221,7 +225,7 @@ public class FXMLVendaScreenController implements Initializable {
     }
 
     @FXML
-    void btnFinalizarVendaDinheiroMouseClicked(MouseEvent event) {
+    void btnFinalizarVendaDinheiroMouseClicked(MouseEvent event) throws Exception {
         dadosFinaisDaVenda();
 
         if(!textFieldValorPago.getText().isEmpty() && calc.calculaTroco(Double.parseDouble(textFieldValorPago.getText()))) {
@@ -243,21 +247,23 @@ public class FXMLVendaScreenController implements Initializable {
 
     @FXML
     void tapDinheiroOnSelectionChanged(Event event) {
-        textFieldValorTotal.setText("R$ "+calc.getPrecoTotal());
+        textFieldValorTotal.setText("R$ %.2f".formatted(calc.getPrecoTotal()));
     }
 
     // -----------------------MÉTODOS DE CONFIGURAÇÃO/AUXILIAR AS TELAS DE VENDAS-----------------------
 
     /**
-     * Salva os dados no banco de dados e finaliza de fato a venda
+     * Salva os dados no banco de dados e finaliza de fato a venda e chama a impressão da passagem
      */
-    void finalizaVenda() {
+    void finalizaVenda() throws Exception {
 
         passageiroDAO.save(dadosDoPassageiro);
 
         // Pega o id do ultimo passageiro salvo
         dadosDaVenda.setIdPassageiro(dadosDoPassageiro.getIdPassageiro());
         vendaDAO.save(dadosDaVenda);
+
+        imprimirPassagem();
     }
 
     /**
@@ -288,6 +294,45 @@ public class FXMLVendaScreenController implements Initializable {
         dadosDaVenda.setValorTotal(calc.getPrecoTotal());
         dadosDaVenda.setOpcaoPagamento(tapPane.getSelectionModel().getSelectedItem().getText());
         dadosDaVenda.setStatus("EM VIGOR");
+    }
+
+    void imprimirPassagem() throws Exception {
+
+        // Trabalhamos com uma URL para poder definir o local onde se encontra o .jasper
+//        URL url = getClass().getResource("/br/com/passabus/relatorios/JAVAFXFXMLRelatórioPassagem.jasper");
+
+//         Caminho do arquivo de imagem dentro do classpath
+        InputStream logoStream = getClass().getResourceAsStream("/br/com/passabus/view/imgs/logo.png");
+        InputStream mainStream = getClass().getResourceAsStream("/br/com/passabus/view/imgs/mainbus.png");
+
+        if (logoStream == null) {
+            throw new RuntimeException("Imagem não encontrada: logo.png");
+        }
+
+        // Criamos um mapa de parâmetros para passar ao relatório
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("logo", logoStream); // Passa a imagem como parâmetro
+        parameters.put("mainbus", mainStream);
+
+
+        InputStream jasperStream = getClass().getResourceAsStream("/br/com/passabus/relatorios/JAVAFXFXMLRelatórioPassagem.jasper");
+
+        if (jasperStream == null) {
+            throw new JRException("Arquivo do relatório não encontrado!");
+        }
+
+
+        // O objeto JasperReport serve para carregar o arquivo do relatório.jarper
+        JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
+
+        // JasperPrint irá buscar os valores que serão passados para a impressão no banco de dados
+        // null: caso não existam filtros
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, ConnectionFactory.createConnectionToMySQL());
+
+        // JasperViewer serve para poder exibir o relatório e carregá-lo em uma página visualizável
+        // false: serve para não deixar fechar a aplicação principal
+        JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
+        jasperViewer.setVisible(true);
     }
 
     /**
