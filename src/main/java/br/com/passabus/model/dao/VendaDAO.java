@@ -116,6 +116,84 @@ public class VendaDAO {
         return vendas;
     }
 
+    public static String destinoPopular() {
+        String sql = "SELECT destino FROM destinoPopular";
+
+        String destino = "";
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rset = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySQL();
+
+            pstm = conn.prepareStatement(sql);
+
+            rset = pstm.executeQuery();
+
+            while (rset.next()) {
+                destino = rset.getString("destino");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if(conn != null)
+                    conn.close();
+
+                if(pstm != null)
+                    pstm.close();
+
+                if(rset != null)
+                    rset.close();
+
+            }catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return destino;
+    }
+
+    public static int quantidadeVendida() {
+        String sql = "SELECT quantidadeVendida FROM quantidadeVendida";
+
+        int quantidadeVendida = 0;
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rset = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySQL();
+
+            pstm = conn.prepareStatement(sql);
+
+            rset = pstm.executeQuery();
+
+            while (rset.next()) {
+                quantidadeVendida = rset.getInt("quantidadeVendida");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if(conn != null)
+                    conn.close();
+
+                if(pstm != null)
+                    pstm.close();
+
+                if(rset != null)
+                    rset.close();
+
+            }catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return quantidadeVendida;
+    }
+
     /**
      * O método_ executa um select no banco de dados que busca as poltronas que já foram compradas para uma viagem específica
      * @param idViagem
