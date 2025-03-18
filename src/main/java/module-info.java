@@ -4,6 +4,9 @@ module br.com.passabus {
     requires java.desktop;
     requires java.sql;
     requires jasypt;
+    requires net.sf.jasperreports.core;
+    requires commons.email;
+    requires javax.mail;
 
 
     opens br.com.passabus.view.screens to javafx.fxml;
