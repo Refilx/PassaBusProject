@@ -32,12 +32,12 @@ public class ConnectionFactory {
     public static void main(String[] args) throws Exception {
 
         //Recuperar uma conexão com o banco de dados
-        Connection con = createConnectionToMySQL();
+        Connection conn = createConnectionToMySQL();
 
         //Testar se a conexão é nula
-        if(con!=null) {
+        if(conn != null) {
             System.out.println("Conexão Obtida com Sucesso!");
-            con.close();
+            conn.close();
         }
 
     }

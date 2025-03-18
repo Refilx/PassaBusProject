@@ -1,20 +1,55 @@
 package br.com.passabus.model.util;
 
+/**
+ * Classe que calcula todos os valores que envolvem a passagem, seja venda ou cancelamento
+ * @author Bruno Sousa da Silva
+ */
 public class CalculadoraPassagem {
 
-    private double tarifa;
-    private double custoPorKm;
-    private double seguro;
+    private final double tarifa = 5.00; // Tarifa fixa
+    private final double custoPorKm = 0.30; // Custo por quilômetro
+    private final double seguro = 2.00; // Custo por seguro do passageiro
+    private final double txCancelamento = 0.05; // A empresa pode cobrar até 5% do valor da passagem
     private double precoTotal;
     private double troco;
 
+    /**
+     * O método calcula o preço da passagem ao realizar uma venda
+     * @param distanciaKm
+     * @return preço total da passagem
+     */
     public double calcularPrecoPassagem(double distanciaKm) {
-        tarifa = 5.00; // Tarifa inicial fixa
-        custoPorKm = 0.30; // Custo por quilômetro
-        seguro = 2.0; // Custo por seguro do passageiro
+
         precoTotal = tarifa + seguro + (distanciaKm * custoPorKm);
 
         return precoTotal;
+    }
+
+    /**
+     * O método calcula o troco durante o processo de venda da passagem
+     * @param valorPago
+     * @return troco do passageiro
+     */
+    public boolean calculaTroco(double valorPago) {
+        if(valorPago >= this.precoTotal) {
+            this.troco = valorPago - this.precoTotal;
+            return true;
+        }
+        else
+            return false;
+    }
+
+    /**
+     * Calcula a preço a pagar para realizar o cancelamento da passagem
+     * @param precoPago
+     * @return preço para cancelar
+     */
+    public double calculaCancelamento(double precoPago) {
+        return (precoPago * txCancelamento);
+    }
+
+    public double getTxCancelamento() {
+        return txCancelamento;
     }
 
     public double getTarifa() {
@@ -35,15 +70,6 @@ public class CalculadoraPassagem {
 
     public double getTroco() {
         return troco;
-    }
-
-    public boolean calculaTroco(double valorPago) {
-        if(valorPago >= this.precoTotal) {
-            this.troco = valorPago - this.precoTotal;
-            return true;
-        }
-        else
-            return false;
     }
 
     public static void main(String[] args) {

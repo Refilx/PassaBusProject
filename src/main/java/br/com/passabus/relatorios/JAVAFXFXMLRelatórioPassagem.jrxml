@@ -1,0 +1,187 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<jasperReport name="JAVAFXFXMLRelatórioPassagem" language="java" columnCount="1" pageWidth="679" pageHeight="1255" columnWidth="679" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="6856055f-9235-4d6c-b41a-fce64f5abaee">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MySQL Adapter"/>
+	<parameter name="logo" class="java.io.InputStream"/>
+	<parameter name="mainbus" class="java.io.InputStream"/>
+	<query language="SQL"><![CDATA[SELECT P.nome as nomepassageiro, P.*, VI.*, VC.nome as nomeviacao, VC.*, VD.* FROM venda VD
+JOIN passageiro P ON (VD.idPassageiro = P.idPassageiro)
+JOIN viagem VI ON (VD.idViagem = VI.idViagem)
+JOIN viacao VC ON (VI.idViacao = VC.idViacao)
+ORDER BY idVenda DESC limit 1]]></query>
+	<field name="nomepassageiro" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nome"/>
+		<property name="com.jaspersoft.studio.field.label" value="nomepassageiro"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="passageiro"/>
+	</field>
+	<field name="CPF" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="CPF"/>
+		<property name="com.jaspersoft.studio.field.label" value="CPF"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="passageiro"/>
+	</field>
+	<field name="dtNascimento" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="dtNascimento"/>
+		<property name="com.jaspersoft.studio.field.label" value="dtNascimento"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="passageiro"/>
+	</field>
+	<field name="poltrona" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="poltrona"/>
+		<property name="com.jaspersoft.studio.field.label" value="poltrona"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="passageiro"/>
+	</field>
+	<field name="origem" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="origem"/>
+		<property name="com.jaspersoft.studio.field.label" value="origem"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="passageiro"/>
+	</field>
+	<field name="destino" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="destino"/>
+		<property name="com.jaspersoft.studio.field.label" value="destino"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="passageiro"/>
+	</field>
+	<field name="dataviagem" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="dataviagem"/>
+		<property name="com.jaspersoft.studio.field.label" value="dataviagem"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="passageiro"/>
+	</field>
+	<field name="distancia" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="distancia"/>
+		<property name="com.jaspersoft.studio.field.label" value="distancia"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="viagem"/>
+	</field>
+	<field name="linha" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="linha"/>
+		<property name="com.jaspersoft.studio.field.label" value="linha"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="viagem"/>
+	</field>
+	<field name="tipoViagem" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tipoViagem"/>
+		<property name="com.jaspersoft.studio.field.label" value="tipoViagem"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="viagem"/>
+	</field>
+	<field name="classe" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="classe"/>
+		<property name="com.jaspersoft.studio.field.label" value="classe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="viagem"/>
+	</field>
+	<field name="horario" class="java.sql.Time">
+		<property name="com.jaspersoft.studio.field.name" value="horario"/>
+		<property name="com.jaspersoft.studio.field.label" value="horario"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="viagem"/>
+	</field>
+	<field name="nomeviacao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nome"/>
+		<property name="com.jaspersoft.studio.field.label" value="nomeviacao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="viacao"/>
+	</field>
+	<field name="CNPJ" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="CNPJ"/>
+		<property name="com.jaspersoft.studio.field.label" value="CNPJ"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="viacao"/>
+	</field>
+	<field name="sede" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="sede"/>
+		<property name="com.jaspersoft.studio.field.label" value="sede"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="viacao"/>
+	</field>
+	<field name="tarifa" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="tarifa"/>
+		<property name="com.jaspersoft.studio.field.label" value="tarifa"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="venda"/>
+	</field>
+	<field name="seguro" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="seguro"/>
+		<property name="com.jaspersoft.studio.field.label" value="seguro"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="venda"/>
+	</field>
+	<field name="valorTotal" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="valorTotal"/>
+		<property name="com.jaspersoft.studio.field.label" value="valorTotal"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="venda"/>
+	</field>
+	<field name="dtVenda" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="dtVenda"/>
+		<property name="com.jaspersoft.studio.field.label" value="dtVenda"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="venda"/>
+	</field>
+	<field name="opcaoPagamento" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="opcaoPagamento"/>
+		<property name="com.jaspersoft.studio.field.label" value="opcaoPagamento"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="venda"/>
+	</field>
+	<field name="status" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="status"/>
+		<property name="com.jaspersoft.studio.field.label" value="status"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="venda"/>
+	</field>
+	<field name="bilhete" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="bilhete"/>
+		<property name="com.jaspersoft.studio.field.label" value="bilhete"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="venda"/>
+	</field>
+	<detail>
+		<band height="1255" splitType="Stretch">
+			<element kind="rectangle" uuid="d23beb7b-0b5a-4c0e-aef0-5fe5003299e6" x="6" y="158" width="678" height="2">
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<pen lineWidth="3.0"/>
+			</element>
+			<element kind="staticText" uuid="91c6b21e-4d75-4ea0-a04d-026d2d3408ac" x="6" y="164" width="678" height="70" fontName="Arial" fontSize="16.0" bold="true" hTextAlign="Center">
+				<text><![CDATA[Via do Cliente
+
+DOCUMENTO AUXILIAR DE BILHETE DE PASSAGEM ELETRÔNICO]]></text>
+			</element>
+			<element kind="rectangle" uuid="2821f634-4dcb-46c5-aba5-4ed9253895aa" x="9" y="227" width="678" height="2">
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<pen lineWidth="3.0"/>
+			</element>
+			<element kind="textField" uuid="9f7479da-6b30-45fa-9787-bdecd7e81fcf" x="22" y="240" width="659" height="419" fontName="Arial" fontSize="22.0">
+				<expression><![CDATA["Passageiro: " + $F{nomepassageiro}+
+"\nDocumento: " + $F{CPF}+
+"\nData de Nascimento: " + $F{dtNascimento}+
+"\nPoltrona: " + $F{poltrona}+
+"\n"+
+"\n"+
+"\nViação: " + $F{nomeviacao}+
+"\nCNPJ: " + $F{CNPJ}+
+"\nSede: "+$F{sede}+
+"\nOrigem: " + $F{origem}+
+"\nDestino: " + $F{destino}+
+"\nData da viagem: " +$F{dataviagem} +
+"\nHorário da viagem: " + $F{horario}+
+"\nLinha: " + $F{linha}+
+"\nClasse: " + $F{classe}+
+"\nTipo de Viagem: " + $F{tipoViagem}]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</element>
+			<element kind="textField" uuid="6d547ba5-0ac7-4726-9829-e802091d8f88" x="124" y="730" width="470" height="160" fontName="Arial" fontSize="22.0" hTextAlign="Justified">
+				<expression><![CDATA["Tarifa:  R$"+ $F{tarifa}+
+"\nSeguro:  R$"+ $F{seguro}+
+"\nDistancia da viagem (Km): " +$F{distancia} +
+"\nPreço por Km:  R$  0,30 " +
+"\nValor Total:  R$  " + $F{valorTotal}+
+"\nForma de Pagamento: " + $F{opcaoPagamento}]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</element>
+			<element kind="rectangle" uuid="ca601e2b-be35-4cc3-a19f-1ff975208c20" x="112" y="910" width="467" height="120" radius="10">
+				<pen lineWidth="5.0"/>
+			</element>
+			<element kind="textField" uuid="70a1b533-f36f-4401-8bd0-6be96bbcca9f" x="124" y="930" width="449" height="80" fontName="Arial" fontSize="19.0">
+				<expression><![CDATA["Nº do Bilhete: " + $F{bilhete}+
+"\n"+
+"\nData da Emissão: " + $F{dtVenda}]]></expression>
+			</element>
+			<element kind="image" uuid="e1f31201-7e51-4e75-ad65-458d7282e712" x="237" y="0" width="230" height="157">
+				<expression><![CDATA[$P{logo}]]></expression>
+			</element>
+			<element kind="image" uuid="1debaca0-d3a8-4dc6-ba5e-92a023f14cfd" x="230" y="1030" width="230" height="225" forecolor="#000000">
+				<expression><![CDATA[$P{mainbus}]]></expression>
+			</element>
+			<element kind="staticText" uuid="4b843703-78db-4564-9319-3901d585497c" mode="Transparent" x="178" y="1214" width="355" height="30" forecolor="#000000" fontName="Arial" fontSize="22.0">
+				<text><![CDATA[Viaje Bem. Viaje com Passabus!]]></text>
+			</element>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</detail>
+</jasperReport>
