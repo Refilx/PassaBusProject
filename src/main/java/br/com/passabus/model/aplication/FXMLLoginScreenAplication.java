@@ -6,9 +6,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
- *
+ * Classe que Executa a tela de login do sistema
  * @author Bruno Sousa
  */
 public class FXMLLoginScreenAplication extends Application {
@@ -35,11 +36,8 @@ public class FXMLLoginScreenAplication extends Application {
         Stage novoStage = new Stage();
         novoStage.setScene(novaCena);
         novoStage.centerOnScreen();
+        novoStage.initStyle(StageStyle.UNDECORATED);
         novoStage.show();
-
-//        stageAtual.setScene(novaCena);
-//        stageAtual.centerOnScreen();
-//        stageAtual.setTitle(null);
     }
 
     /**

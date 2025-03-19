@@ -1,5 +1,12 @@
 package br.com.passabus.model.util;
 
+import javafx.util.converter.LocalDateStringConverter;
+
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
 /**
  * Classe que calcula todos os valores que envolvem a passagem, seja venda ou cancelamento
  * @author Bruno Sousa da Silva
@@ -7,7 +14,7 @@ package br.com.passabus.model.util;
 public class CalculadoraPassagem {
 
     private final double tarifa = 5.00; // Tarifa fixa
-    private final double custoPorKm = 0.30; // Custo por quilômetro
+    private double custoPorKm; // Custo por quilômetro
     private final double seguro = 2.00; // Custo por seguro do passageiro
     private final double txCancelamento = 0.05; // A empresa pode cobrar até 5% do valor da passagem
     private double precoTotal;
@@ -18,7 +25,14 @@ public class CalculadoraPassagem {
      * @param distanciaKm
      * @return preço total da passagem
      */
-    public double calcularPrecoPassagem(double distanciaKm) {
+    public double calcularPrecoPassagem(double distanciaKm, String classe) {
+
+        if(classe.equals("CONVENCIONAL")) {
+            custoPorKm = 0.30;
+        }
+        else if(classe.equals("EXECUTIVO")) {
+            custoPorKm = 0.45;
+        }
 
         precoTotal = tarifa + seguro + (distanciaKm * custoPorKm);
 
