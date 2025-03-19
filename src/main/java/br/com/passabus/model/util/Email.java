@@ -1,17 +1,23 @@
 package br.com.passabus.model.util;
 
+import javafx.scene.control.Alert;
 import org.apache.commons.mail.DefaultAuthenticator;
+import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 
 import javax.swing.*;
+import java.net.UnknownHostException;
 import java.util.UUID;
 
 public class Email {
 
     private String recoveryCode;
+    private Alert alert;
 
-    public void sendMailTo(String destinatario) {
+    public boolean sendMailTo(String destinatario) {
         // Dependências necessárias: commons-email-1.5 e mail-1.6.2
+
+        boolean enviado = false;
 
         String[] code = generateUniqueCode().split("-");
         recoveryCode = code[1]+"-"+code[2]+"-"+code[3];
@@ -38,12 +44,18 @@ public class Email {
             email.setMsg(msg);
             email.addTo(destinatario);
             email.send();
-            JOptionPane.showMessageDialog(null, "Email enviado com sucesso!\nFavor confira sua caixa de entrada!",
-                    "E-mail de recuperação de senha enviado", JOptionPane.INFORMATION_MESSAGE);
-
+            alert = new Alert(Alert.AlertType.INFORMATION, "Email de recuperação enviado com sucesso!\nFavor confira sua caixa de entrada!");
+            alert.showAndWait();
+            enviado = true;
+        } catch (EmailException e) {
+            // Tratamento para outros erros de envio de e-mail
+            JOptionPane.showMessageDialog(null, "Erro ao enviar o e-mail. \nDetalhes: "+ e.getMessage());
+            enviado = false;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            // Para qualquer outro tipo de erro
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro inesperado. \nDetalhes: " + e.getMessage());
         }
+        return enviado;
     }
 
     // Gerar um código único

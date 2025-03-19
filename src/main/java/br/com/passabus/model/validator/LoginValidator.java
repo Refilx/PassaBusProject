@@ -1,6 +1,7 @@
 package br.com.passabus.model.validator;
 
 import br.com.passabus.model.dao.VerifyDAO;
+import javafx.scene.control.Alert;
 
 import javax.swing.*;
 
@@ -10,7 +11,7 @@ public class LoginValidator {
 
     }
 
-    public boolean resultVerify(String user, String pass) {
+    public static boolean resultVerify(String user, String pass) {
 
         boolean resultVerify = false;
 
@@ -23,18 +24,18 @@ public class LoginValidator {
 
             if(resultVerify){
                 //Mensagem de login bem sucedido
-                JOptionPane.showMessageDialog(null, "Login Realizado com Sucesso",
-                        "", JOptionPane.INFORMATION_MESSAGE, null);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Login Realizado com Sucesso");
+                alert.showAndWait();
             }
             else{
                 //Mensagem de erro no usuário/senha
-                JOptionPane.showMessageDialog(null, "Usuário ou Senha Incorretos \nPor favor tente novamente",
-                        "Erro ao tentar realizar login", JOptionPane.ERROR_MESSAGE, null);
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Erro ao tentar realizar login\n\nUsuário ou Senha Incorretos \nPor favor tente novamente");
+                alert.showAndWait();
             }
         }
         else{
-            JOptionPane.showMessageDialog(null, "Preencha todos os campos, por favor",
-                    "Erro ao tentar realizar o login",JOptionPane.WARNING_MESSAGE, null);
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Erro ao tentar realizar o login\n\nPreencha todos os campos, por favor!");
+            alert.showAndWait();
         }
 
         return resultVerify;

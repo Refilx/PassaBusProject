@@ -18,10 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -70,6 +67,7 @@ public class FXMLLoginScreenController implements Initializable {
     private Email email = new Email();
     private static Usuario dadosDoUsuario = new Usuario();
     private static String codigoEnviado;
+    private Alert alert;
 
     // -----------------------TELA INSERÇÃO DO EMAIL DE RECUPERAÇÃO-----------------------
     @FXML
@@ -103,7 +101,7 @@ public class FXMLLoginScreenController implements Initializable {
         //Inicializamos a String que pegará o valor do campo password da tela de login
         String password = passFieldSenha.getText();
 
-        boolean resultVerify = new LoginValidator().resultVerify(username, password);
+        boolean resultVerify = LoginValidator.resultVerify(username, password);
 
         if(resultVerify){
 
@@ -164,18 +162,21 @@ public class FXMLLoginScreenController implements Initializable {
                 UsuarioDAO.getIdUsuarioByEmail(dadosDoUsuario);
 
                 // Enviando email com o cógido de recuperação de senha para o e-mail do usuário
-                email.sendMailTo(textFieldEmailToRecoverPassword.getText());
-                codigoEnviado = email.getRecoveryCode(); //Guardo o código de recuperação enviado
-                getEnterRecoveryCodeScreen(null); // Chamando a tela de inserção do código de recuperação
+                boolean enviado = email.sendMailTo(textFieldEmailToRecoverPassword.getText());
+
+                if(enviado) {
+                    codigoEnviado = email.getRecoveryCode(); //Guardo o código de recuperação enviado
+                    getEnterRecoveryCodeScreen(null); // Chamando a tela de inserção do código de recuperação
+                }
             }
             else {
-                JOptionPane.showMessageDialog(null, "O CPF digitado é inválido\nPor favor, digite um CPF válido/correto!",
-                        "Erro tentar realizar cadastro", JOptionPane.WARNING_MESSAGE);
+                alert = new Alert(Alert.AlertType.WARNING, "Erro tentar realizar o envio do email de recuperação\n\nO E-mail digitado não está cadastrado em nenhum usuário!");
+                alert.showAndWait();
             }
         }
         else {
-            JOptionPane.showMessageDialog(null, "O CPF digitado é inválido\nPor favor, digite um CPF válido/correto!",
-                    "Erro tentar realizar cadastro", JOptionPane.WARNING_MESSAGE);
+            alert = new Alert(Alert.AlertType.INFORMATION, "Erro tentar realizar o envio do email de recuperação\n\nO E-mail digitado é inválido\nPor favor, digite um E-mail válido/correto!");
+            alert.showAndWait();
         }
     }
 
@@ -183,11 +184,13 @@ public class FXMLLoginScreenController implements Initializable {
     @FXML
     void btnConfirmarRecoveryCodeOnMouseClicked(MouseEvent event) throws IOException {
         if(codigoEnviado.equals(tfRecoveryCode.getText())) {
+            alert = new Alert(Alert.AlertType.INFORMATION,"Código inserido validado com sucesso!");
+            alert.showAndWait();
             getEnterNewPasswordScreen(null);
         }
         else {
-            JOptionPane.showMessageDialog(null, "O código digitado é diferente do enviado!\nDigite o código enviado corretamente",
-                    "Código digitado errado!", JOptionPane.WARNING_MESSAGE);
+            alert = new Alert(Alert.AlertType.WARNING,"Código digitado errado!\n\nO código digitado é diferente do enviado!\nDigite o código enviado corretamente");
+            alert.showAndWait();
         }
     }
 
@@ -200,8 +203,8 @@ public class FXMLLoginScreenController implements Initializable {
             getLoginScreen(null);
         }
         else {
-            JOptionPane.showMessageDialog(null, "As senhas estão diferentes!\nOs campos precisam estar com senhas iguais",
-                    "Erro tentar realizar atualizar senhas", JOptionPane.WARNING_MESSAGE);
+            alert = new Alert(Alert.AlertType.WARNING, "Erro tentar realizar atualizar senhas\n\nAs senhas estão diferentes!\nOs campos precisam estar com senhas iguais!");
+            alert.showAndWait();
             pfNovaSenha.setText(null);
             pfConfirmNovaSenha.setText(null);
         }

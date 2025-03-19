@@ -5,6 +5,7 @@ import br.com.passabus.model.domain.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import br.com.passabus.model.factory.ConnectionFactory;
+import javafx.scene.control.Alert;
 import org.jasypt.util.password.BasicPasswordEncryptor;
 
 import javax.swing.*;
@@ -199,14 +200,20 @@ public class UsuarioDAO {
 
             pstm = conn.prepareStatement(sql);
 
+            // Criptografando a nova senha do usuário antes de salvá-la no banco
+            BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
+            usuario.setPassword(passwordEncryptor.encryptPassword(usuario.getPassword()));
+
             pstm.setString(1, usuario.getPassword());
             pstm.setInt(2, usuario.getIdUsuario());
 
             int rowsUpdated = pstm.executeUpdate();
             if (rowsUpdated > 0) {
-                JOptionPane.showMessageDialog(null, "Senha Atualizada com Sucesso!");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Senha Atualizada com Sucesso!");
+                alert.showAndWait();
             } else {
-                JOptionPane.showMessageDialog(null, "Erro ao realizar a atualização da senha!");
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Erro ao realizar a atualização da senha!");
+                alert.showAndWait();
             }
 
         } catch (Exception e) {
