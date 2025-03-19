@@ -4,6 +4,7 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MySQL Adapter"/>
 	<parameter name="logo" class="java.io.InputStream"/>
 	<parameter name="mainbus" class="java.io.InputStream"/>
+	<parameter name="precoKm" class="java.lang.Double"/>
 	<query language="SQL"><![CDATA[SELECT P.nome as nomepassageiro, P.*, VI.*, VC.nome as nomeviacao, VC.*, VD.* FROM venda VD
 JOIN passageiro P ON (VD.idPassageiro = P.idPassageiro)
 JOIN viagem VI ON (VD.idViagem = VI.idViagem)
@@ -155,12 +156,12 @@ DOCUMENTO AUXILIAR DE BILHETE DE PASSAGEM ELETRÔNICO]]></text>
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			</element>
 			<element kind="textField" uuid="6d547ba5-0ac7-4726-9829-e802091d8f88" x="124" y="730" width="470" height="160" fontName="Arial" fontSize="22.0" hTextAlign="Justified">
-				<expression><![CDATA["Tarifa:  R$"+ $F{tarifa}+
-"\nSeguro:  R$"+ $F{seguro}+
-"\nDistancia da viagem (Km): " +$F{distancia} +
-"\nPreço por Km:  R$  0,30 " +
+				<expression><![CDATA["Tarifa:  R$  "+ $F{tarifa}+
+"\nSeguro:  R$  "+ $F{seguro}+
+"\nDistancia da viagem (Km):  " +$F{distancia} +
+"\nPreço por Km:  R$  " +  $P{precoKm}+
 "\nValor Total:  R$  " + $F{valorTotal}+
-"\nForma de Pagamento: " + $F{opcaoPagamento}]]></expression>
+"\nForma de Pagamento:  " + $F{opcaoPagamento}]]></expression>
 				<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			</element>

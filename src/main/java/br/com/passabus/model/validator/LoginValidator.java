@@ -22,14 +22,9 @@ public class LoginValidator {
             //Verificação se o usuário ou a senha fornecida estão corretos
             resultVerify = verifyDAO.verifyPass(user, pass);
 
-            if(resultVerify){
+            if(resultVerify) {
                 //Mensagem de login bem sucedido
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Login Realizado com Sucesso");
-                alert.showAndWait();
-            }
-            else{
-                //Mensagem de erro no usuário/senha
-                Alert alert = new Alert(Alert.AlertType.WARNING, "Erro ao tentar realizar login\n\nUsuário ou Senha Incorretos \nPor favor tente novamente");
                 alert.showAndWait();
             }
         }

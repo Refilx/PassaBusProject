@@ -244,7 +244,7 @@ public class VerifyDAO {
 
             rset = pstm.executeQuery();
 
-            while(rset.next()){
+            if(rset.next()){
 
                 //Criamos um usuário
                 Usuario usuario = new Usuario();
@@ -277,9 +277,12 @@ public class VerifyDAO {
 
                     resultadoValidacao = true;
                 } else {
-                    JOptionPane.showMessageDialog(null, "Senha incorreta!");
+                    JOptionPane.showMessageDialog(null, "Senha incorreta! Tente novamente.");
                 }
+            } else {
+                JOptionPane.showMessageDialog(null, "O nome de usuário digitado está incorreto ou\nNão existe usuário com esse username cadastrado!");
             }
+
         }catch(Exception e){
             e.printStackTrace();
         }finally {
