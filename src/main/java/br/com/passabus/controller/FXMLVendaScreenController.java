@@ -18,6 +18,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -40,6 +41,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -135,14 +137,41 @@ public class FXMLVendaScreenController implements Initializable {
         String origem = textFieldOrigemViagemPesquisa.getText();
         String destino = textFieldDestinoViagemPesquisa.getText();
 
-        if(textFieldDataViagemPesquisa.getText() != null && textFieldDataViagemPesquisa.getText().length() == 10) {
-            if(tvViagensPesquisadas.isDisable())
-                tvViagensPesquisadas.setDisable(false);
+        if(textFieldDataViagemPesquisa.getText() != null && textFieldDataViagemPesquisa.getText().trim().length() == 10) {
 
-            prepararListaTabela(origem, destino);
+            LocalDate hoje = new Timestamp(System.currentTimeMillis()).toLocalDateTime().toLocalDate();
+            LocalDate diaPesquisado = null;
+            boolean dataValida = false;
+
+            try {
+                diaPesquisado = LocalDate.parse(textFieldDataViagemPesquisa.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                dataValida = true;
+            } catch (DateTimeException e) {
+                dataValida = false;
+                JOptionPane.showMessageDialog(null, "Data digitada inválida!\nDetalhes: %s".formatted(e.getMessage()));
+            }
+
+            // Se a data for válida, verificados se a data é pode ser usada para a venda
+            if(dataValida) {
+
+                // Comparando a data digitada com a data atual, impedindo a venda para dias que já passaram
+                if (diaPesquisado.isAfter(hoje) || diaPesquisado.isEqual(hoje)) {
+                    // Se a tabela de viagens ainda não tiver sido usada em alguma pesquisa
+                    if (tvViagensPesquisadas.isDisable())
+                        tvViagensPesquisadas.setDisable(false);
+
+                    prepararListaTabela(origem, destino);
+                }
+                else {
+                    Alert alert = new Alert(Alert.AlertType.WARNING, "A data informada já passou.\nPor favor, insira a data atual ou uma data futura para continuar.");
+                    alert.showAndWait();
+                }
+            }
         }
-        else
-            JOptionPane.showMessageDialog(null, "Preencha o campo da Data da Viagem corretanebte, por favor");
+        else {
+            Alert alert = new Alert(Alert.AlertType.WARNING,"Preencha o campo da Data da Viagem corretamente, por favor!");
+            alert.showAndWait();
+        }
     }
 
     @FXML
@@ -156,21 +185,24 @@ public class FXMLVendaScreenController implements Initializable {
         dadosDaViagemEscolhida = tvViagensPesquisadas.getSelectionModel().getSelectedItem();
 
         if(dadosDaViagemEscolhida != null && textFieldDataViagemPesquisa.getText() != null) {
-            dadosDoPassageiro.setDataViagem(LocalDate.parse(textFieldDataViagemPesquisa.getText(), format));
+                dadosDoPassageiro.setDataViagem(LocalDate.parse(textFieldDataViagemPesquisa.getText(), format));
 
-            poltronasVendidas = new VendaDAO().getPoltronasCompradas(dadosDaViagemEscolhida.getIdViagem(), Date.valueOf(dadosDoPassageiro.getDataViagem()));
-            configurarGridPane();
+                poltronasVendidas = new VendaDAO().getPoltronasCompradas(dadosDaViagemEscolhida.getIdViagem(), Date.valueOf(dadosDoPassageiro.getDataViagem()));
+                configurarGridPane();
 
-            abrirTelaPopUp("FXMLPopUpSelecionarAssentosPassageiro");
-        } else
-            JOptionPane.showMessageDialog(null, "Selecione uma viagem clicando na tabela antes de continuar!");
+                abrirTelaPopUp("FXMLPopUpSelecionarAssentosPassageiro");
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.WARNING,"Selecione uma viagem clicando na tabela antes de continuar!");
+            alert.showAndWait();
+        }
     }
 
     // -----------------------BOTÕES DA TELA POP UP SELEÇÃO DE POLTRONA-----------------------
     @FXML
     void btnSelecaoPoltronaCancelarMouseClicked(MouseEvent event) {
         chamarTelaPopUp = false;
-        Stage stageAtual = (Stage) ((javafx.scene.Node) (btnSelecaoPoltronaCancelar)).getScene().getWindow();
+        Stage stageAtual = (Stage) ((Node) (btnSelecaoPoltronaCancelar)).getScene().getWindow();
         stageAtual.close();
     }
 
@@ -187,13 +219,16 @@ public class FXMLVendaScreenController implements Initializable {
             dadosDoPassageiro.setPoltrona(Integer.parseInt(textFieldPoltronaSelecionada.getText()));
 
             // Já calculamos o valor da passagem antes da tela ser chamada
-            calc.calcularPrecoPassagem(dadosDaViagemEscolhida.getDistancia());
+            calc.calcularPrecoPassagem(dadosDaViagemEscolhida.getDistancia(), dadosDaViagemEscolhida.getClasse());
 
             // fechamos o stage da tela Pop Up
-            Stage stageAtual = (Stage) ((javafx.scene.Node) (btnSelecaoPoltronaProximo)).getScene().getWindow();
+            Stage stageAtual = (Stage) ((Node) (btnSelecaoPoltronaProximo)).getScene().getWindow();
             stageAtual.close();
-        } else
-            JOptionPane.showMessageDialog(null,"Selecione uma das poltronas disponíveis, por favor!");
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.WARNING,"Selecione uma das poltronas disponíveis, por favor!");
+            alert.showAndWait();
+        }
     }
 
     @FXML
@@ -214,14 +249,16 @@ public class FXMLVendaScreenController implements Initializable {
                 finalizaVenda();
 
                 // fechamos o stage da tela Pop Up
-                Stage stageAtual = (Stage) ((javafx.scene.Node) (btnFinalizarVendaCartao)).getScene().getWindow();
+                Stage stageAtual = (Stage) ((Node) (btnFinalizarVendaCartao)).getScene().getWindow();
                 stageAtual.close();
-            } else
-                JOptionPane.showMessageDialog(null, "Venda ainda NÃO finalizada");
-
-        } else
-            JOptionPane.showMessageDialog(null, "O número do Cartão de Crédito é inválido!");
-
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION,"Venda ainda NÃO finalizada");
+                alert.showAndWait();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING,"O número do Cartão de Crédito é inválido!");
+            alert.showAndWait();
+        }
     }
 
     @FXML
@@ -233,15 +270,18 @@ public class FXMLVendaScreenController implements Initializable {
                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{"Sim", "Não"}, 0);
 
             if (opcao == 0) {
-                JOptionPane.showMessageDialog(null, "Troco: R$ " + calc.getTroco());
+                Alert alert = new Alert(Alert.AlertType.INFORMATION,"Troco: R$ " + calc.getTroco());
+                alert.showAndWait();
 
                 finalizaVenda();
 
                 // fechamos o stage da tela Pop Up
-                Stage stageAtual = (Stage) ((javafx.scene.Node) (btnFinalizarVendaDinheiro)).getScene().getWindow();
+                Stage stageAtual = (Stage) ((Node) (btnFinalizarVendaDinheiro)).getScene().getWindow();
                 stageAtual.close();
-            } else
-                JOptionPane.showMessageDialog(null, "Venda ainda NÃO finalizada");
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION,"Venda ainda NÃO finalizada");
+                alert.showAndWait();
+            }
         }
     }
 

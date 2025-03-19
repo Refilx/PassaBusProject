@@ -35,7 +35,7 @@ ENGINE = InnoDB;
 
 LOCK TABLES `pessoa` WRITE;
 /*!40000 ALTER TABLE `pessoa` DISABLE KEYS */;
-INSERT INTO `pessoa` VALUES (1,'Bruno Sousa','091.319.945-12','brunosillva1079@gmail.com','(73) 98835-9652','2002-08-24');
+INSERT INTO `pessoa` VALUES (1,'Bruno Sousa','091.319.945-12','brunosillva1079@gmail.com','(73)98835-9652','2002-08-24'),(2,'Bruno Sousa','123.456.789-09','jovenestudantex11@gmail.com','(73)98835-9652','2002-08-24');
 /*!40000 ALTER TABLE `pessoa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -68,7 +68,7 @@ ENGINE = InnoDB;
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'bruno.silva','5D7J8EfTY7PhB+OjFrBDHwoKJk7nD+AS','Administrador','2025-03-11 03:00:00','Ativo',1),(2,'bruno.operador','5D7J8EfTY7PhB+OjFrBDHwoKJk7nD+AS','Operador','2025-03-11 03:00:00','Ativo',1);
+INSERT INTO `usuario` VALUES (1,'bruno.silva','5D7J8EfTY7PhB+OjFrBDHwoKJk7nD+AS','Administrador','2025-03-11 03:00:00','Ativo',1),(2,'bruno.operador','5D7J8EfTY7PhB+OjFrBDHwoKJk7nD+AS','Operador','2025-03-11 03:00:00','Ativo',2);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
