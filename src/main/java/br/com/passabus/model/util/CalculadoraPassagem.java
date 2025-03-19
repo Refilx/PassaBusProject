@@ -1,11 +1,5 @@
 package br.com.passabus.model.util;
 
-import javafx.util.converter.LocalDateStringConverter;
-
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 /**
  * Classe que calcula todos os valores que envolvem a passagem, seja venda ou cancelamento

@@ -239,47 +239,60 @@ public class FXMLVendaScreenController implements Initializable {
     // -----------------------BOTÕES DA TELA POP UP DE DADOS DO PASSAGEIRO-----------------------
     @FXML
     void btnFinalizarVendaCartaoMouseClicked(MouseEvent event) throws Exception {
-        dadosFinaisDaVenda();
+        boolean dadosProntos = dadosFinaisDaVenda();
 
-        if(CartaoValidator.validarCartaoCredito(textFieldNumCartao.getText())) {
-            int opcao = JOptionPane.showOptionDialog(null, "Cartão de crédito Aprovado!\nTem certeza que deseja finalizar a venda?", "Confirmação final",
-                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{"Sim", "Não"}, 0);
+        // Se todos dados estiverem prontos
+        if(dadosProntos) {
 
-            if (opcao == 0) {
-                finalizaVenda();
+            // Validamos o número do cartão para saber se é válido
+            if (CartaoValidator.validarCartaoCredito(textFieldNumCartao.getText())) {
+                int opcao = JOptionPane.showOptionDialog(null, "Cartão de crédito Aprovado!\nTem certeza que deseja finalizar a venda?", "Confirmação final",
+                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{"Sim", "Não"}, 0);
 
-                // fechamos o stage da tela Pop Up
-                Stage stageAtual = (Stage) ((Node) (btnFinalizarVendaCartao)).getScene().getWindow();
-                stageAtual.close();
+                if (opcao == 0) {
+                    finalizaVenda();
+
+                    // fechamos o stage da tela Pop Up
+                    Stage stageAtual = (Stage) ((Node) (btnFinalizarVendaCartao)).getScene().getWindow();
+                    stageAtual.close();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Venda ainda NÃO finalizada");
+                    alert.showAndWait();
+                }
             } else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION,"Venda ainda NÃO finalizada");
+                Alert alert = new Alert(Alert.AlertType.WARNING, "O número do Cartão de Crédito é inválido!");
                 alert.showAndWait();
             }
-        } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING,"O número do Cartão de Crédito é inválido!");
-            alert.showAndWait();
         }
     }
 
     @FXML
     void btnFinalizarVendaDinheiroMouseClicked(MouseEvent event) throws Exception {
-        dadosFinaisDaVenda();
+        boolean dadosProntos = dadosFinaisDaVenda();
 
-        if(!textFieldValorPago.getText().isEmpty() && calc.calculaTroco(Double.parseDouble(textFieldValorPago.getText()))) {
-            int opcao = JOptionPane.showOptionDialog(null, "Tem certeza que deseja finalizar a venda?", "Confirmação final",
-                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{"Sim", "Não"}, 0);
+        // Se todos dados estiverem prontos
+        if(dadosProntos) {
 
-            if (opcao == 0) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION,"Troco: R$ " + calc.getTroco());
-                alert.showAndWait();
+            // Verificamos se o valor pago está correto
+            if (!textFieldValorPago.getText().isEmpty() && calc.calculaTroco(Double.parseDouble(textFieldValorPago.getText()))) {
+                int opcao = JOptionPane.showOptionDialog(null, "Tem certeza que deseja finalizar a venda?", "Confirmação final",
+                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{"Sim", "Não"}, 0);
 
-                finalizaVenda();
+                if (opcao == 0) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Troco: R$ %.2f".formatted(calc.getTroco()));
+                    alert.showAndWait();
 
-                // fechamos o stage da tela Pop Up
-                Stage stageAtual = (Stage) ((Node) (btnFinalizarVendaDinheiro)).getScene().getWindow();
-                stageAtual.close();
+                    finalizaVenda();
+
+                    // fechamos o stage da tela Pop Up
+                    Stage stageAtual = (Stage) ((Node) (btnFinalizarVendaDinheiro)).getScene().getWindow();
+                    stageAtual.close();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Venda ainda NÃO finalizada");
+                    alert.showAndWait();
+                }
             } else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION,"Venda ainda NÃO finalizada");
+                Alert alert = new Alert(Alert.AlertType.WARNING, "O campo do valor pago está vazio ou \nO valor informadoestá abaixo do valor total");
                 alert.showAndWait();
             }
         }
@@ -309,31 +322,61 @@ public class FXMLVendaScreenController implements Initializable {
     /**
      * Armazena os dados do passageiro (pessoa) e da venda para salvar
      */
-    void dadosFinaisDaVenda() {
-        if(!textFieldNomePassageiro.getText().isEmpty())
-            dadosDoPassageiro.setNome(textFieldNomePassageiro.getText());
+    boolean dadosFinaisDaVenda() {
 
-        if(!textFieldDataNascimento.getText().isEmpty())
-            dadosDoPassageiro.setDtNascimento(LocalDate.parse(textFieldDataNascimento.getText(), format));
+        boolean dadosProntos = false;
 
-        if(CPFValidator.validateCPF(textFieldCPFPassageiro.getText())) {
-            dadosDoPassageiro.setCPF(textFieldCPFPassageiro.getText());
-        } else
-            JOptionPane.showMessageDialog(null, "O CPF informado é inválido");
+        // Verificamos se o campo do nome do passageiro está vazio
+        if(!textFieldNomePassageiro.getText().isEmpty()) {
 
-        dadosDoPassageiro.setIdViagem(dadosDaViagemEscolhida.getIdViagem());
-        dadosDoPassageiro.setOrigem(dadosDaViagemEscolhida.getOrigem());
-        dadosDoPassageiro.setDestino(dadosDaViagemEscolhida.getDestino());
+            // Validamos o CPF do passageiro para saber se é válido
+            if (CPFValidator.validateCPF(textFieldCPFPassageiro.getText())) {
 
-        // Armazenando os dados da venda
-        dadosDaVenda.setIdViagem(dadosDaViagemEscolhida.getIdViagem());
-        dadosDaVenda.setDtVenda(new Timestamp(System.currentTimeMillis()));
-        dadosDaVenda.setBilhete(dadosDaVenda.getDtVenda().getTime());
-        dadosDaVenda.setTarifa(calc.getTarifa());
-        dadosDaVenda.setSeguro(calc.getSeguro());
-        dadosDaVenda.setValorTotal(calc.getPrecoTotal());
-        dadosDaVenda.setOpcaoPagamento(tapPane.getSelectionModel().getSelectedItem().getText());
-        dadosDaVenda.setStatus("EM VIGOR");
+                boolean dataValida = true;
+
+                // Tentamos converter a data digitada pelo usuário na dtNascimento para a data de nascimento da pessoa
+                try {
+                    dadosDoPassageiro.setDtNascimento(LocalDate.parse(textFieldDataNascimento.getText(), format));
+                } catch (DateTimeException e) {
+                    dataValida = false;
+                    JOptionPane.showMessageDialog(null, "Data digitada inválida!\nDetalhes: %s".formatted(e.getMessage()));
+                }
+
+                // Se a data de nascimento for válida deixamos armazenar todos os dados
+                if(dataValida) {
+
+                    dadosDoPassageiro.setNome(textFieldNomePassageiro.getText());
+
+                    dadosDoPassageiro.setDtNascimento(LocalDate.parse(textFieldDataNascimento.getText(), format));
+
+                    dadosDoPassageiro.setCPF(textFieldCPFPassageiro.getText());
+
+                    dadosDoPassageiro.setIdViagem(dadosDaViagemEscolhida.getIdViagem());
+                    dadosDoPassageiro.setOrigem(dadosDaViagemEscolhida.getOrigem());
+                    dadosDoPassageiro.setDestino(dadosDaViagemEscolhida.getDestino());
+
+                    // Armazenando os dados da venda
+                    dadosDaVenda.setIdViagem(dadosDaViagemEscolhida.getIdViagem());
+                    dadosDaVenda.setDtVenda(new Timestamp(System.currentTimeMillis()));
+                    dadosDaVenda.setBilhete(dadosDaVenda.getDtVenda().getTime());
+                    dadosDaVenda.setTarifa(calc.getTarifa());
+                    dadosDaVenda.setSeguro(calc.getSeguro());
+                    dadosDaVenda.setValorTotal(calc.getPrecoTotal());
+                    dadosDaVenda.setOpcaoPagamento(tapPane.getSelectionModel().getSelectedItem().getText());
+                    dadosDaVenda.setStatus("EM VIGOR");
+
+                    dadosProntos = true; // Após todas as verificações comprovamos que os dados estão prontos
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "O CPF digitado é inválido\nPor favor, digite um CPF válido/correto!");
+                alert.showAndWait();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "O nome do passageiro está vazio!\nPor favor, digite o nome do passageiro! ");
+            alert.showAndWait();
+        }
+
+        return dadosProntos;
     }
 
     void imprimirPassagem() throws Exception {
@@ -353,8 +396,9 @@ public class FXMLVendaScreenController implements Initializable {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("logo", logoStream); // Passa a imagem como parâmetro
         parameters.put("mainbus", mainStream);
+        parameters.put("precoKm", calc.getCustoPorKm());
 
-
+        // Carregamos o relatório por meio de um InputStream
         InputStream jasperStream = getClass().getResourceAsStream("/br/com/passabus/relatorios/JAVAFXFXMLRelatórioPassagem.jasper");
 
         if (jasperStream == null) {

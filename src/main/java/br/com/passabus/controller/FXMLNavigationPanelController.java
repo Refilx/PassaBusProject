@@ -63,6 +63,8 @@ public class FXMLNavigationPanelController implements Initializable {
     @FXML
     private void getDashboardScreen(MouseEvent event) {
         borderPane.setCenter(dashboardScreen);
+        textFieldQuantidadeVendidaMes.setText(""+VendaDAO.quantidadeVendida());
+        textFieldDestinoPopular.setText(VendaDAO.destinoPopular());
     }
 
     @FXML
@@ -116,7 +118,7 @@ public class FXMLNavigationPanelController implements Initializable {
         textFieldQuantidadeVendidaMes.setText(""+VendaDAO.quantidadeVendida());
         textFieldDestinoPopular.setText(VendaDAO.destinoPopular());
 
-        Image img = new Image(getClass().getResource("/br/com/passabus/view/imgs/heliozao.png").toExternalForm(), false);
+        Image img = new Image(getClass().getResource("/br/com/passabus/view/imgs/usericon.png").toExternalForm(), false);
         imgCircle.setFill(new ImagePattern(img));
     }
     
