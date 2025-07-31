@@ -28,8 +28,8 @@ public class Email {
                 "---------------\n" +
                 "PassaBus Administration";
 
-        String appMail = "passabus.official@gmail.com";
-        String appMailPass = "akql uukw epmm qosn"; // Senha de app gerada pelo google
+        String appMail = "";
+        String appMailPass = ""; // Senha de app gerada pelo google
 
         SimpleEmail email = new SimpleEmail();
         email.setHostName("smtp.gmail.com");
